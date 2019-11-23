@@ -101,7 +101,7 @@ public class PlayScreen implements Screen{
 		new WorldCreator(world,map);
 		
 		//Construct Player
-		player = new Player(world);
+		player = new Player(world, new Vector2(129,100));
 	}
 	
 	@Override
