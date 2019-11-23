@@ -41,11 +41,11 @@ public class PlayScreen implements Screen{
 	public void handleInput(float dt) {
 		//If D Key Pressed
 		if(Gdx.input.isKeyPressed(Input.Keys.D) && player.b2body.getLinearVelocity().x <= 2) {
-			player.b2body.applyLinearImpulse(new Vector2(4f,0), player.b2body.getWorldCenter(), true);
+			player.b2body.applyLinearImpulse(new Vector2(0.5f,0), player.b2body.getWorldCenter(), true);
 		}
 		//If A Key Pressed
 		if(Gdx.input.isKeyPressed(Input.Keys.A) && player.b2body.getLinearVelocity().x >= -2) {
-			player.b2body.applyLinearImpulse(new Vector2(-4f,0), player.b2body.getWorldCenter(), true);
+			player.b2body.applyLinearImpulse(new Vector2(-0.5f,0), player.b2body.getWorldCenter(), true);
 		}
 //		if(Gdx.input.isKeyPressed(Input.Keys.W)) {
 //			gamecam.position.y += GazeintoAbyss.MOVEMENT_CAMERA*dt;	

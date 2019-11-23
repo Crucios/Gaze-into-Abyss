@@ -28,7 +28,7 @@ public class Player extends Sprite{
 		shape.setRadius(70 / GazeintoAbyss.PPM);
 		
 		fdef.shape = shape;
-		fdef.friction = 2.0f;
+		fdef.friction = 1.0f;
 		b2body.createFixture(fdef);
 	}
 }

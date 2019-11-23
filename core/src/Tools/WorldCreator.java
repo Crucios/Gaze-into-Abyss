@@ -11,6 +11,9 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
+import Sprites.Chest;
+import Sprites.DoorArea;
+
 public class WorldCreator {
 	public WorldCreator(World world,TiledMap map) {
 		BodyDef bdef = new BodyDef();
@@ -36,28 +39,14 @@ public class WorldCreator {
 		for(MapObject object : map.getLayers().get("chest-object").getObjects().getByType(RectangleMapObject.class)) {
 			Rectangle rect = ((RectangleMapObject) object).getRectangle();
 			
-			bdef.type = BodyDef.BodyType.KinematicBody;
-			bdef.position.set((rect.getX() + rect.getWidth()/2) / GazeintoAbyss.PPM,(rect.getY() + rect.getHeight()/2) / GazeintoAbyss.PPM);
-			
-			body = world.createBody(bdef);
-			
-			shape.setAsBox((rect.getWidth()/2) / GazeintoAbyss.PPM, (rect.getHeight()/2) / GazeintoAbyss.PPM);
-			fdef.shape = shape;
-			body.createFixture(fdef);
+			new Chest(world, map, rect);
 		}
 		
 		//Set for door-area-object
 		for(MapObject object : map.getLayers().get("door-area-object").getObjects().getByType(RectangleMapObject.class)) {
 			Rectangle rect = ((RectangleMapObject) object).getRectangle();
 			
-			bdef.type = BodyDef.BodyType.KinematicBody;
-			bdef.position.set((rect.getX() + rect.getWidth()/2) / GazeintoAbyss.PPM,(rect.getY() + rect.getHeight()/2) / GazeintoAbyss.PPM);
-			
-			body = world.createBody(bdef);
-			
-			shape.setAsBox((rect.getWidth()/2) / GazeintoAbyss.PPM, (rect.getHeight()/2) / GazeintoAbyss.PPM);
-			fdef.shape = shape;
-			body.createFixture(fdef);
+			new DoorArea(world, map, rect);
 		}
 	}
 }
