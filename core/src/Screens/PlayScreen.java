@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -22,10 +23,14 @@ import Tools.WorldCreator;
 public class PlayScreen implements Screen{
 	private GazeintoAbyss game;
 	
+	//Camera
 	private OrthographicCamera gamecam;
 	private Viewport gamePort;
+	
+	//HUD
 	//private Hud hud;
 	
+	//Tiled map variables
 	private TmxMapLoader mapLoader;
 	private TiledMap map;
 	private OrthogonalTiledMapRenderer renderer;
@@ -37,6 +42,8 @@ public class PlayScreen implements Screen{
 	private Box2DDebugRenderer b2dr;
 	
 	private Player player;
+	
+	private TextureAtlas atlas;
 	
 	public void handleInput(float dt) {
 		//If D Key Pressed
@@ -75,6 +82,8 @@ public class PlayScreen implements Screen{
 	}
 	
 	public PlayScreen(GazeintoAbyss game) {
+		atlas = new TextureAtlas("Resources/Player/Player.pack");
+		
 		this.game = game;
 		
 		//Camera movement
@@ -101,7 +110,11 @@ public class PlayScreen implements Screen{
 		new WorldCreator(world,map);
 		
 		//Construct Player
-		player = new Player(world, new Vector2(129,100));
+		player = new Player(world, this, new Vector2(129,100));
+	}
+	
+	public TextureAtlas getAtlas() {
+		return atlas;
 	}
 	
 	@Override
@@ -119,6 +132,11 @@ public class PlayScreen implements Screen{
 		renderer.render();
 		
 		b2dr.render(world, gamecam.combined);
+		
+		game.batch.setProjectionMatrix(gamecam.combined);
+		game.batch.begin();
+		player.draw(game.batch);
+		game.batch.end();
 	}
 
 	@Override

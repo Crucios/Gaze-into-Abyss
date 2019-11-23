@@ -1,6 +1,7 @@
 package Sprites;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -9,16 +10,23 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
+import Screens.PlayScreen;
+
 public class Player extends Sprite{
 	public World world;
 	public Body b2body;
+	private TextureRegion playerStand;
 	
 	private Vector2 position;
 	
-	public Player(World world, Vector2 position) {
+	public Player(World world, PlayScreen screen,Vector2 position) {
+		super(screen.getAtlas().findRegion("sprite-player"));
 		this.world = world;
-		definePlayer();
 		this.position = position;
+		definePlayer();
+		playerStand = new TextureRegion(getTexture(), 0,0,16,16);
+		setBounds(0,0,16,16);
+		setRegion(playerStand);
 	}
 	
 	public void definePlayer() {
