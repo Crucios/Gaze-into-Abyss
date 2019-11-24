@@ -4,18 +4,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
-import Screens.PlayScreen;
+import Screens.Level_1.Level_1_1;
 
 public class Player extends Sprite{
 	public enum State{RUNNING_PISTOL, RUNNING_RIFLE, WALKING_PISTOL, WALKING_RIFLE, STANDING_PISTOL, STANDING_RIFLE, SHOOTING_RIFLE, SHOOTING_PISTOL};
@@ -42,16 +43,18 @@ public class Player extends Sprite{
 	
 	private Vector2 position;
 	
-	public Player(World world, PlayScreen screen,Vector2 position) {
-		super(screen.getAtlas().findRegion("sprite-player"));
+	public Player(World world, Vector2 position) {
+		super(new AtlasRegion(new TextureAtlas("Resources/Player/Player.pack").findRegion("sprite-player")));
 		this.world = world;
+		
+		this.position = position;
 		
 		currentState = State.STANDING_PISTOL;
 		previousState = State.STANDING_PISTOL;
 		stateTimer = 0;
 		toRight = true;
-		pistol = true;
-		rifle = false;
+		pistol = false;
+		rifle = true;
 		shooting = false;
 		running = false;
 		walking = false;
@@ -59,37 +62,37 @@ public class Player extends Sprite{
 		//Player with pistol walk
 		Array<TextureRegion> frames = new Array<TextureRegion>();
 		for(int i=0;i<4;i++) {
-			frames.add(new TextureRegion(getTexture(), i*45, 52 ,45, 50));
+			frames.add(new TextureRegion(getTexture(), i*45, 52 ,45, 49));
 		}
 		playerWalkPistol = new Animation(0.1f, frames);
 		frames.clear();
 		
 		//Player with pistol run
 		for(int i=0;i<6;i++) {
-			frames.add(new TextureRegion(getTexture(), i*45, 254, 45, 52));
+			frames.add(new TextureRegion(getTexture(), i*45 + 2, 254, 43, 49));
 		}
 		playerRunPistol = new Animation(0.1f, frames);
 		frames.clear();
 		
 		//Player with pistol stand
-		frames.add(new TextureRegion(getTexture(), 315, 253, 45, 52));
+		frames.add(new TextureRegion(getTexture(), 317, 253, 43, 49));
 		playerStandPistol = new Animation(0.1f, frames);
 		frames.clear();
 		
 		//Player shoot with pistol
-		frames.add(new TextureRegion(getTexture(), 275, 253, 45, 52));
+		frames.add(new TextureRegion(getTexture(), 275, 253, 45, 49));
 		playerShootPistol = new Animation(0.1f, frames);
 		frames.clear();
 		
 		//Player with rifle walk
 		for(int i=0;i<4;i++)
-			frames.add(new TextureRegion(getTexture(), i*45, 102, 45, 52));
+			frames.add(new TextureRegion(getTexture(), i*45, 102, 45, 49));
 		playerWalkRifle = new Animation(0.1f, frames);
 		frames.clear();
 		
 		//Player with rifle run
 		for(int i=0;i<6;i++) 
-			frames.add(new TextureRegion(getTexture(), i*45, 3*52, 45, 50));
+			frames.add(new TextureRegion(getTexture(), i*45, 3*52, 45, 46));
 		playerRunRifle = new Animation(0.1f, frames);
 		frames.clear();
 		
@@ -99,7 +102,7 @@ public class Player extends Sprite{
 		frames.clear();
 		
 		//Player shoot with rifle
-		frames.add(new TextureRegion(getTexture(), 7*45, 160, 45, 44));
+		frames.add(new TextureRegion(getTexture(), 7*45 + 2, 160, 45, 42));
 		playerShootRifle = new Animation(0.1f, frames);
 		frames.clear();
 		
@@ -260,5 +263,13 @@ public class Player extends Sprite{
 			b2body.applyLinearImpulse(new Vector2(-0.5f,0), b2body.getWorldCenter(), true);
 		}
 		
+	}
+	
+	public void setPosition(Vector2 positions) {
+		this.position = positions;
+	}
+	
+	public Vector2 getPosition() {
+		return position;
 	}
 }

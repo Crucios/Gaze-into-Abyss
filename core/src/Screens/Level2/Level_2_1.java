@@ -17,11 +17,11 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
-import Screens.PlayScreen;
+import Screens.Level_1.Level_1_1;
 import Sprites.Player;
 import Tools.WorldCreator;
 
-public class Level_2_1 extends PlayScreen implements Screen{
+public class Level_2_1 extends Level_1_1 implements Screen{
 	private GazeintoAbyss game;
 	
 	//Camera

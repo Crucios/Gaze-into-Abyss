@@ -1,4 +1,4 @@
-package Screens;
+package Screens.Level_1;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -20,7 +20,7 @@ import Sprites.Player;
 import Tools.WorldContactListener;
 import Tools.WorldCreator;
 
-public class PlayScreen implements Screen{
+public class Level_1_1 implements Screen{
 	private GazeintoAbyss game;
 	
 	//Camera
@@ -69,12 +69,8 @@ public class PlayScreen implements Screen{
 		
 		renderer.setView(gamecam);
 	}
-	public PlayScreen() {
-		
-	}
-	public PlayScreen(GazeintoAbyss game) {
-		atlas = new TextureAtlas("Resources/Player/Player.pack");
-		
+	
+	public Level_1_1(GazeintoAbyss game, World world,Player player) {
 		this.game = game;
 		
 		//Camera movement
@@ -95,13 +91,13 @@ public class PlayScreen implements Screen{
 		gamecam.position.set((gamePort.getWorldWidth()/2),(gamePort.getWorldHeight()/4),0);
 		renderer.setView(gamecam);
 		
-		world = new World(new Vector2(0, -10),true);
+		this.world = world;
 		b2dr = new Box2DDebugRenderer();
 		
 		new WorldCreator(world,map);
 		
 		//Construct Player
-		player = new Player(world, this, new Vector2(129,100));
+		this.player = player;
 		
 		world.setContactListener(new WorldContactListener());
 	}
@@ -124,7 +120,7 @@ public class PlayScreen implements Screen{
 		
 		renderer.render();
 		
-		b2dr.render(world, gamecam.combined);
+		//b2dr.render(world, gamecam.combined);
 		
 		game.batch.setProjectionMatrix(gamecam.combined);
 		game.batch.begin();
