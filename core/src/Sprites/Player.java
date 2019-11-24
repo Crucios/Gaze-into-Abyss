@@ -53,8 +53,8 @@ public class Player extends Sprite{
 		previousState = State.STANDING_PISTOL;
 		stateTimer = 0;
 		toRight = true;
-		pistol = false;
-		rifle = true;
+		pistol = true;
+		rifle = false;
 		shooting = false;
 		running = false;
 		walking = false;
@@ -102,7 +102,7 @@ public class Player extends Sprite{
 		frames.clear();
 		
 		//Player shoot with rifle
-		frames.add(new TextureRegion(getTexture(), 7*45 + 2, 160, 45, 42));
+		frames.add(new TextureRegion(getTexture(), 7*45 + 1, 160, 45, 42));
 		playerShootRifle = new Animation(0.1f, frames);
 		frames.clear();
 		
@@ -238,7 +238,7 @@ public class Player extends Sprite{
 		shape.setAsBox(x / GazeintoAbyss.PPM, y / GazeintoAbyss.PPM);
 		
 		fdef.shape = shape;
-		fdef.friction = 1.0f;
+		fdef.friction = 4.0f;
 		b2body.createFixture(fdef);
 		fdef.isSensor = true;
 		b2body.createFixture(fdef).setUserData("body");
@@ -262,7 +262,14 @@ public class Player extends Sprite{
 		if(Gdx.input.isKeyPressed(Input.Keys.A) && b2body.getLinearVelocity().x >= -2) {
 			b2body.applyLinearImpulse(new Vector2(-0.5f,0), b2body.getWorldCenter(), true);
 		}
-		
+		//If D and Shift left Key Pressed
+		if(Gdx.input.isKeyPressed(Input.Keys.D) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x <= 3) {
+			b2body.applyLinearImpulse(new Vector2(1f,0), b2body.getWorldCenter(), true);
+		}
+		//If A and Shift left Key Pressed
+		if(Gdx.input.isKeyPressed(Input.Keys.A) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x >= -3) {
+			b2body.applyLinearImpulse(new Vector2(-1f,0), b2body.getWorldCenter(), true);
+		}		
 	}
 	
 	public void setPosition(Vector2 positions) {
