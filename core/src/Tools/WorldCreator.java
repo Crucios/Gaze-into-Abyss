@@ -32,20 +32,22 @@ public class WorldCreator {
 			
 			shape.setAsBox((rect.getWidth()/2) / GazeintoAbyss.PPM, (rect.getHeight()/2) / GazeintoAbyss.PPM);
 			fdef.shape = shape;
+			fdef.filter.categoryBits = 4;
+			fdef.filter.maskBits = 1 | 2;
 			body.createFixture(fdef);
 		}
 		
 		//Set for chest-object
 		for(MapObject object : map.getLayers().get("chest-object").getObjects().getByType(RectangleMapObject.class)) {
 			Rectangle rect = ((RectangleMapObject) object).getRectangle();
-			
 			new Chest(world, map, rect);
 		}
 		
 		//Set for door-area-object
 		for(MapObject object : map.getLayers().get("door-area-object").getObjects().getByType(RectangleMapObject.class)) {
 			Rectangle rect = ((RectangleMapObject) object).getRectangle();
-			
+			fdef.filter.categoryBits=1;
+			fdef.filter.maskBits=2;
 			new DoorArea(world, map, rect);
 		}
 	}

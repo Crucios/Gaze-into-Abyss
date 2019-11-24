@@ -33,6 +33,8 @@ public abstract class InteractiveTileObject {
 		
 		shape.setAsBox((bounds.getWidth()/2) / GazeintoAbyss.PPM, (bounds.getHeight()/2) / GazeintoAbyss.PPM);
 		fdef.shape = shape;
+		fdef.filter.categoryBits = 1;
+		fdef.filter.maskBits = 1;
 		body.createFixture(fdef);
 	}
 }

@@ -47,21 +47,7 @@ public class Level_2_2 extends PlayScreen implements Screen{
 	private TextureAtlas atlas;
 	
 	public void handleInput(float dt) {
-		//If D Key Pressed
-		if(Gdx.input.isKeyPressed(Input.Keys.D) && player.b2body.getLinearVelocity().x <= 2) {
-			player.b2body.applyLinearImpulse(new Vector2(0.5f,0), player.b2body.getWorldCenter(), true);
-		}
-		//If A Key Pressed
-		if(Gdx.input.isKeyPressed(Input.Keys.A) && player.b2body.getLinearVelocity().x >= -2) {
-			player.b2body.applyLinearImpulse(new Vector2(-0.5f,0), player.b2body.getWorldCenter(), true);
-		}
-//		if(Gdx.input.isKeyPressed(Input.Keys.W)) {
-//			gamecam.position.y += GazeintoAbyss.MOVEMENT_CAMERA*dt;	
-//		}
-//		if(Gdx.input.isKeyPressed(Input.Keys.S)) {
-//			gamecam.position.y -= GazeintoAbyss.MOVEMENT_CAMERA*dt;	
-//		}
-		
+		player.handleinput();
 		//Print Mouse Position
 		if(Gdx.input.isTouched()) {
 			System.out.println("X: " + Gdx.input.getX() + " " + "Y: " + Gdx.input.getY());
@@ -73,7 +59,9 @@ public class Level_2_2 extends PlayScreen implements Screen{
 		
 		world.step(1/60f, 6, 2);
 		
-		if(player.b2body.getPosition().x < gamePort.getWorldWidth()/2 - gamePort.getWorldWidth()/3 + 12.25 && player.b2body.getPosition().x > gamePort.getWorldWidth()/2)
+		player.update(dt);
+		
+		if(player.b2body.getPosition().x < gamePort.getWorldWidth() * 3 + 4.0 && player.b2body.getPosition().x > gamePort.getWorldWidth()/2)
 			gamecam.position.x = player.b2body.getPosition().x;
 		
 		//Update camera every iteration
