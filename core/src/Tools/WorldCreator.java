@@ -12,6 +12,8 @@ import com.badlogic.gdx.physics.box2d.World;
 
 import Sprites.Chest;
 import Sprites.DoorArea;
+import Sprites.DoorHide;
+import Sprites.DoorLevel;
 import Sprites.Ground;
 
 public class WorldCreator {
@@ -40,6 +42,18 @@ public class WorldCreator {
 			Rectangle rect = ((RectangleMapObject) object).getRectangle();
 			
 			new DoorArea(world, map, rect);
+		}
+		
+		for(MapObject object : map.getLayers().get("door-level-object").getObjects().getByType(RectangleMapObject.class)) {
+			Rectangle rect = ((RectangleMapObject) object).getRectangle();
+			
+			new DoorLevel(world, map, rect);
+		}
+		
+		for(MapObject object : map.getLayers().get("door-hide-object").getObjects().getByType(RectangleMapObject.class)) {
+			Rectangle rect = ((RectangleMapObject) object).getRectangle();
+			
+			new DoorHide(world, map, rect);
 		}
 	}
 }
