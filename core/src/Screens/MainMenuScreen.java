@@ -63,7 +63,7 @@ public class MainMenuScreen implements Screen {
                 this.dispose();
                 World tempWorld = new World(new Vector2(0, -10),true);
                 
-                game.setScreen(new Level_1_1(game, tempWorld, new Player(tempWorld, new Vector2(100,120))));
+                game.setScreen(new Level_1_1(game, tempWorld, new Player(tempWorld, new Vector2(100,120)),"Resources/Levels/Level 1/Level 1-1.tmx"));
             }
         }else {
             game.batch.draw(PlayButtonInactive,ExitX,300, ExitB_WIDTH, ExitB_HEIGHT);

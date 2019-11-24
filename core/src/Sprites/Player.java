@@ -86,7 +86,7 @@ public class Player extends Sprite{
 		
 		//Player with rifle walk
 		for(int i=0;i<4;i++)
-			frames.add(new TextureRegion(getTexture(), i*45, 102, 45, 49));
+			frames.add(new TextureRegion(getTexture(), i*45, 102, 45, 50));
 		playerWalkRifle = new Animation(0.1f, frames);
 		frames.clear();
 		

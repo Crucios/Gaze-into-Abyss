@@ -70,7 +70,7 @@ public class Level_1_1 implements Screen{
 		renderer.setView(gamecam);
 	}
 	
-	public Level_1_1(GazeintoAbyss game, World world,Player player) {
+	public Level_1_1(GazeintoAbyss game, World world,Player player, String filepath_tmx) {
 		this.game = game;
 		
 		//Camera movement
@@ -84,7 +84,7 @@ public class Level_1_1 implements Screen{
 		
 		//Map loading
 		mapLoader = new TmxMapLoader();
-		map = mapLoader.load("Resources/Levels/Level 1/Level 1-1.tmx");
+		map = mapLoader.load(filepath_tmx);
 		renderer = new OrthogonalTiledMapRenderer(map, 1 / GazeintoAbyss.PPM);
 		
 		//First camera position
