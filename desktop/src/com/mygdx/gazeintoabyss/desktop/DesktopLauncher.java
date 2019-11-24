@@ -7,7 +7,6 @@ import com.mygdx.gazeintoabyss.GazeintoAbyss;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.resizable = false;
 		config.height = GazeintoAbyss.HEIGHT;
 		config.width = GazeintoAbyss.WIDTH;
 		new LwjglApplication(new GazeintoAbyss(), config);

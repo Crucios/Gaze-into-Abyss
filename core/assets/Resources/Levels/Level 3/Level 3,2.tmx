@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.3.0" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="200" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="5">
+ <tileset firstgid="1" source="../../World/Dungeon-Door.tsx"/>
+ <layer id="1" name="ground" width="200" height="17">
+  <data encoding="base64" compression="zlib">
+   eAHt0sdSVGEUhdEGCYqoIIoiomLkNTAnBEREUEyYXkPAHFDBCAaCymO6etrVgx5Zd7Bv1Zr8o13fuaVSvhRIgRRIgRRIgRRIgRRIgRRIgRRIgRRIgRRIgRRIgRRIgRRIgRRIgRRIgRRIgRRIgRRIgRRIgRRIgRRIgRRIgf9VoK6hVKpnAw000kQzG9lEC5tpZQtb2UYb7Wyngx3spJNd7KaLPXSzlx72sZ8D9HKQQxRpy2F7jnCUY/RR3ljtvei7s6/2f7Dyvv1ufpwTnOQUpznDWc5xngtcZIBLDDLEMJcZ4QqjXGWMa4wzwXVuMMlNbnGbO9xliiJtuWfPfR7wkEeUN1Z7L/ru7Kv9H6y872M3n2aGWZ7wlGc85wUvecVr3vCWOd7xng/Ms8BHPvGZL3zlG4ss8Z0f/OQXy6ywSpG2rNnzmz/8ZZ3yxmrvRd+dfbX/g5X3/QdX/M9e
+  </data>
+ </layer>
+ <layer id="2" name="background" width="200" height="17">
+  <data encoding="base64" compression="zlib">
+   eAHt2smJK1EMheHqfpG4Pabl2WnVXGnVXGH0n4A48G5vBDJ8KyHQEbqLAudZlhUoUaFGgxYdcvxv3WOvyuwxU8xs37TaTc/9DxgxYcaCFRtS6h57VWaPmWJm+6bVbnZfWfaDPQ444oQzLkipe+xVmT1mipntm1a7ufIGbrjjgSdeeOODlLrHXpXZY6aY2b5ptZucN1CgRIUaDVp0SKl77FWZPWaKme2bVrvpeQMDRkyYsWDFhpS6x16V2WOmmNm+abWb3TffH9jjgCNOOOOClLrHXpXZY6aY2b5ptZsrb+CGOx544oU3Pkipe+xVmT1mipntm1a7yXkDBUpUqNGgRYeUusdeldljppjZvmm1m543MGDEhBkLVmxIqXvsVZk9ZoqZ7ZtWu9n94/sDexxwxAlnXJBS99irMnvMFDPbN612c+UN3HDHA0+88MYHKXWPvSqzx0wxs33Tajc5b6BAiQo1GrTokFL32Ksye8wUM9s3rXbT8wYGjJgwY8GKDSl1j70qs8dMMbN902o3/AUxfrGB2EBsIDYQG4gNxAZiA3+4gV8DjB3P
+  </data>
+ </layer>
+ <layer id="3" name="door" width="200" height="17">
+  <data encoding="base64" compression="zlib">
+   eAHt19cNwlAQBdEHdGFMqMtgQ13OdTmXwtTBzpVOAyPtx6bkLGABC1jAAhawgAUsYAELxCpQn1Jq0KJDjwEjnAWiF5i4gxkLVmzYccBZIHqB7JzSFTluuOOBJ5wFohcouIMX3ihR4YMvnAWiF6i5gwYtOvQYMMJZIHqBiTuYsWDFhh0HnAWiF8gu/B/IccMdDzzhLBC9QMEdvPBGiQoffOEsEL1AzR00aNGhx4ARzgLRC0zcwYwFKzbsOOAsYAELWMACFrCABSxggf8o8AO+4yZJ
+  </data>
+ </layer>
+ <objectgroup id="5" name="door-level-object"/>
+ <objectgroup id="6" name="door-hide-object">
+  <object id="4" x="547" y="71" width="109" height="154"/>
+ </objectgroup>
+ <objectgroup id="7" name="door-area-object"/>
+ <objectgroup id="8" name="chest-object">
+  <object id="3" x="2058" y="174" width="63.5" height="54.5"/>
+ </objectgroup>
+ <objectgroup id="9" name="ground-object">
+  <object id="2" x="0.5" y="224" width="3199.5" height="48.5"/>
+ </objectgroup>
+</map>

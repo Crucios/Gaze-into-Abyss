@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -124,11 +125,13 @@ public class Player extends Sprite{
 			region = (TextureRegion) playerStandPistol.getKeyFrame(stateTimer);
 			setSize((float) 1.6,(float) 1.6);
 			b2body.destroyFixture(b2body.getFixtureList().get(0));
+			b2body.destroyFixture(b2body.getFixtureList().get(0));
 			defineHitBox(40,70);
 			break;
 		case RUNNING_PISTOL:
 			region = (TextureRegion) playerRunPistol.getKeyFrame(stateTimer, true);
 			setSize((float) 1.6,(float) 1.6);
+			b2body.destroyFixture(b2body.getFixtureList().get(0));
 			b2body.destroyFixture(b2body.getFixtureList().get(0));
 			defineHitBox(40,70);
 			break;
@@ -136,11 +139,13 @@ public class Player extends Sprite{
 			region = (TextureRegion) playerWalkPistol.getKeyFrame(stateTimer, true);
 			setSize((float) 1.6,(float) 1.6);
 			b2body.destroyFixture(b2body.getFixtureList().get(0));
+			b2body.destroyFixture(b2body.getFixtureList().get(0));
 			defineHitBox(40,70);
 			break;
 		case SHOOTING_PISTOL:
 			region = (TextureRegion) playerShootPistol.getKeyFrame(stateTimer);
 			setSize((float) 1.6,(float) 1.6);
+			b2body.destroyFixture(b2body.getFixtureList().get(0));
 			b2body.destroyFixture(b2body.getFixtureList().get(0));
 			defineHitBox(40,70);
 			break;
@@ -148,11 +153,13 @@ public class Player extends Sprite{
 			region = (TextureRegion) playerStandRifle.getKeyFrame(stateTimer);
 			setSize((float) 1.6,(float) 1.6);
 			b2body.destroyFixture(b2body.getFixtureList().get(0));
+			b2body.destroyFixture(b2body.getFixtureList().get(0));			
 			defineHitBox(40,70);
 			break;
 		case RUNNING_RIFLE:
 			region = (TextureRegion) playerRunRifle.getKeyFrame(stateTimer, true);
 			setSize((float) 1.6,(float) 1.6);
+			b2body.destroyFixture(b2body.getFixtureList().get(0));
 			b2body.destroyFixture(b2body.getFixtureList().get(0));
 			defineHitBox(40,70);
 			break;
@@ -160,16 +167,22 @@ public class Player extends Sprite{
 			region = (TextureRegion) playerWalkRifle.getKeyFrame(stateTimer, true);
 			setSize((float) 1.6,(float) 1.6);
 			b2body.destroyFixture(b2body.getFixtureList().get(0));
+			b2body.destroyFixture(b2body.getFixtureList().get(0));
 			defineHitBox(40,70);
 			break;
 		case SHOOTING_RIFLE:
 			region = (TextureRegion) playerShootRifle.getKeyFrame(stateTimer);
 			setSize((float) 1.4,(float) 1.4);
 			b2body.destroyFixture(b2body.getFixtureList().get(0));
+			b2body.destroyFixture(b2body.getFixtureList().get(0));
 			defineHitBox(40,60);
 			break;
 			default:
 				region = playerStand;
+				setSize((float) 1.4,(float) 1.4);
+				b2body.destroyFixture(b2body.getFixtureList().get(0));
+				b2body.destroyFixture(b2body.getFixtureList().get(0));
+				defineHitBox(40,60);
 				break;
 		}
 		
@@ -223,7 +236,11 @@ public class Player extends Sprite{
 		
 		fdef.shape = shape;
 		fdef.friction = 1.0f;
+		fdef.filter.categoryBits = 2;
+		fdef.filter.maskBits = 4;
 		b2body.createFixture(fdef);
+		fdef.isSensor = true;
+		b2body.createFixture(fdef).setUserData("body");
 	}
 	
 	public void definePlayer() {

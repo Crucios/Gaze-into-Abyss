@@ -1,7 +1,6 @@
 package Screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -18,6 +17,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
 import Sprites.Player;
+import Tools.WorldContactListener;
 import Tools.WorldCreator;
 
 public class PlayScreen implements Screen{
@@ -69,7 +69,9 @@ public class PlayScreen implements Screen{
 		
 		renderer.setView(gamecam);
 	}
-	
+	public PlayScreen() {
+		
+	}
 	public PlayScreen(GazeintoAbyss game) {
 		atlas = new TextureAtlas("Resources/Player/Player.pack");
 		
@@ -100,6 +102,8 @@ public class PlayScreen implements Screen{
 		
 		//Construct Player
 		player = new Player(world, this, new Vector2(129,100));
+		
+		world.setContactListener(new WorldContactListener());
 	}
 	
 	public TextureAtlas getAtlas() {

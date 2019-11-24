@@ -1,4 +1,4 @@
-package Screens.Level2;
+package Screens.Level3;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -21,7 +21,7 @@ import Screens.PlayScreen;
 import Sprites.Player;
 import Tools.WorldCreator;
 
-public class Level_2_1 extends PlayScreen implements Screen{
+public class Level_3_1 extends PlayScreen implements Screen{
 	private GazeintoAbyss game;
 	
 	//Camera
@@ -48,10 +48,11 @@ public class Level_2_1 extends PlayScreen implements Screen{
 	
 	public void handleInput(float dt) {
 		player.handleinput();
+		
 		//Print Mouse Position
 		if(Gdx.input.isTouched()) {
 			System.out.println("X: " + Gdx.input.getX() + " " + "Y: " + Gdx.input.getY());
-			System.out.println("X Meter: " + Gdx.input.getX() / GazeintoAbyss.PPM + " " + "Y Meter: " + Gdx.input.getY() / GazeintoAbyss.PPM);
+			System.out.print("World Width: " + gamePort.getWorldWidth());
 		}
 	}
 	
@@ -71,7 +72,7 @@ public class Level_2_1 extends PlayScreen implements Screen{
 		renderer.setView(gamecam);
 	}
 	
-	public Level_2_1(GazeintoAbyss game) {
+	public Level_3_1(GazeintoAbyss game) {
 		super();
 		atlas = new TextureAtlas("Resources/Player/Player.pack");
 		
@@ -88,11 +89,11 @@ public class Level_2_1 extends PlayScreen implements Screen{
 		
 		//Map loading
 		mapLoader = new TmxMapLoader();
-		map = mapLoader.load("Resources/Levels/Level 2/Level2.tmx");
+		map = mapLoader.load("Resources/Levels/Level 3/Level 3,1.tmx");
 		renderer = new OrthogonalTiledMapRenderer(map, 1 / GazeintoAbyss.PPM);
 		
 		//First camera position
-		gamecam.position.set((gamePort.getWorldWidth()/2),(gamePort.getWorldHeight()/4),0);
+		gamecam.position.set((gamePort.getWorldWidth()*2),(gamePort.getWorldHeight()/4),0);
 		renderer.setView(gamecam);
 		
 		world = new World(new Vector2(0, -10),true);
@@ -101,7 +102,7 @@ public class Level_2_1 extends PlayScreen implements Screen{
 		new WorldCreator(world,map);
 		
 		//Construct Player
-		player = new Player(world, this, new Vector2(300,100));
+		player = new Player(world, this, new Vector2(1635,100));
 	}
 	
 	public TextureAtlas getAtlas() {
@@ -164,3 +165,4 @@ public class Level_2_1 extends PlayScreen implements Screen{
 	}
 
 }
+

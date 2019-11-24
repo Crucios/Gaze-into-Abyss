@@ -16,11 +16,6 @@
    eAHt10dOI1EUBVB39wLISDR5RWQkMqzI4CQZcFqRsyXbOO2kzx5qVF3vSmf4BnXrTn4uF4kGooFoIBqIBqKBaCAaiAaigWggPQ1Uf+Vyn3zxTY06DZq0SJK8+3c+KFCkRJkKkWw1kLY9jG10wpQfZsxZsGRFkrTdd+jSo8+AISMi2WogbXvY+53L/WWfAw454pgTTkmSNffrbLDJFtvssEskWw2kbQ93NnrPA4888cwLr7yRJGfuz7ngkiuuueGWSLYaSNseqjb6yRff1KjToEmLJMm7f+eDAkVKlKkQyVYDadvD2EYnTPlhxpwFS1YkSdt9hy49+gwYMiKSrQbStoe9P94f7HPAIUccc8IpSbLmfp0NNtlimx12iWSrgbTt4c5G73ngkSeeeeGVN5LkzP05F1xyxTU33BLJVgNp20PVRj/54psadRo0aZEkeffvfFCgSIkyFSLZaiBtexjb6IQpP8yYs2DJiiRpu+/QpUefAUNGRLLVQOwhW/87vjYaiAaigWggGogG/q8G/gFN+4Ip
   </data>
  </layer>
- <layer id="7" name="chest" width="200" height="17">
-  <data encoding="base64" compression="zlib">
-   eAHt0AENAAAAwqD3T20ON4hAYcCAAQMGDBgwYMCAAQMGDBgwYMCAAQMGDBgwYMCAAQMGDBgwYMCAAQMGDBgwYMCAAQMGDBgwYMCAgc+BATUgAAE=
-  </data>
- </layer>
  <objectgroup id="8" name="door-level-object"/>
  <objectgroup id="9" name="door-area-object">
   <object id="4" x="664.667" y="71.3333" width="110.667" height="152"/>
@@ -33,7 +28,6 @@
   <object id="3" x="1770.67" y="174.667" width="64" height="55.3333"/>
  </objectgroup>
  <objectgroup id="12" name="ground-object">
-  <object id="1" x="986" y="-378"/>
   <object id="2" x="0.363636" y="224.364" width="3199.35" height="48"/>
  </objectgroup>
 </map>

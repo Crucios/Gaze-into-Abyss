@@ -9,10 +9,10 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
 import Sprites.Chest;
 import Sprites.DoorArea;
+import Sprites.Ground;
 
 public class WorldCreator {
 	public WorldCreator(World world,TiledMap map) {
@@ -25,14 +25,7 @@ public class WorldCreator {
 		for(MapObject object : map.getLayers().get("ground-object").getObjects().getByType(RectangleMapObject.class)) {
 			Rectangle rect = ((RectangleMapObject) object).getRectangle();
 			
-			bdef.type = BodyDef.BodyType.StaticBody;
-			bdef.position.set((rect.getX() + rect.getWidth()/2) / GazeintoAbyss.PPM,(rect.getY() + rect.getHeight()/2) / GazeintoAbyss.PPM);
-			
-			body = world.createBody(bdef);
-			
-			shape.setAsBox((rect.getWidth()/2) / GazeintoAbyss.PPM, (rect.getHeight()/2) / GazeintoAbyss.PPM);
-			fdef.shape = shape;
-			body.createFixture(fdef);
+			new Ground(world, map, rect);
 		}
 		
 		//Set for chest-object
