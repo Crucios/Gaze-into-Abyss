@@ -236,8 +236,6 @@ public class Player extends Sprite{
 		
 		fdef.shape = shape;
 		fdef.friction = 1.0f;
-		fdef.filter.categoryBits = 2;
-		fdef.filter.maskBits = 4;
 		b2body.createFixture(fdef);
 		fdef.isSensor = true;
 		b2body.createFixture(fdef).setUserData("body");
