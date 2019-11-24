@@ -1,6 +1,9 @@
 package Screens;
 import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
+import Screens.Level2.*;
+import Screens.Level3.*;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;

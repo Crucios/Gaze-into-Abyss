@@ -21,7 +21,7 @@ import Screens.PlayScreen;
 import Sprites.Player;
 import Tools.WorldCreator;
 
-public class Level_2_1 extends PlayScreen implements Screen{
+public class Level_2_2 extends PlayScreen implements Screen{
 	private GazeintoAbyss game;
 	
 	//Camera
@@ -82,7 +82,7 @@ public class Level_2_1 extends PlayScreen implements Screen{
 		renderer.setView(gamecam);
 	}
 	
-	public Level_2_1(GazeintoAbyss game) {
+	public Level_2_2(GazeintoAbyss game) {
 		super();
 		atlas = new TextureAtlas("Resources/Player/Player.pack");
 		
@@ -99,7 +99,7 @@ public class Level_2_1 extends PlayScreen implements Screen{
 		
 		//Map loading
 		mapLoader = new TmxMapLoader();
-		map = mapLoader.load("Resources/Levels/Level 2/Level2.tmx");
+		map = mapLoader.load("Resources/Levels/Level 2/Level 2,2.tmx");
 		renderer = new OrthogonalTiledMapRenderer(map, 1 / GazeintoAbyss.PPM);
 		
 		//First camera position

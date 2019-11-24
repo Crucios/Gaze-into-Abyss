@@ -1,4 +1,4 @@
-package Screens.Level2;
+package Screens.Level3;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -21,7 +21,7 @@ import Screens.PlayScreen;
 import Sprites.Player;
 import Tools.WorldCreator;
 
-public class Level_2_1 extends PlayScreen implements Screen{
+public class Level_3_1 extends PlayScreen implements Screen{
 	private GazeintoAbyss game;
 	
 	//Camera
@@ -82,7 +82,7 @@ public class Level_2_1 extends PlayScreen implements Screen{
 		renderer.setView(gamecam);
 	}
 	
-	public Level_2_1(GazeintoAbyss game) {
+	public Level_3_1(GazeintoAbyss game) {
 		super();
 		atlas = new TextureAtlas("Resources/Player/Player.pack");
 		
@@ -99,7 +99,7 @@ public class Level_2_1 extends PlayScreen implements Screen{
 		
 		//Map loading
 		mapLoader = new TmxMapLoader();
-		map = mapLoader.load("Resources/Levels/Level 2/Level2.tmx");
+		map = mapLoader.load("Resources/Levels/Level 3/Level 3,1.tmx");
 		renderer = new OrthogonalTiledMapRenderer(map, 1 / GazeintoAbyss.PPM);
 		
 		//First camera position
@@ -112,7 +112,7 @@ public class Level_2_1 extends PlayScreen implements Screen{
 		new WorldCreator(world,map);
 		
 		//Construct Player
-		player = new Player(world, this, new Vector2(129,100));
+		player = new Player(world, this, new Vector2(1400,100));
 	}
 	
 	public TextureAtlas getAtlas() {
@@ -175,3 +175,4 @@ public class Level_2_1 extends PlayScreen implements Screen{
 	}
 
 }
+

@@ -80,7 +80,9 @@ public class PlayScreen implements Screen{
 		
 		renderer.setView(gamecam);
 	}
-	
+	public PlayScreen() {
+		
+	}
 	public PlayScreen(GazeintoAbyss game) {
 		atlas = new TextureAtlas("Resources/Player/Player.pack");
 		
