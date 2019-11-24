@@ -1,32 +1,229 @@
 package Sprites;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
 import Screens.PlayScreen;
 
 public class Player extends Sprite{
+	public enum State{RUNNING_PISTOL, RUNNING_RIFLE, WALKING_PISTOL, WALKING_RIFLE, STANDING_PISTOL, STANDING_RIFLE, SHOOTING_RIFLE, SHOOTING_PISTOL};
+	public State currentState;
+	public State previousState;
 	public World world;
 	public Body b2body;
 	private TextureRegion playerStand;
+	private Animation playerRunPistol;
+	private Animation playerRunRifle;
+	private Animation playerWalkPistol;
+	private Animation playerWalkRifle;
+	private Animation playerStandPistol;
+	private Animation playerStandRifle;
+	private Animation playerShootPistol;
+	private Animation playerShootRifle;
+	private float stateTimer;
+	private boolean walking;
+	private boolean running;
+	private boolean shooting;
+	private boolean toRight;
+	private boolean pistol;
+	private boolean rifle;
 	
 	private Vector2 position;
 	
 	public Player(World world, PlayScreen screen,Vector2 position) {
 		super(screen.getAtlas().findRegion("sprite-player"));
 		this.world = world;
+		
+		currentState = State.STANDING_PISTOL;
+		previousState = State.STANDING_PISTOL;
+		stateTimer = 0;
+		toRight = true;
+		pistol = true;
+		rifle = false;
+		shooting = false;
+		running = false;
+		walking = false;
+		
+		//Player with pistol walk
+		Array<TextureRegion> frames = new Array<TextureRegion>();
+		for(int i=0;i<4;i++) {
+			frames.add(new TextureRegion(getTexture(), i*45, 52 ,45, 50));
+		}
+		playerWalkPistol = new Animation(0.1f, frames);
+		frames.clear();
+		
+		//Player with pistol run
+		for(int i=0;i<6;i++) {
+			frames.add(new TextureRegion(getTexture(), i*45, 254, 45, 52));
+		}
+		playerRunPistol = new Animation(0.1f, frames);
+		frames.clear();
+		
+		//Player with pistol stand
+		frames.add(new TextureRegion(getTexture(), 315, 253, 45, 52));
+		playerStandPistol = new Animation(0.1f, frames);
+		frames.clear();
+		
+		//Player shoot with pistol
+		frames.add(new TextureRegion(getTexture(), 275, 253, 45, 52));
+		playerShootPistol = new Animation(0.1f, frames);
+		frames.clear();
+		
+		//Player with rifle walk
+		for(int i=0;i<4;i++)
+			frames.add(new TextureRegion(getTexture(), i*45, 102, 45, 52));
+		playerWalkRifle = new Animation(0.1f, frames);
+		frames.clear();
+		
+		//Player with rifle run
+		for(int i=0;i<6;i++) 
+			frames.add(new TextureRegion(getTexture(), i*45, 3*52, 45, 50));
+		playerRunRifle = new Animation(0.1f, frames);
+		frames.clear();
+		
+		//Player with rifle stand
+		frames.add(new TextureRegion(getTexture(), 4*45, 0, 45, 52));
+		playerStandRifle = new Animation(0.1f, frames);
+		frames.clear();
+		
+		//Player shoot with rifle
+		frames.add(new TextureRegion(getTexture(), 7*45, 160, 45, 44));
+		playerShootRifle = new Animation(0.1f, frames);
+		frames.clear();
+		
 		this.position = position;
 		definePlayer();
-		playerStand = new TextureRegion(getTexture(), 0,0,16,16);
-		setBounds(0,0,16,16);
+		playerStand = new TextureRegion(getTexture(), 0,0,45,52);
+		setBounds(0,0,45 / GazeintoAbyss.PPM,52 / GazeintoAbyss.PPM);
+		
 		setRegion(playerStand);
+	}
+	
+	public void update(float dt) {
+		setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight() / 2);
+		setRegion(getFrame(dt));
+	}
+	
+	public TextureRegion getFrame(float dt) {
+		currentState = getState();
+		
+		TextureRegion region;
+		switch(currentState) {
+		case STANDING_PISTOL:
+			region = (TextureRegion) playerStandPistol.getKeyFrame(stateTimer);
+			setSize((float) 1.6,(float) 1.6);
+			b2body.destroyFixture(b2body.getFixtureList().get(0));
+			defineHitBox(40,70);
+			break;
+		case RUNNING_PISTOL:
+			region = (TextureRegion) playerRunPistol.getKeyFrame(stateTimer, true);
+			setSize((float) 1.6,(float) 1.6);
+			b2body.destroyFixture(b2body.getFixtureList().get(0));
+			defineHitBox(40,70);
+			break;
+		case WALKING_PISTOL:
+			region = (TextureRegion) playerWalkPistol.getKeyFrame(stateTimer, true);
+			setSize((float) 1.6,(float) 1.6);
+			b2body.destroyFixture(b2body.getFixtureList().get(0));
+			defineHitBox(40,70);
+			break;
+		case SHOOTING_PISTOL:
+			region = (TextureRegion) playerShootPistol.getKeyFrame(stateTimer);
+			setSize((float) 1.6,(float) 1.6);
+			b2body.destroyFixture(b2body.getFixtureList().get(0));
+			defineHitBox(40,70);
+			break;
+		case STANDING_RIFLE:
+			region = (TextureRegion) playerStandRifle.getKeyFrame(stateTimer);
+			setSize((float) 1.6,(float) 1.6);
+			b2body.destroyFixture(b2body.getFixtureList().get(0));
+			defineHitBox(40,70);
+			break;
+		case RUNNING_RIFLE:
+			region = (TextureRegion) playerRunRifle.getKeyFrame(stateTimer, true);
+			setSize((float) 1.6,(float) 1.6);
+			b2body.destroyFixture(b2body.getFixtureList().get(0));
+			defineHitBox(40,70);
+			break;
+		case WALKING_RIFLE:
+			region = (TextureRegion) playerWalkRifle.getKeyFrame(stateTimer, true);
+			setSize((float) 1.6,(float) 1.6);
+			b2body.destroyFixture(b2body.getFixtureList().get(0));
+			defineHitBox(40,70);
+			break;
+		case SHOOTING_RIFLE:
+			region = (TextureRegion) playerShootRifle.getKeyFrame(stateTimer);
+			setSize((float) 1.4,(float) 1.4);
+			b2body.destroyFixture(b2body.getFixtureList().get(0));
+			defineHitBox(40,60);
+			break;
+			default:
+				region = playerStand;
+				break;
+		}
+		
+		//
+		if((Gdx.input.isKeyPressed(Input.Keys.A) || !toRight) && !region.isFlipX()) {
+			region.flip(true, false);
+			toRight = false;
+		}
+		else if((Gdx.input.isKeyPressed(Input.Keys.D) || toRight) && region.isFlipX()) {
+			region.flip(true, false);
+			toRight = true;
+		}
+		
+		stateTimer = currentState == previousState ? stateTimer + dt : 0;
+		previousState = currentState;
+		return region;
+	}
+	
+	public State getState() {
+		if(pistol) {
+			if((Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && Gdx.input.isKeyPressed(Input.Keys.A)) || 
+					(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && Gdx.input.isKeyPressed(Input.Keys.D)))
+				return State.RUNNING_PISTOL;
+			else if(Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.D))
+				return State.WALKING_PISTOL;
+			else if(Gdx.input.isKeyPressed(Input.Keys.SPACE))
+				return State.SHOOTING_PISTOL;
+			else
+				return State.STANDING_PISTOL;
+		}
+		else if(rifle) {
+			if((Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && Gdx.input.isKeyPressed(Input.Keys.A)) || 
+					(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && Gdx.input.isKeyPressed(Input.Keys.D)))
+				return State.RUNNING_RIFLE;
+			else if(Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.D))
+				return State.WALKING_RIFLE;
+			else if(Gdx.input.isKeyPressed(Input.Keys.SPACE))
+				return State.SHOOTING_RIFLE;
+			else
+				return State.STANDING_RIFLE;
+		}
+		else {
+			return State.STANDING_PISTOL;
+		}
+	}
+	
+	public void defineHitBox(int x, int y) {
+		FixtureDef fdef = new FixtureDef();
+		PolygonShape shape = new PolygonShape();
+		shape.setAsBox(x / GazeintoAbyss.PPM, y / GazeintoAbyss.PPM);
+		
+		fdef.shape = shape;
+		fdef.friction = 1.0f;
+		b2body.createFixture(fdef);
 	}
 	
 	public void definePlayer() {
@@ -35,12 +232,18 @@ public class Player extends Sprite{
 		bdef.type = BodyDef.BodyType.DynamicBody;
 		b2body = world.createBody(bdef);
 		
-		FixtureDef fdef = new FixtureDef();
-		CircleShape shape = new CircleShape();
-		shape.setRadius(70 / GazeintoAbyss.PPM);
+		defineHitBox(40,70);
+	}
+	
+	public void handleinput() {
+		//If D Key Pressed
+		if(Gdx.input.isKeyPressed(Input.Keys.D) && b2body.getLinearVelocity().x <= 2) {
+			b2body.applyLinearImpulse(new Vector2(0.5f,0), b2body.getWorldCenter(), true);
+		}
+		//If A Key Pressed
+		if(Gdx.input.isKeyPressed(Input.Keys.A) && b2body.getLinearVelocity().x >= -2) {
+			b2body.applyLinearImpulse(new Vector2(-0.5f,0), b2body.getWorldCenter(), true);
+		}
 		
-		fdef.shape = shape;
-		fdef.friction = 1.0f;
-		b2body.createFixture(fdef);
 	}
 }
