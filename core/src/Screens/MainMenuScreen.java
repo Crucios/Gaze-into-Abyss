@@ -1,15 +1,14 @@
 package Screens;
-import com.mygdx.gazeintoabyss.GazeintoAbyss;
-
-import Screens.Level2.*;
-import Screens.Level3.*;
-
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.gazeintoabyss.GazeintoAbyss;
+
+import Screens.Level_1.Level_1_1;
+import Sprites.Player;
 
 public class MainMenuScreen implements Screen {
 
@@ -62,7 +61,9 @@ public class MainMenuScreen implements Screen {
             game.batch.draw(PlayButtonActive,ExitX,300, ExitB_WIDTH, ExitB_HEIGHT);
             if (Gdx.input.isTouched()) {
                 this.dispose();
-                game.setScreen(new Level_2_1(game));
+                World tempWorld = new World(new Vector2(0, -10),true);
+                
+                game.setScreen(new Level_1_1(game, tempWorld, new Player(tempWorld, new Vector2(100,120))));
             }
         }else {
             game.batch.draw(PlayButtonInactive,ExitX,300, ExitB_WIDTH, ExitB_HEIGHT);
