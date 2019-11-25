@@ -259,7 +259,7 @@ public class Player extends Sprite{
 			b2body.applyLinearImpulse(new Vector2(0.5f,0), b2body.getWorldCenter(), true);
 		}
 		//If A Key Pressed
-		if(Gdx.input.isKeyPressed(Input.Keys.A) && b2body.getLinearVelocity().x >= -2) {
+		else if(Gdx.input.isKeyPressed(Input.Keys.A) && b2body.getLinearVelocity().x >= -2) {
 			b2body.applyLinearImpulse(new Vector2(-0.5f,0), b2body.getWorldCenter(), true);
 		}
 		//If D and Shift left Key Pressed
@@ -267,7 +267,7 @@ public class Player extends Sprite{
 			b2body.applyLinearImpulse(new Vector2(1f,0), b2body.getWorldCenter(), true);
 		}
 		//If A and Shift left Key Pressed
-		if(Gdx.input.isKeyPressed(Input.Keys.A) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x >= -3) {
+		else if(Gdx.input.isKeyPressed(Input.Keys.A) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x >= -3) {
 			b2body.applyLinearImpulse(new Vector2(-1f,0), b2body.getWorldCenter(), true);
 		}		
 	}

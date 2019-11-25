@@ -37,23 +37,23 @@ public class WorldCreator {
 			new Chest(world, map, rect);
 		}
 		
-		//Set for door-area-object
-		for(MapObject object : map.getLayers().get("door-area-object").getObjects().getByType(RectangleMapObject.class)) {
-			Rectangle rect = ((RectangleMapObject) object).getRectangle();
-			
-			new DoorArea(world, map, rect);
-		}
+//		//Set for door-area-object
+//		for(MapObject object : map.getLayers().get("door-area-object").getObjects().getByType(RectangleMapObject.class)) {
+//			Rectangle rect = ((RectangleMapObject) object).getRectangle();
+//			
+//			new DoorArea(world, map, rect);
+//		}
 		
-		for(MapObject object : map.getLayers().get("door-level-object").getObjects().getByType(RectangleMapObject.class)) {
-			Rectangle rect = ((RectangleMapObject) object).getRectangle();
-			
-			new DoorLevel(world, map, rect);
-		}
-		
-		for(MapObject object : map.getLayers().get("door-hide-object").getObjects().getByType(RectangleMapObject.class)) {
-			Rectangle rect = ((RectangleMapObject) object).getRectangle();
-			
-			new DoorHide(world, map, rect);
-		}
+//		for(MapObject object : map.getLayers().get("door-level-object").getObjects().getByType(RectangleMapObject.class)) {
+//			Rectangle rect = ((RectangleMapObject) object).getRectangle();
+//			
+//			new DoorLevel(world, map, rect);
+//		}
+//		
+//		for(MapObject object : map.getLayers().get("door-hide-object").getObjects().getByType(RectangleMapObject.class)) {
+//			Rectangle rect = ((RectangleMapObject) object).getRectangle();
+//			
+//			new DoorHide(world, map, rect);
+//		}
 	}
 }

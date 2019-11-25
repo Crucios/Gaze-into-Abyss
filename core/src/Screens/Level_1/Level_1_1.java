@@ -21,29 +21,29 @@ import Tools.WorldContactListener;
 import Tools.WorldCreator;
 
 public class Level_1_1 implements Screen{
-	private GazeintoAbyss game;
+	protected GazeintoAbyss game;
 	
 	//Camera
-	private OrthographicCamera gamecam;
-	private Viewport gamePort;
+	protected OrthographicCamera gamecam;
+	protected Viewport gamePort;
 	
 	//HUD
 	//private Hud hud;
 	
 	//Tiled map variables
-	private TmxMapLoader mapLoader;
-	private TiledMap map;
-	private OrthogonalTiledMapRenderer renderer;
+	protected TmxMapLoader mapLoader;
+	protected TiledMap map;
+	protected OrthogonalTiledMapRenderer renderer;
 	
 	Texture texture;
 	
 	//Box2D
-	private World world;
-	private Box2DDebugRenderer b2dr;
+	protected World world;
+	protected Box2DDebugRenderer b2dr;
 	
-	private Player player;
+	protected Player player;
 	
-	private TextureAtlas atlas;
+	protected TextureAtlas atlas;
 	
 	public void handleInput(float dt) {
 		player.handleinput();
@@ -102,10 +102,6 @@ public class Level_1_1 implements Screen{
 		world.setContactListener(new WorldContactListener());
 	}
 	
-	public TextureAtlas getAtlas() {
-		return atlas;
-	}
-	
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
@@ -120,7 +116,7 @@ public class Level_1_1 implements Screen{
 		
 		renderer.render();
 		
-		//b2dr.render(world, gamecam.combined);
+		b2dr.render(world, gamecam.combined);
 		
 		game.batch.setProjectionMatrix(gamecam.combined);
 		game.batch.begin();
