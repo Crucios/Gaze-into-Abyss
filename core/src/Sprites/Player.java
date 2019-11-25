@@ -40,6 +40,7 @@ public class Player extends Sprite{
 	private boolean toRight;
 	private boolean pistol;
 	private boolean rifle;
+	private boolean interact;
 	
 	private Vector2 position;
 	
@@ -58,6 +59,7 @@ public class Player extends Sprite{
 		shooting = false;
 		running = false;
 		walking = false;
+		interact = false;
 		
 		//Player with pistol walk
 		Array<TextureRegion> frames = new Array<TextureRegion>();
@@ -113,7 +115,9 @@ public class Player extends Sprite{
 		
 		setRegion(playerStand);
 	}
-	
+	public boolean getInteract() {
+		return interact;
+	}
 	public void update(float dt) {
 		setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight() / 2);
 		setRegion(getFrame(dt));
@@ -261,6 +265,15 @@ public class Player extends Sprite{
 		//If A Key Pressed
 		else if(Gdx.input.isKeyPressed(Input.Keys.A) && b2body.getLinearVelocity().x >= -2) {
 			b2body.applyLinearImpulse(new Vector2(-0.5f,0), b2body.getWorldCenter(), true);
+		}
+		//If E Key Pressed
+		else if(Gdx.input.isKeyPressed(Input.Keys.E) && b2body.getLinearVelocity().x >= -2) {
+			if(interact) {			
+				interact = false;
+			}
+			else {
+				interact = interact;
+			}
 		}
 		//If D and Shift left Key Pressed
 		if(Gdx.input.isKeyPressed(Input.Keys.D) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x <= 3) {

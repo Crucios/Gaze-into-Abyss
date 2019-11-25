@@ -68,6 +68,7 @@ public class Level_1_1 implements Screen{
 		gamecam.update();
 		
 		renderer.setView(gamecam);
+		
 	}
 	
 	public Level_1_1(GazeintoAbyss game, World world,Player player, String filepath_tmx) {
@@ -94,7 +95,7 @@ public class Level_1_1 implements Screen{
 		this.world = world;
 		b2dr = new Box2DDebugRenderer();
 		
-		new WorldCreator(world,map);
+		new WorldCreator(game,world,map);
 		
 		//Construct Player
 		this.player = player;

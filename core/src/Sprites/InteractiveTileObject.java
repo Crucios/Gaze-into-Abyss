@@ -1,6 +1,8 @@
 package Sprites;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.math.Rectangle;
@@ -19,11 +21,13 @@ public abstract class InteractiveTileObject {
 	protected Rectangle bounds;
 	protected Body body;
 	protected Fixture fixture;
+	protected MapObject object;
 	
-	public InteractiveTileObject(World world, TiledMap map, Rectangle bounds, boolean isSensor) {
+	public InteractiveTileObject(World world, TiledMap map, MapObject object, boolean isSensor) {
 		this.world = world;
 		this.map = map;
-		this.bounds = bounds;
+		this.bounds = ((RectangleMapObject) object).getRectangle();;
+		this.object = object;
 		
 		BodyDef bdef = new BodyDef();
 		FixtureDef fdef = new FixtureDef();
