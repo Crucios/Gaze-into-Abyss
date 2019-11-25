@@ -262,18 +262,9 @@ public class Player extends Sprite{
 		if(Gdx.input.isKeyPressed(Input.Keys.D) && b2body.getLinearVelocity().x <= 2) {
 			b2body.applyLinearImpulse(new Vector2(0.5f,0), b2body.getWorldCenter(), true);
 		}
-		//If A Key Pressed
+		//If A Key Presseda
 		else if(Gdx.input.isKeyPressed(Input.Keys.A) && b2body.getLinearVelocity().x >= -2) {
 			b2body.applyLinearImpulse(new Vector2(-0.5f,0), b2body.getWorldCenter(), true);
-		}
-		//If E Key Pressed
-		else if(Gdx.input.isKeyPressed(Input.Keys.E) && b2body.getLinearVelocity().x >= -2) {
-			if(interact) {			
-				interact = false;
-			}
-			else {
-				interact = interact;
-			}
 		}
 		//If D and Shift left Key Pressed
 		if(Gdx.input.isKeyPressed(Input.Keys.D) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x <= 3) {

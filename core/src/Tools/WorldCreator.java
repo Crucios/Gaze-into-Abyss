@@ -31,23 +31,23 @@ public class WorldCreator {
 		}
 		
 		//Set for chest-object
-		for(MapObject object : map.getLayers().get("chest-object").getObjects().getByType(RectangleMapObject.class)) {		
-			new Chest(world, map, object);
+		for(MapObject object : map.getLayers().get("chest-object").getObjects().getByType(RectangleMapObject.class)) {
+			
+			new Chest(game, world, map, object);
 		}
 		
 		//Set for door-area-object
 		for(MapObject object : map.getLayers().get("door-area-object").getObjects().getByType(RectangleMapObject.class)) {
-			DoorArea doorA;
-			doorA = new DoorArea(game,world, map, object);
+			new DoorArea(game,world, map, object);
 		}
 		
 		for(MapObject object : map.getLayers().get("door-level-object").getObjects().getByType(RectangleMapObject.class)) {
 
-			new DoorLevel(world, map, object);
+			new DoorLevel(game, world, map, object);
 		}
 		
 		for(MapObject object : map.getLayers().get("door-hide-object").getObjects().getByType(RectangleMapObject.class)) {
-			new DoorHide(world, map, object);
+			new DoorHide(game, world, map, object);
 		}
 	}
 }
