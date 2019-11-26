@@ -18,6 +18,7 @@ import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
 import Sprites.Player;
 import Tools.DoorAreaCreator;
+import Tools.DoorHideCreator;
 import Tools.WorldContactListener;
 import Tools.WorldCreator;
 
@@ -101,16 +102,29 @@ public class Level_1_1 implements Screen{
 		this.world = world;
 		b2dr = new Box2DDebugRenderer();
 		
-		//Generate Wall and Ground
-		new WorldCreator(world, map);
+		generateLevel();
 		
-		//Generate 
-		new DoorAreaCreator(game, world, map, player, gamecam, gamePort, "door-area-object_area1", new Vector2(100,129));
-		
+		world.setContactListener(new WorldContactListener());
+	}
+	
+	public void generateLevel() {
 		this.maxRight = gamePort.getWorldWidth()/2 - gamePort.getWorldWidth()/3 + 12.55;
 		this.maxLeft = gamePort.getWorldWidth()/2;
 		
-		world.setContactListener(new WorldContactListener());
+		//Generate Wall and Ground
+		new WorldCreator(world, map);
+				
+		//Generate door-area
+		double newMaxRight = gamePort.getWorldWidth()*2 + 1;
+		Vector2 newCamera = new Vector2((gamePort.getWorldWidth()/2),(gamePort.getWorldHeight()/4)); 
+		new DoorAreaCreator(game, world, map, player, gamecam, newCamera, "door-area-object_area1", new Vector2(100,129), this, newMaxRight);
+
+		newMaxRight = gamePort.getWorldWidth()/2 - gamePort.getWorldWidth()/3 + 12.55;
+		newCamera = new Vector2((gamePort.getWorldWidth()/2),(gamePort.getWorldHeight() + 0.75f)); 
+		new DoorAreaCreator(game, world, map, player, gamecam, newCamera, "door-area-object_area2", new Vector2(1400,520), this, newMaxRight);
+		
+		//Generate door-hide
+		new DoorHideCreator(game, world, map, player, "door-hide-object_area2");
 	}
 	
 	@Override
@@ -166,14 +180,6 @@ public class Level_1_1 implements Screen{
 		world.dispose();
 		b2dr.dispose();
 		//hud.dispose();
-	}
-
-	public double getMaxLeft() {
-		return maxLeft;
-	}
-
-	public void setMaxLeft(double maxLeft) {
-		this.maxLeft = maxLeft;
 	}
 
 	public double getMaxRight() {

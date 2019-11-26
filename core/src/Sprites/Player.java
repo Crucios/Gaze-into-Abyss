@@ -42,8 +42,11 @@ public class Player extends Sprite{
 	private boolean rifle;
 	private boolean interact;
 	private boolean setToTeleport;
+	private boolean isHiding;
+	private boolean hidden;
 	
-	private Vector2 position;
+	private Vector2 position;	//Origin Position
+	private Vector2 nowPosition;
 	
 	public Player(World world, Vector2 position) {
 		super(new AtlasRegion(new TextureAtlas("Resources/Player/Player.pack").findRegion("sprite-player")));
@@ -62,6 +65,8 @@ public class Player extends Sprite{
 		walking = false;
 		interact = false;
 		setToTeleport = false;
+		isHiding = false;
+		hidden = false;
 		
 		generateAnimation();
 		
@@ -131,7 +136,15 @@ public class Player extends Sprite{
 			setToTeleport = false;
 			definePlayer(40, 70);
 		}
-		else {
+		else if(isHiding && !hidden) {
+			world.destroyBody(b2body);
+			hidden = true;
+		}
+		else if(!isHiding && hidden) {
+			definePlayer(40,70);
+			hidden = false;
+		}
+		else if(!isHiding && !setToTeleport){
 			setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight() / 2);
 			setRegion(getFrame(dt));
 		}
@@ -288,14 +301,27 @@ public class Player extends Sprite{
 		else if(Gdx.input.isKeyPressed(Input.Keys.A) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x >= -3) {
 			b2body.applyLinearImpulse(new Vector2(-1f,0), b2body.getWorldCenter(), true);
 		}
+		
 		if(Gdx.input.isKeyPressed(Input.Keys.Q) && !pistol) {
 			pistol = true;
 			rifle = false;
 		}
-		else if(Gdx.input.isKeyPressed(Input.Keys.E) && !rifle) {
+		else if(Gdx.input.isKeyPressed(Input.Keys.R) && !rifle) {
 			rifle = true;
 			pistol = false;
 		}
+		
+		if(Gdx.input.isKeyJustPressed(Input.Keys.E) && isHiding) {
+			isHiding = false;
+		}
+	}
+	
+	public boolean getHiding() {
+		return isHiding;
+	}
+	
+	public void setHiding(boolean isHiding) {
+		this.isHiding = isHiding;
 	}
 	
 	public void setPosition(Vector2 positions) {

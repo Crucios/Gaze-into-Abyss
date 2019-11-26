@@ -10,20 +10,26 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
+import Screens.Level_1.Level_1_1;
+
 public class DoorArea extends InteractiveTileObject{
 	protected GazeintoAbyss game;
 	protected Player player;
 	protected OrthographicCamera gamecam;
-	protected Viewport gamePort;
+	protected Vector2 newCameraPosition;
 	protected Vector2 newPosition;
+	protected Level_1_1 screen;
+	protected double newMaxRight;
 	
-	public DoorArea(GazeintoAbyss game,World world, TiledMap map,MapObject object, Player player, OrthographicCamera gamecam, Viewport gamePort, Vector2 newPosition) {
+	public DoorArea(GazeintoAbyss game,World world, TiledMap map,MapObject object, Player player, OrthographicCamera gamecam, Vector2 newCameraPosition, Vector2 newPosition, Level_1_1 level, double newMaxRight) {
 		super(world, map , object, true);
 		this.game = game;
 		this.player = player;
 		this.gamecam = gamecam;
-		this.gamePort = gamePort;
+		this.newCameraPosition = newCameraPosition;
 		this.newPosition = newPosition;
+		this.screen = level;
+		this.newMaxRight = newMaxRight;
 		fixture.setUserData(this);
 	}
 
@@ -31,9 +37,8 @@ public class DoorArea extends InteractiveTileObject{
 	public void onHit() {
 		if(Gdx.input.isKeyJustPressed(Input.Keys.E)) {
 			player.setPosition(newPosition);
-			gamecam.position.set((gamePort.getWorldWidth()/2),(gamePort.getWorldHeight()/4),0);
+			gamecam.position.set(newCameraPosition.x, newCameraPosition.y, 0);
+			screen.setMaxRight(newMaxRight);
 		}
-		
-		
 	}
 }

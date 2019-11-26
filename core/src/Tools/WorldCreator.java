@@ -35,17 +35,11 @@ public class WorldCreator {
 			new Ground(world, map, object);
 		}
 		
-		//Set for chest-object
-		for(MapObject object : map.getLayers().get("chest-object_area1").getObjects().getByType(RectangleMapObject.class)) {
-			
-			new Chest(game, world, map, object);
-		}
-		
-		//Set for chest-object
-		for(MapObject object : map.getLayers().get("chest-object_area2").getObjects().getByType(RectangleMapObject.class)) {
-			
-			new Chest(game, world, map, object);
-		}		
+//		//Set for chest-object
+//		for(MapObject object : map.getLayers().get("chest-object_area1").getObjects().getByType(RectangleMapObject.class)) {
+//			
+//			new Chest(game, world, map, object);
+//		}
 		
 
 		
@@ -54,8 +48,6 @@ public class WorldCreator {
 //			new DoorLevel(game, world, map, object);
 //		}
 //		
-//		for(MapObject object : map.getLayers().get("door-hide-object").getObjects().getByType(RectangleMapObject.class)) {
-//			new DoorHide(game, world, map, object);
-//		}
+
 	}
 }
