@@ -19,7 +19,7 @@ import com.mygdx.gazeintoabyss.GazeintoAbyss;
 import Screens.Level_1.Level_1_1;
 
 public class Player extends Sprite{
-	public enum State{RUNNING_PISTOL, RUNNING_RIFLE, WALKING_PISTOL, WALKING_RIFLE, STANDING_PISTOL, STANDING_RIFLE, SHOOTING_RIFLE, SHOOTING_PISTOL};
+	public enum State{RUNNING_PISTOL, RUNNING_RIFLE, WALKING_PISTOL, WALKING_RIFLE, STANDING_PISTOL, STANDING_RIFLE, SHOOTING_RIFLE, SHOOTING_PISTOL, HIDDING};
 	public State currentState;
 	public State previousState;
 	public World world;
@@ -33,6 +33,7 @@ public class Player extends Sprite{
 	private Animation playerStandRifle;
 	private Animation playerShootPistol;
 	private Animation playerShootRifle;
+	private Animation playerHidding;
 	private float stateTimer;
 	private boolean walking;
 	private boolean running;
@@ -46,7 +47,6 @@ public class Player extends Sprite{
 	private boolean hidden;
 	
 	private Vector2 position;	//Origin Position
-	private Vector2 nowPosition;
 	
 	public Player(World world, Vector2 position) {
 		super(new AtlasRegion(new TextureAtlas("Resources/Player/Player.pack").findRegion("sprite-player")));
@@ -125,6 +125,10 @@ public class Player extends Sprite{
 		playerShootRifle = new Animation(0.1f, frames);
 		frames.clear();
 		
+		//Player Hiding (Blank)
+		frames.add(new TextureRegion(getTexture(), 8*45 , 0, 45, 42));
+		playerHidding = new Animation(0.1f, frames);
+		frames.clear();
 		
 	}
 	public boolean getInteract() {
@@ -139,12 +143,13 @@ public class Player extends Sprite{
 		else if(isHiding && !hidden) {
 			world.destroyBody(b2body);
 			hidden = true;
+			setRegion(getFrame(dt));
 		}
 		else if(!isHiding && hidden) {
 			definePlayer(40,70);
 			hidden = false;
 		}
-		else if(!isHiding && !setToTeleport){
+		else if(!isHiding && !setToTeleport && !hidden){
 			setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight() / 2);
 			setRegion(getFrame(dt));
 		}
@@ -210,6 +215,9 @@ public class Player extends Sprite{
 			b2body.destroyFixture(b2body.getFixtureList().get(0));
 			b2body.destroyFixture(b2body.getFixtureList().get(0));
 			defineHitBox(40,60);
+		case HIDDING:
+			region = (TextureRegion) playerHidding.getKeyFrame(stateTimer);
+			setSize((float) 1.4,(float) 1.4);
 			break;
 			default:
 				region = playerStand;
@@ -236,6 +244,8 @@ public class Player extends Sprite{
 	}
 	
 	public State getState() {
+		if(isHiding)
+			return State.HIDDING;
 		if(pistol) {
 			if((Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && Gdx.input.isKeyPressed(Input.Keys.A)) || 
 					(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && Gdx.input.isKeyPressed(Input.Keys.D)))
@@ -320,8 +330,9 @@ public class Player extends Sprite{
 		return isHiding;
 	}
 	
-	public void setHiding(boolean isHiding) {
+	public void setHiding(boolean isHiding, Vector2 hiddingPosition) {
 		this.isHiding = isHiding;
+		this.position = hiddingPosition;
 	}
 	
 	public void setPosition(Vector2 positions) {

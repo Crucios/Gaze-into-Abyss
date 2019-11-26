@@ -124,7 +124,7 @@ public class Level_1_1 implements Screen{
 		new DoorAreaCreator(game, world, map, player, gamecam, newCamera, "door-area-object_area2", new Vector2(1400,520), this, newMaxRight);
 		
 		//Generate door-hide
-		new DoorHideCreator(game, world, map, player, "door-hide-object_area2");
+		new DoorHideCreator(game, world, map, player, "door-hide-object_area2", new Vector2(1225,129));
 	}
 	
 	@Override
