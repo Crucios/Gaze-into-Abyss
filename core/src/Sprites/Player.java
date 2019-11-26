@@ -41,6 +41,7 @@ public class Player extends Sprite{
 	private boolean pistol;
 	private boolean rifle;
 	private boolean interact;
+	private boolean setToTeleport;
 	
 	private Vector2 position;
 	
@@ -60,7 +61,18 @@ public class Player extends Sprite{
 		running = false;
 		walking = false;
 		interact = false;
+		setToTeleport = false;
 		
+		generateAnimation();
+		
+		this.position = position;
+		definePlayer(40,70);
+		playerStand = new TextureRegion(getTexture(), 0,0,45,52);
+		setBounds(0,0,45 / GazeintoAbyss.PPM,52 / GazeintoAbyss.PPM);
+		
+		setRegion(playerStand);
+	}
+	public void generateAnimation() {
 		//Player with pistol walk
 		Array<TextureRegion> frames = new Array<TextureRegion>();
 		for(int i=0;i<4;i++) {
@@ -108,19 +120,21 @@ public class Player extends Sprite{
 		playerShootRifle = new Animation(0.1f, frames);
 		frames.clear();
 		
-		this.position = position;
-		definePlayer();
-		playerStand = new TextureRegion(getTexture(), 0,0,45,52);
-		setBounds(0,0,45 / GazeintoAbyss.PPM,52 / GazeintoAbyss.PPM);
 		
-		setRegion(playerStand);
 	}
 	public boolean getInteract() {
 		return interact;
 	}
 	public void update(float dt) {
-		setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight() / 2);
-		setRegion(getFrame(dt));
+		if(setToTeleport) {
+			world.destroyBody(b2body);
+			setToTeleport = false;
+			definePlayer(40, 70);
+		}
+		else {
+			setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight() / 2);
+			setRegion(getFrame(dt));
+		}
 	}
 	
 	public TextureRegion getFrame(float dt) {
@@ -248,13 +262,13 @@ public class Player extends Sprite{
 		b2body.createFixture(fdef).setUserData("body");
 	}
 	
-	public void definePlayer() {
+	public void definePlayer(int x, int y) {
 		BodyDef bdef = new BodyDef();
 		bdef.position.set(position.x / GazeintoAbyss.PPM,position.y / GazeintoAbyss.PPM);
 		bdef.type = BodyDef.BodyType.DynamicBody;
 		b2body = world.createBody(bdef);
 		
-		defineHitBox(40,70);
+		defineHitBox(x,y);
 	}
 	
 	public void handleinput() {
@@ -262,7 +276,7 @@ public class Player extends Sprite{
 		if(Gdx.input.isKeyPressed(Input.Keys.D) && b2body.getLinearVelocity().x <= 2) {
 			b2body.applyLinearImpulse(new Vector2(0.5f,0), b2body.getWorldCenter(), true);
 		}
-		//If A Key Presseda
+		//If A Key Pressed
 		else if(Gdx.input.isKeyPressed(Input.Keys.A) && b2body.getLinearVelocity().x >= -2) {
 			b2body.applyLinearImpulse(new Vector2(-0.5f,0), b2body.getWorldCenter(), true);
 		}
@@ -273,11 +287,20 @@ public class Player extends Sprite{
 		//If A and Shift left Key Pressed
 		else if(Gdx.input.isKeyPressed(Input.Keys.A) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x >= -3) {
 			b2body.applyLinearImpulse(new Vector2(-1f,0), b2body.getWorldCenter(), true);
-		}		
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.Q) && !pistol) {
+			pistol = true;
+			rifle = false;
+		}
+		else if(Gdx.input.isKeyPressed(Input.Keys.E) && !rifle) {
+			rifle = true;
+			pistol = false;
+		}
 	}
 	
 	public void setPosition(Vector2 positions) {
 		this.position = positions;
+		setToTeleport = true;
 	}
 	
 	public Vector2 getPosition() {

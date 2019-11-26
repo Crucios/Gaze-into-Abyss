@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
 import Sprites.Player;
+import Tools.DoorAreaCreator;
 import Tools.WorldContactListener;
 import Tools.WorldCreator;
 
@@ -26,6 +27,8 @@ public class Level_1_1 implements Screen{
 	//Camera
 	protected OrthographicCamera gamecam;
 	protected Viewport gamePort;
+	protected double maxLeft;
+	protected double maxRight;
 	
 	//HUD
 	//private Hud hud;
@@ -61,7 +64,7 @@ public class Level_1_1 implements Screen{
 		
 		player.update(dt);
 		
-		if(player.b2body.getPosition().x < gamePort.getWorldWidth()/2 - gamePort.getWorldWidth()/3 + 12.25 && player.b2body.getPosition().x > gamePort.getWorldWidth()/2)
+		if(player.b2body.getPosition().x <  maxRight && player.b2body.getPosition().x > maxLeft)
 			gamecam.position.x = player.b2body.getPosition().x;
 		
 		//Update camera every iteration
@@ -83,22 +86,29 @@ public class Level_1_1 implements Screen{
 		//Create HUD
 		//hud = new Hud(game.batch);
 		
+		//Construct Player
+		this.player = player;
+		
 		//Map loading
 		mapLoader = new TmxMapLoader();
 		map = mapLoader.load(filepath_tmx);
 		renderer = new OrthogonalTiledMapRenderer(map, 1 / GazeintoAbyss.PPM);
 		
 		//First camera position
-		gamecam.position.set((gamePort.getWorldWidth()/2),(gamePort.getWorldHeight()/4),0);
+		gamecam.position.set((gamePort.getWorldWidth()/2),(gamePort.getWorldHeight() + 0.75f),0);
 		renderer.setView(gamecam);
 		
 		this.world = world;
 		b2dr = new Box2DDebugRenderer();
 		
-		new WorldCreator(game,world,map);
+		//Generate Wall and Ground
+		new WorldCreator(world, map);
 		
-		//Construct Player
-		this.player = player;
+		//Generate 
+		new DoorAreaCreator(game, world, map, player, gamecam, gamePort, "door-area-object_area1", new Vector2(100,129));
+		
+		this.maxRight = gamePort.getWorldWidth()/2 - gamePort.getWorldWidth()/3 + 12.55;
+		this.maxLeft = gamePort.getWorldWidth()/2;
 		
 		world.setContactListener(new WorldContactListener());
 	}
@@ -156,6 +166,22 @@ public class Level_1_1 implements Screen{
 		world.dispose();
 		b2dr.dispose();
 		//hud.dispose();
+	}
+
+	public double getMaxLeft() {
+		return maxLeft;
+	}
+
+	public void setMaxLeft(double maxLeft) {
+		this.maxLeft = maxLeft;
+	}
+
+	public double getMaxRight() {
+		return maxRight;
+	}
+
+	public void setMaxRight(double maxRight) {
+		this.maxRight = maxRight;
 	}
 
 }
