@@ -16,8 +16,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
-import Screens.Level_1.Level_1_1;
-
 public class Player extends Sprite{
 	public enum State{RUNNING_PISTOL, RUNNING_RIFLE, WALKING_PISTOL, WALKING_RIFLE, STANDING_PISTOL, STANDING_RIFLE, SHOOTING_RIFLE, SHOOTING_PISTOL, HIDDING};
 	public State currentState;
@@ -47,6 +45,7 @@ public class Player extends Sprite{
 	private boolean hidden;
 	
 	private Vector2 position;	//Origin Position
+	private Vector2 nowPosition;
 	
 	public Player(World world, Vector2 position) {
 		super(new AtlasRegion(new TextureAtlas("Resources/Player/Player.pack").findRegion("sprite-player")));
@@ -74,6 +73,8 @@ public class Player extends Sprite{
 		definePlayer(40,70);
 		playerStand = new TextureRegion(getTexture(), 0,0,45,52);
 		setBounds(0,0,45 / GazeintoAbyss.PPM,52 / GazeintoAbyss.PPM);
+		
+		nowPosition = new Vector2();
 		
 		setRegion(playerStand);
 	}
@@ -151,8 +152,14 @@ public class Player extends Sprite{
 		}
 		else if(!isHiding && !setToTeleport && !hidden){
 			setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight() / 2);
+			if(b2body.getWorldPoint(position).x *10 < GazeintoAbyss.MAX_MAP_SIZE)
+				nowPosition = new Vector2(b2body.getWorldPoint(position).x * 10, b2body.getWorldPoint(position).y);
+			else
+				nowPosition = new Vector2(b2body.getWorldPoint(position).x, b2body.getWorldPoint(position).y);
 			setRegion(getFrame(dt));
 		}
+		
+		System.out.println("Player Position: " + nowPosition.x + " , " + nowPosition.y);
 	}
 	
 	public TextureRegion getFrame(float dt) {
@@ -330,9 +337,9 @@ public class Player extends Sprite{
 		return isHiding;
 	}
 	
-	public void setHiding(boolean isHiding, Vector2 hiddingPosition) {
+	public void setHiding(boolean isHiding, Vector2 HiddingPosition) {
 		this.isHiding = isHiding;
-		this.position = hiddingPosition;
+		position = HiddingPosition;
 	}
 	
 	public void setPosition(Vector2 positions) {
