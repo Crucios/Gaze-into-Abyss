@@ -412,7 +412,7 @@
  <objectgroup id="22" name="chest-object-area3">
   <object id="25" x="2917.5" y="1032.17" width="66.3333" height="57"/>
  </objectgroup>
- <objectgroup id="19" name="wall-boject">
+ <objectgroup id="19" name="wall-object">
   <object id="6" x="-0.666667" y="-0.666667" width="15.3333" height="273.333"/>
   <object id="7" x="0.33335" y="432" width="15.3333" height="273.333"/>
   <object id="8" x="3217" y="864.333" width="15.3333" height="273.333"/>

@@ -2,32 +2,43 @@ package Sprites;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
 import Screens.Level_1.Level_1;
 
 public class DoorLevel extends InteractiveTileObject{
-	GazeintoAbyss game;
-	public DoorLevel(GazeintoAbyss game, World world, TiledMap map, MapObject object) {
+	private GazeintoAbyss game;
+	private Player player;
+	private Level_1 nextLevel;
+	private Vector2 newGameCamPosition;
+	private double nextMaxRight;
+	private Vector2 nextPlayerPosition;
+	
+	public DoorLevel(GazeintoAbyss game, World world, TiledMap map, MapObject object, 
+			Player player, Level_1 nextLevel, Vector2 newGameCamPosition, double nextMaxRight, 
+			Vector2 nextPlayerPosition) {
 		super(world, map , object, true);
 		fixture.setUserData(this);
 		this.game = game;
+		this.player = player;
+		this.nextLevel = nextLevel;
+		this.nextMaxRight = nextMaxRight;
+		this.newGameCamPosition = newGameCamPosition;
+		this.nextPlayerPosition = nextPlayerPosition;
 	}
 
 	@Override
 	public void onHit() {
-		Gdx.app.log("Door Level", "Collide");
 		if(Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-			World tempWorld = new World(new Vector2(0, -10),true);
-			game.setScreen(new Level_1(game, tempWorld, new Player(tempWorld, new Vector2(100,120)),"Resources/Levels/Level 1/Level 1-1.tmx"));
+			game.setScreen(nextLevel);
+			nextLevel.getGamecam().position.set(newGameCamPosition,0);
+			nextLevel.setMaxRight(nextMaxRight);
+			player.setNextLevelPosition(nextPlayerPosition, nextLevel.getWorld());
 		}
 	}
 }

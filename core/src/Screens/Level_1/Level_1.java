@@ -8,8 +8,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -20,11 +18,12 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
-import Sprites.ChestInteractiveObject;
+import Screens.Level2.Level_2;
 import Sprites.Player;
 import Tools.ChestCreator;
 import Tools.DoorAreaCreator;
 import Tools.DoorHideCreator;
+import Tools.DoorLevelCreator;
 import Tools.WorldContactListener;
 import Tools.WorldCreator;
 
@@ -56,7 +55,7 @@ public class Level_1 implements Screen{
 	protected TextureAtlas atlas;
 	
 	//Chest
-	private ArrayList<ChestCreator> chestCreator;
+	protected ArrayList<ChestCreator> chestCreator;
 	
 	public void handleInput(float dt) {
 		player.handleinput();
@@ -70,6 +69,7 @@ public class Level_1 implements Screen{
 	public void update(float dt) {
 		handleInput(dt);
 		
+		
 		world.step(1/60f, 6, 2);
 		
 		player.update(dt);
@@ -77,8 +77,11 @@ public class Level_1 implements Screen{
 		for(int i=0;i<chestCreator.size();i++)
 			chestCreator.get(i).update(dt);
 		
-		if(player.b2body.getPosition().x <  maxRight && player.b2body.getPosition().x > maxLeft)
+		if((player.b2body.getPosition().x <  maxRight && player.b2body.getPosition().x > maxLeft) || (player.isCamGlitched() && player.b2body.getPosition().x > maxLeft)) {
 			gamecam.position.x = player.b2body.getPosition().x;
+			if(player.isCamGlitched())
+				player.setCamGlitched(false);
+		}
 		
 		//Update camera every iteration
 		gamecam.update();
@@ -142,6 +145,13 @@ public class Level_1 implements Screen{
 		//Generate Chest
 		chestCreator.add(new ChestCreator(game, world, map, "chest-object_area1"));
 		chestCreator.add(new ChestCreator(game, world, map, "chest-object_area2"));
+		
+		//Generate door-level
+		Level_2 nextLevel = new Level_2(game, new World(new Vector2(0, -10),true), player,"Resources/Levels/Level 2/Level 2.tmx");
+		newCamera = new Vector2(nextLevel.getGamePort().getWorldWidth()/2, nextLevel.getGamePort().getWorldHeight() + 5);
+		newMaxRight = nextLevel.getGamePort().getWorldWidth() + 20.3;
+		Vector2 newPosition = new Vector2(300, 1000);
+		new DoorLevelCreator(game, world, map, player, nextLevel, newCamera, newMaxRight, newPosition,"door-level-object_area2");
 	}
 	
 	@Override
@@ -207,6 +217,30 @@ public class Level_1 implements Screen{
 
 	public void setMaxRight(double maxRight) {
 		this.maxRight = maxRight;
+	}
+
+	public Viewport getGamePort() {
+		return gamePort;
+	}
+
+	public void setGamePort(Viewport gamePort) {
+		this.gamePort = gamePort;
+	}
+
+	public OrthographicCamera getGamecam() {
+		return gamecam;
+	}
+
+	public void setGamecam(OrthographicCamera gamecam) {
+		this.gamecam = gamecam;
+	}
+
+	public World getWorld() {
+		return world;
+	}
+
+	public void setWorld(World world) {
+		this.world = world;
 	}
 
 }

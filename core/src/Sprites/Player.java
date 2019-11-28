@@ -43,6 +43,8 @@ public class Player extends Sprite{
 	private boolean setToTeleport;
 	private boolean isHiding;
 	private boolean hidden;
+	private boolean camGlitched;
+	private boolean teleportNextLevel;
 	
 	private Vector2 position;	//Origin Position
 	private Vector2 nowPosition;
@@ -66,6 +68,8 @@ public class Player extends Sprite{
 		setToTeleport = false;
 		isHiding = false;
 		hidden = false;
+		camGlitched = false;
+		teleportNextLevel = false;
 		
 		generateAnimation();
 		
@@ -136,10 +140,15 @@ public class Player extends Sprite{
 		return interact;
 	}
 	public void update(float dt) {
+		if(teleportNextLevel) {
+			definePlayer(40,70);
+			teleportNextLevel = false;
+		}
 		if(setToTeleport) {
 			world.destroyBody(b2body);
 			setToTeleport = false;
 			definePlayer(40, 70);
+			camGlitched = true;
 		}
 		else if(isHiding && !hidden) {
 			world.destroyBody(b2body);
@@ -152,10 +161,7 @@ public class Player extends Sprite{
 		}
 		else if(!isHiding && !setToTeleport && !hidden){
 			setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight() / 2);
-			if(b2body.getWorldPoint(position).x *10 < GazeintoAbyss.MAX_MAP_SIZE)
-				nowPosition = new Vector2(b2body.getWorldPoint(position).x * 10, b2body.getWorldPoint(position).y);
-			else
-				nowPosition = new Vector2(b2body.getWorldPoint(position).x, b2body.getWorldPoint(position).y);
+			nowPosition = new Vector2(b2body.getWorldPoint(position).x, b2body.getWorldPoint(position).y);
 			setRegion(getFrame(dt));
 		}
 
@@ -312,12 +318,12 @@ public class Player extends Sprite{
 			b2body.applyLinearImpulse(new Vector2(-0.5f,0), b2body.getWorldCenter(), true);
 		}
 		//If D and Shift left Key Pressed
-		if(Gdx.input.isKeyPressed(Input.Keys.D) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x <= 3) {
-			b2body.applyLinearImpulse(new Vector2(1f,0), b2body.getWorldCenter(), true);
+		if(Gdx.input.isKeyPressed(Input.Keys.D) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x <= 6) {
+			b2body.applyLinearImpulse(new Vector2(2f,0), b2body.getWorldCenter(), true);
 		}
 		//If A and Shift left Key Pressed
-		else if(Gdx.input.isKeyPressed(Input.Keys.A) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x >= -3) {
-			b2body.applyLinearImpulse(new Vector2(-1f,0), b2body.getWorldCenter(), true);
+		else if(Gdx.input.isKeyPressed(Input.Keys.A) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x >= -6) {
+			b2body.applyLinearImpulse(new Vector2(-2f,0), b2body.getWorldCenter(), true);
 		}
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.Q) && !pistol) {
@@ -348,7 +354,21 @@ public class Player extends Sprite{
 		setToTeleport = true;
 	}
 	
+	public void setNextLevelPosition(Vector2 positions, World world) {
+		this.position = positions;
+		this.world = world;
+		teleportNextLevel = true;
+	}
+	
 	public Vector2 getPosition() {
 		return position;
+	}
+	
+	public boolean isCamGlitched() {
+		return camGlitched;
+	}
+	
+	public void setCamGlitched(boolean camGlitched) {
+		this.camGlitched = camGlitched;
 	}
 }

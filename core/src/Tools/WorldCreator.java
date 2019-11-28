@@ -34,16 +34,5 @@ public class WorldCreator {
 		for(MapObject object : map.getLayers().get("ground-object").getObjects().getByType(RectangleMapObject.class)) {			
 			new Ground(world, map, object);
 		}
-		
-
-		
-
-		
-//		for(MapObject object : map.getLayers().get("door-level-object").getObjects().getByType(RectangleMapObject.class)) {
-//
-//			new DoorLevel(game, world, map, object);
-//		}
-//		
-
 	}
 }
