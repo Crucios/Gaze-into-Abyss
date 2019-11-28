@@ -1,11 +1,15 @@
 package Screens.Level_1;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -16,6 +20,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
+import Sprites.ChestInteractiveObject;
 import Sprites.Player;
 import Tools.DoorAreaCreator;
 import Tools.DoorHideCreator;
@@ -49,6 +54,9 @@ public class Level_1_1 implements Screen{
 	
 	protected TextureAtlas atlas;
 	
+	//Chest
+	private ArrayList<ChestInteractiveObject> chestInteractive;
+	
 	public void handleInput(float dt) {
 		player.handleinput();
 		//Print Mouse Position
@@ -65,6 +73,9 @@ public class Level_1_1 implements Screen{
 		
 		player.update(dt);
 		
+		for(int i=0;i<chestInteractive.size();i++)
+			chestInteractive.get(i).update(dt);
+		
 		if(player.b2body.getPosition().x <  maxRight && player.b2body.getPosition().x > maxLeft)
 			gamecam.position.x = player.b2body.getPosition().x;
 		
@@ -77,6 +88,7 @@ public class Level_1_1 implements Screen{
 	
 	public Level_1_1(GazeintoAbyss game, World world,Player player, String filepath_tmx) {
 		this.game = game;
+		chestInteractive = new ArrayList<ChestInteractiveObject>();
 		
 		//Camera movement
 		gamecam = new OrthographicCamera();
@@ -125,6 +137,15 @@ public class Level_1_1 implements Screen{
 		
 		//Generate door-hide
 		new DoorHideCreator(game, world, map, player, "door-hide-object_area2", new Vector2(1225,129));
+		
+		//Generate Chest
+		for(MapObject object : map.getLayers().get("chest-object_area1").getObjects().getByType(RectangleMapObject.class)) {
+			chestInteractive.add(new ChestInteractiveObject(game, world, map, object)); 
+		}
+		
+		for(MapObject object : map.getLayers().get("chest-object_area2").getObjects().getByType(RectangleMapObject.class)) {
+			chestInteractive.add(new ChestInteractiveObject(game, world, map, object));
+		}
 	}
 	
 	@Override
@@ -145,6 +166,8 @@ public class Level_1_1 implements Screen{
 		
 		game.batch.setProjectionMatrix(gamecam.combined);
 		game.batch.begin();
+		for(int i=0;i<chestInteractive.size();i++)
+			chestInteractive.get(i).getChest().draw(game.batch);
 		player.draw(game.batch);
 		game.batch.end();
 	}

@@ -158,7 +158,7 @@ public class Player extends Sprite{
 				nowPosition = new Vector2(b2body.getWorldPoint(position).x, b2body.getWorldPoint(position).y);
 			setRegion(getFrame(dt));
 		}
-		
+
 		System.out.println("Player Position: " + nowPosition.x + " , " + nowPosition.y);
 	}
 	
@@ -222,6 +222,7 @@ public class Player extends Sprite{
 			b2body.destroyFixture(b2body.getFixtureList().get(0));
 			b2body.destroyFixture(b2body.getFixtureList().get(0));
 			defineHitBox(40,60);
+			break;
 		case HIDDING:
 			region = (TextureRegion) playerHidding.getKeyFrame(stateTimer);
 			setSize((float) 1.4,(float) 1.4);

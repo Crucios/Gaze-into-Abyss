@@ -1,0 +1,12 @@
+
+Chest.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Chests
+  rotate: false
+  xy: 1, 1
+  size: 900, 500
+  orig: 900, 500
+  offset: 0, 0
+  index: -1

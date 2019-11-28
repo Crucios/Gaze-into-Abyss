@@ -12,7 +12,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
-import Sprites.Chest;
+import Sprites.ChestInteractiveObject;
 import Sprites.DoorArea;
 import Sprites.Ground;
 import Sprites.Player;
@@ -35,11 +35,7 @@ public class WorldCreator {
 			new Ground(world, map, object);
 		}
 		
-//		//Set for chest-object
-//		for(MapObject object : map.getLayers().get("chest-object_area1").getObjects().getByType(RectangleMapObject.class)) {
-//			
-//			new Chest(game, world, map, object);
-//		}
+
 		
 
 		
