@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
-import Screens.Level_1.Level_1_1;
+import Screens.Level_1.Level_1;
 import Sprites.Player;
 
 public class MainMenuScreen implements Screen {
@@ -63,7 +63,7 @@ public class MainMenuScreen implements Screen {
                 this.dispose();
                 World tempWorld = new World(new Vector2(0, -10),true);
                 
-                game.setScreen(new Level_1_1(game, tempWorld, new Player(tempWorld, new Vector2(100,520)),"Resources/Levels/Level 1/Level 1.tmx"));
+                game.setScreen(new Level_1(game, tempWorld, new Player(tempWorld, new Vector2(100,520)),"Resources/Levels/Level 1/Level 1.tmx"));
             }
         }else {
             game.batch.draw(PlayButtonInactive,ExitX,300, ExitB_WIDTH, ExitB_HEIGHT);

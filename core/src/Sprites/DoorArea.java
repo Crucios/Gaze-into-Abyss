@@ -10,7 +10,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
-import Screens.Level_1.Level_1_1;
+import Screens.Level_1.Level_1;
 
 public class DoorArea extends InteractiveTileObject{
 	protected GazeintoAbyss game;
@@ -18,10 +18,10 @@ public class DoorArea extends InteractiveTileObject{
 	protected OrthographicCamera gamecam;
 	protected Vector2 newCameraPosition;
 	protected Vector2 newPosition;
-	protected Level_1_1 screen;
+	protected Level_1 screen;
 	protected double newMaxRight;
 	
-	public DoorArea(GazeintoAbyss game,World world, TiledMap map,MapObject object, Player player, OrthographicCamera gamecam, Vector2 newCameraPosition, Vector2 newPosition, Level_1_1 level, double newMaxRight) {
+	public DoorArea(GazeintoAbyss game,World world, TiledMap map,MapObject object, Player player, OrthographicCamera gamecam, Vector2 newCameraPosition, Vector2 newPosition, Level_1 level, double newMaxRight) {
 		super(world, map , object, true);
 		this.game = game;
 		this.player = player;

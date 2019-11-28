@@ -1,7 +1,7 @@
 package com.mygdx.gazeintoabyss;
 
 import Screens.MainMenuScreen;
-import Screens.Level_1.Level_1_1;
+import Screens.Level_1.Level_1;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

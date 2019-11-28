@@ -12,7 +12,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
-import Screens.Level_1.Level_1_1;
+import Screens.Level_1.Level_1;
 
 public class DoorHide extends InteractiveTileObject{
 	private GazeintoAbyss game;

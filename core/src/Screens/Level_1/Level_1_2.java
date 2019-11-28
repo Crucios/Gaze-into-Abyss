@@ -7,7 +7,7 @@ import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
 import Sprites.Player;
 
-public class Level_1_2 extends Level_1_1{
+public class Level_1_2 extends Level_1{
 
 	public Level_1_2(GazeintoAbyss game, World world, Player player, String filepath_tmx) {
 		super(game, world, player, filepath_tmx);
