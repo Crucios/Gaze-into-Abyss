@@ -31,10 +31,10 @@ public class RifleBullet extends Sprite {
 	}
 	public void update(float dt) {
 		if(toRight) {
-			b2body.setLinearVelocity(2f, 0);
+			b2body.setLinearVelocity(8f, 0);
 		}
 		else {
-			b2body.setLinearVelocity(-2f,0);
+			b2body.setLinearVelocity(-8f,0);
 		}
 		setPosition(new Vector2(b2body.getPosition().x, b2body.getPosition().y));
 	}

@@ -89,7 +89,7 @@ public class Player extends Sprite{
 		toRight = true;
 		pistol = true;
 		rifle = false;
-		shooting = false;
+		shooting = true;
 		running = false;
 		walking = false;
 		interact = false;
@@ -107,8 +107,9 @@ public class Player extends Sprite{
 		setBounds(0,0,45 / GazeintoAbyss.PPM,52 / GazeintoAbyss.PPM);
 		
 		nowPosition = new Vector2();
-		bulletPosition = position;
-		bulletPosition.y = position.y + 68.0f;
+		bulletPosition = nowPosition;
+		bulletPosition.y += 39f;
+		bulletPosition.x += 30f;
 		setRegion(playerStand);
 	}
 	public void generateAnimation() {
@@ -191,13 +192,30 @@ public class Player extends Sprite{
 			setRegion(getFrame(dt));
 		}
 		if(shooting) {
-			if(pistol)
+			bulletPosition = nowPosition;
+			if(pistol) {
 				PBullet.update(dt);
-			else
+				bulletPosition.y += 39f;
+				if(toRight) {
+					bulletPosition.x += 30f;
+				}
+				else {
+					bulletPosition.x -= 30f;
+				}
+			}
+			else {
 				RBullet.update(dt);
-			PBulletTimer += dt;
-			RBulletTimer += dt;
+				bulletPosition.y += 28f;
+				if(toRight) {
+					bulletPosition.x += 30f;
+				}
+				else {
+					bulletPosition.x -= 30f;
+				}
+			}
 		}
+		PBulletTimer += dt;
+		RBulletTimer += dt;
 		System.out.println("Player Position: " + nowPosition.x + " , " + nowPosition.y);
 	}
 	
@@ -374,26 +392,25 @@ public class Player extends Sprite{
 		if(Gdx.input.isKeyPressed(Input.Keys.Q) && !pistol) {
 			pistol = true;
 			rifle = false;
-			bulletPosition.y -= 48.0f;
-			bulletPosition.y = position.y + 68.0f;
 		}
 		else if(Gdx.input.isKeyPressed(Input.Keys.R) && !rifle) {
 			rifle = true;
 			pistol = false;
-			bulletPosition.y -= 68.0f;
-			bulletPosition.y = position.y + 48.0f;
 		}
 		
 		if(Gdx.input.isKeyJustPressed(Input.Keys.E) && isHiding) {
 			isHiding = false;
 		}
-		if(pistol && Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-			PBullet = new PistolBullet(world,nowPosition);
+		if(pistol && Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D)) {
+			if(PBulletTimer>0.2f) {
+				PBullet = new PistolBullet(world,bulletPosition);
+				PBulletTimer = 0;
+			}
 			shooting = true;
 		}
-		else if(rifle && Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-			if(RBulletTimer>0.2f) {
-				RBullet = new RifleBullet(world,nowPosition);
+		else if(rifle && Gdx.input.isKeyPressed(Input.Keys.SPACE) && !Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D)) {
+			if(RBulletTimer>0.4f) {
+				RBullet = new RifleBullet(world,bulletPosition);
 				RBulletTimer = 0;
 			}
 			shooting = true;
