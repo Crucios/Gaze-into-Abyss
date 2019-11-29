@@ -7,6 +7,8 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 
 import Sprites.InteractiveTileObject;
+import Sprites.PistolBullet;
+import Sprites.RifleBullet;
 
 public class WorldContactListener implements ContactListener{
 
@@ -22,6 +24,12 @@ public class WorldContactListener implements ContactListener{
 			//if object is interactive tile object
 			if(object.getUserData() != null && InteractiveTileObject.class.isAssignableFrom(object.getUserData().getClass())){
 				((InteractiveTileObject) object.getUserData()).onHit();
+			}
+			if(object.getUserData() != null && RifleBullet.class.isAssignableFrom(object.getUserData().getClass())) {
+				((RifleBullet) object.getUserData()).onHit();
+			}
+			if(object.getUserData() != null && PistolBullet.class.isAssignableFrom(object.getUserData().getClass())) {
+				((PistolBullet) object.getUserData()).onHit();
 			}
 		}
 	}

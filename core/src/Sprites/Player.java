@@ -1,5 +1,7 @@
 package Sprites;
 
+import javax.swing.text.html.HTMLDocument.HTMLReader.SpecialAction;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -10,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -22,6 +25,8 @@ public class Player extends Sprite{
 	public State previousState;
 	public World world;
 	public Body b2body;
+	public PistolBullet PBullet;
+	public RifleBullet RBullet;
 	private TextureRegion playerStand;
 	private Animation playerRunPistol;
 	private Animation playerRunRifle;
@@ -33,6 +38,8 @@ public class Player extends Sprite{
 	private Animation playerShootRifle;
 	private Animation playerHidding;
 	private float stateTimer;
+	private float PBulletTimer;
+	private float RBulletTimer;
 	private boolean walking;
 	private boolean running;
 	private boolean shooting;
@@ -48,6 +55,7 @@ public class Player extends Sprite{
 	
 	private Vector2 position;	//Origin Position
 	private Vector2 nowPosition;
+	private Vector2 bulletPosition;
 	
 	public Player(World world, Vector2 position) {
 		super(new AtlasRegion(new TextureAtlas("Resources/Player/Player.pack").findRegion("sprite-player")));
@@ -58,6 +66,8 @@ public class Player extends Sprite{
 		currentState = State.STANDING_PISTOL;
 		previousState = State.STANDING_PISTOL;
 		stateTimer = 0;
+		PBulletTimer = 2;
+		RBulletTimer = 2;
 		toRight = true;
 		pistol = true;
 		rifle = false;
@@ -79,7 +89,8 @@ public class Player extends Sprite{
 		setBounds(0,0,45 / GazeintoAbyss.PPM,52 / GazeintoAbyss.PPM);
 		
 		nowPosition = new Vector2();
-		
+		bulletPosition = position;
+		bulletPosition.y = position.y + 68.0f;
 		setRegion(playerStand);
 	}
 	public void generateAnimation() {
@@ -136,9 +147,6 @@ public class Player extends Sprite{
 		frames.clear();
 		
 	}
-	public boolean getInteract() {
-		return interact;
-	}
 	public void update(float dt) {
 		if(teleportNextLevel) {
 			definePlayer(40,70);
@@ -164,8 +172,15 @@ public class Player extends Sprite{
 			nowPosition = new Vector2(b2body.getWorldPoint(position).x, b2body.getWorldPoint(position).y);
 			setRegion(getFrame(dt));
 		}
-
-		System.out.println("Player Position: " + nowPosition.x + " , " + nowPosition.y);
+		if(shooting) {
+			if(pistol)
+				PBullet.update(dt);
+			else
+				RBullet.update(dt);
+			PBulletTimer += dt;
+			RBulletTimer += dt;
+		}
+		//System.out.println("Player Position: " + nowPosition.x + " , " + nowPosition.y);
 	}
 	
 	public TextureRegion getFrame(float dt) {
@@ -252,6 +267,14 @@ public class Player extends Sprite{
 			toRight = true;
 		}
 		
+		if(shooting) {
+			if(pistol)
+				PBullet.setToRight(toRight);
+			else
+				RBullet.setToRight(toRight);
+			RBulletTimer += dt;
+		}
+		
 		stateTimer = currentState == previousState ? stateTimer + dt : 0;
 		previousState = currentState;
 		return region;
@@ -293,7 +316,7 @@ public class Player extends Sprite{
 		shape.setAsBox(x / GazeintoAbyss.PPM, y / GazeintoAbyss.PPM);
 		
 		fdef.shape = shape;
-		fdef.friction = 4.0f;
+		fdef.friction =  4.0f;
 		b2body.createFixture(fdef);
 		fdef.isSensor = true;
 		b2body.createFixture(fdef).setUserData("body");
@@ -312,31 +335,53 @@ public class Player extends Sprite{
 		//If D Key Pressed
 		if(Gdx.input.isKeyPressed(Input.Keys.D) && b2body.getLinearVelocity().x <= 2) {
 			b2body.applyLinearImpulse(new Vector2(0.5f,0), b2body.getWorldCenter(), true);
+			bulletPosition.x += 11.0f;
 		}
 		//If A Key Pressed
 		else if(Gdx.input.isKeyPressed(Input.Keys.A) && b2body.getLinearVelocity().x >= -2) {
 			b2body.applyLinearImpulse(new Vector2(-0.5f,0), b2body.getWorldCenter(), true);
+			bulletPosition.x -= 11.0f;
 		}
 		//If D and Shift left Key Pressed
-		if(Gdx.input.isKeyPressed(Input.Keys.D) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x <= 6) {
-			b2body.applyLinearImpulse(new Vector2(2f,0), b2body.getWorldCenter(), true);
+		if(Gdx.input.isKeyPressed(Input.Keys.D) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x <= 3) {
+			b2body.applyLinearImpulse(new Vector2(1.0f,0), b2body.getWorldCenter(), true);
+			bulletPosition.x += 20f;
 		}
 		//If A and Shift left Key Pressed
-		else if(Gdx.input.isKeyPressed(Input.Keys.A) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x >= -6) {
-			b2body.applyLinearImpulse(new Vector2(-2f,0), b2body.getWorldCenter(), true);
+		else if(Gdx.input.isKeyPressed(Input.Keys.A) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x >= -3) {
+			b2body.applyLinearImpulse(new Vector2(-1f,0), b2body.getWorldCenter(), true);
+			bulletPosition.x -= 20.0f;
 		}
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.Q) && !pistol) {
 			pistol = true;
 			rifle = false;
+			bulletPosition.y -= 48.0f;
+			bulletPosition.y = position.y + 68.0f;
 		}
 		else if(Gdx.input.isKeyPressed(Input.Keys.R) && !rifle) {
 			rifle = true;
 			pistol = false;
+			bulletPosition.y -= 68.0f;
+			bulletPosition.y = position.y + 48.0f;
 		}
 		
 		if(Gdx.input.isKeyJustPressed(Input.Keys.E) && isHiding) {
 			isHiding = false;
+		}
+		if(pistol && Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+			PBullet = new PistolBullet(world,bulletPosition);
+			shooting = true;
+		}
+		else if(rifle && Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+			if(RBulletTimer>0.2f) {
+				RBullet = new RifleBullet(world,bulletPosition);
+				RBulletTimer = 0;
+			}
+			shooting = true;
+		}
+		else {
+			shooting = false;
 		}
 	}
 	
