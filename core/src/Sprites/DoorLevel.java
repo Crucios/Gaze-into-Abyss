@@ -39,6 +39,8 @@ public class DoorLevel extends InteractiveTileObject{
 			nextLevel.getGamecam().position.set(newGameCamPosition,0);
 			nextLevel.setMaxRight(nextMaxRight);
 			player.setNextLevelPosition(nextPlayerPosition, nextLevel.getWorld());
+			player.setLevel(player.getLevel()+1);
+			player.setScore(player.getScore()+100);
 		}
 	}
 }

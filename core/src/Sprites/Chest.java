@@ -65,7 +65,7 @@ public class Chest extends Sprite{
 				frames.add(new TextureRegion(getTexture(), j*73, i*66, 73, 66));
 			}
 		}
-		chestOpening = new Animation(2f, frames);
+		chestOpening = new Animation(0.1f, frames);
 		frames.clear();
 	}
 	

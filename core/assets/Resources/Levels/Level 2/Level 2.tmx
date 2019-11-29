@@ -404,13 +404,13 @@
  <objectgroup id="23" name="door-hide-area2"/>
  <objectgroup id="24" name="door-hide-area3"/>
  <objectgroup id="20" name="chest-object-area1">
-  <object id="35" x="2154.71" y="223.015" width="66.3333" height="57" rotation="180"/>
+  <object id="35" x="2155.21" y="160.015" width="66.3333" height="57" rotation="180"/>
  </objectgroup>
  <objectgroup id="21" name="chest-object-area2">
-  <object id="34" x="1803.2" y="662.409" width="66.3333" height="57" rotation="180"/>
+  <object id="34" x="1803.56" y="595.076" width="66.3333" height="57" rotation="180"/>
  </objectgroup>
  <objectgroup id="22" name="chest-object-area3">
-  <object id="25" x="2917.5" y="1032.17" width="66.3333" height="57"/>
+  <object id="25" x="2916.5" y="1030.17" width="66.3333" height="57"/>
  </objectgroup>
  <objectgroup id="19" name="wall-object">
   <object id="6" x="-0.666667" y="-0.666667" width="15.3333" height="273.333"/>
