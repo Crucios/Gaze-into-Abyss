@@ -1,5 +1,7 @@
 package Sprites;
 
+import java.util.ArrayList;
+
 import javax.swing.text.html.HTMLDocument.HTMLReader.SpecialAction;
 
 import com.badlogic.gdx.Gdx;
@@ -25,8 +27,8 @@ public class Player extends Sprite{
 	public State previousState;
 	public World world;
 	public Body b2body;
-	public PistolBullet PBullet;
-	public RifleBullet RBullet;
+	public ArrayList<PistolBullet> PBullet;
+	public ArrayList<RifleBullet> RBullet;
 	private TextureRegion playerStand;
 	private Animation playerRunPistol;
 	private Animation playerRunRifle;
@@ -116,6 +118,9 @@ public class Player extends Sprite{
 		bulletPosition = nowPosition;
 		bulletPosition.y += 39f;
 		bulletPosition.x += 30f;
+		
+		PBullet = new ArrayList<PistolBullet>();
+		RBullet = new ArrayList<RifleBullet>();
 		setRegion(playerStand);
 	}
 	public void generateAnimation() {
@@ -197,10 +202,21 @@ public class Player extends Sprite{
 			nowPosition = new Vector2(b2body.getPosition().x * GazeintoAbyss.PPM, b2body.getPosition().y * GazeintoAbyss.PPM);
 			setRegion(getFrame(dt));
 		}
-		if(shooting) {
+
+		for(PistolBullet bul : PBullet) {
+			if(!bul.getDestroy()) {
+				bul.update(dt);
+			}
+		}
+		for(RifleBullet bul : RBullet) {
+			if(!bul.getDestroy()) {
+				bul.update(dt);
+			}
+		}
+		if(shooting) { 
 			bulletPosition = nowPosition;
 			if(pistol) {
-				PBullet.update(dt);
+				
 				bulletPosition.y += 39f;
 				if(toRight) {
 					bulletPosition.x += 30f;
@@ -210,7 +226,7 @@ public class Player extends Sprite{
 				}
 			}
 			else {
-				RBullet.update(dt);
+				
 				bulletPosition.y += 28f;
 				if(toRight) {
 					bulletPosition.x += 30f;
@@ -310,11 +326,14 @@ public class Player extends Sprite{
 		}
 		
 		if(shooting) {
-			if(pistol)
-				PBullet.setToRight(toRight);
-			else
-				RBullet.setToRight(toRight);
-			RBulletTimer += dt;
+			if(pistol) {
+				int bulIndex = PBullet.size();
+				PBullet.get(bulIndex-1 ).setToRight(toRight);
+			}
+			else {
+				int bulIndex = RBullet.size();
+				RBullet.get(bulIndex-1 ).setToRight(toRight);
+			}
 		}
 		
 		stateTimer = currentState == previousState ? stateTimer + dt : 0;
@@ -415,15 +434,15 @@ public class Player extends Sprite{
 			isHiding = false;
 		}
 		if(pistol && Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D)) {
-			if(PBulletTimer>0.2f) {
-				PBullet = new PistolBullet(world,bulletPosition);
+			if(PBulletTimer>0.4f) {
+				PBullet.add(new PistolBullet(world,bulletPosition));
 				PBulletTimer = 0;
 			}
 			shooting = true;
 		}
 		else if(rifle && Gdx.input.isKeyPressed(Input.Keys.SPACE) && !Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D)) {
-			if(RBulletTimer>0.4f) {
-				RBullet = new RifleBullet(world,bulletPosition);
+			if(RBulletTimer>0.2f) {
+				RBullet.add(new RifleBullet(world,bulletPosition));
 				RBulletTimer = 0;
 			}
 			shooting = true;
