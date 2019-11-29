@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
+import Scenes.Hud;
 import Screens.Level2.Level_2;
 import Sprites.Player;
 import Tools.ChestCreator;
@@ -37,7 +38,7 @@ public class Level_1 implements Screen{
 	protected double maxRight;
 	
 	//HUD
-	//private Hud hud;
+	private Hud hud;
 	
 	//Tiled map variables
 	protected TmxMapLoader mapLoader;
@@ -77,10 +78,12 @@ public class Level_1 implements Screen{
 		for(int i=0;i<chestCreator.size();i++)
 			chestCreator.get(i).update(dt);
 		
-		if((player.b2body.getPosition().x <  maxRight && player.b2body.getPosition().x > maxLeft) || (player.isCamGlitched() && player.b2body.getPosition().x > maxLeft)) {
+		if((player.b2body.getPosition().x < maxRight && player.b2body.getPosition().x > maxLeft)) {
 			gamecam.position.x = player.b2body.getPosition().x;
-			if(player.isCamGlitched())
-				player.setCamGlitched(false);
+		}
+		else if(player.isCamGlitched() && player.b2body.getPosition().x > maxLeft) {
+			gamecam.position.x = (float) maxRight;
+			player.setCamGlitched(false);
 		}
 		
 		//Update camera every iteration
@@ -100,11 +103,11 @@ public class Level_1 implements Screen{
 		//Maintain virtual aspect ratio despite resizing
 		gamePort = new FitViewport(GazeintoAbyss.V_WIDTH / GazeintoAbyss.PPM,GazeintoAbyss.V_HEIGHT / GazeintoAbyss.PPM,gamecam);
 		
-		//Create HUD
-		//hud = new Hud(game.batch);
-		
 		//Construct Player
 		this.player = player;
+		
+		//Create HUD
+		hud = new Hud(game.batch, this.player);
 		
 		//Map loading
 		mapLoader = new TmxMapLoader();
@@ -137,10 +140,10 @@ public class Level_1 implements Screen{
 
 		newMaxRight = gamePort.getWorldWidth()/2 - gamePort.getWorldWidth()/3 + 12.55;
 		newCamera = new Vector2((gamePort.getWorldWidth()/2),(gamePort.getWorldHeight() + 0.75f)); 
-		new DoorAreaCreator(game, world, map, player, gamecam, newCamera, "door-area-object_area2", new Vector2(1400,520), this, newMaxRight);
+		new DoorAreaCreator(game, world, map, player, gamecam, newCamera, "door-area-object_area2", new Vector2(1600,525), this, newMaxRight);
 		
 		//Generate door-hide
-		new DoorHideCreator(game, world, map, player, "door-hide-object_area2", new Vector2(1225,129));
+		new DoorHideCreator(game, world, map, player, "door-hide-object_area2");
 		
 		//Generate Chest
 		chestCreator.add(new ChestCreator(game, world, map, "chest-object_area1"));
@@ -170,6 +173,8 @@ public class Level_1 implements Screen{
 		
 		b2dr.render(world, gamecam.combined);
 		
+		game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+		hud.stage.draw();
 		game.batch.setProjectionMatrix(gamecam.combined);
 		game.batch.begin();
 		for(int i=0;i<chestCreator.size();i++)
@@ -208,7 +213,7 @@ public class Level_1 implements Screen{
 		renderer.dispose();
 		world.dispose();
 		b2dr.dispose();
-		//hud.dispose();
+		hud.dispose();
 	}
 
 	public double getMaxRight() {

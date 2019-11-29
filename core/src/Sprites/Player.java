@@ -389,9 +389,9 @@ public class Player extends Sprite{
 		return isHiding;
 	}
 	
-	public void setHiding(boolean isHiding, Vector2 HiddingPosition) {
+	public void setHiding(boolean isHiding) {
 		this.isHiding = isHiding;
-		position = HiddingPosition;
+		position = nowPosition;
 	}
 	
 	public void setPosition(Vector2 positions) {

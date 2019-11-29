@@ -17,21 +17,19 @@ import Screens.Level_1.Level_1;
 public class DoorHide extends InteractiveTileObject{
 	private GazeintoAbyss game;
 	private Player player;
-	private Vector2 hiddingPosition;
 	
-	public DoorHide(GazeintoAbyss game, World world, TiledMap map, MapObject object, Player player, Vector2 HiddingPosition) {
+	public DoorHide(GazeintoAbyss game, World world, TiledMap map, MapObject object, Player player) {
 		super(world, map , object, true);
 		fixture.setUserData(this);
 		this.game = game;
 		this.player = player;
-		this.hiddingPosition = HiddingPosition;
 	}
 
 	@Override
 	public void onHit() {
 		Gdx.app.log("Door Hide", "Collide");
 		if(Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-			player.setHiding(true, hiddingPosition);
+			player.setHiding(true);
 		}
 	}
 }
