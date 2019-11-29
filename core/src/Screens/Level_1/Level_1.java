@@ -56,9 +56,9 @@ public class Level_1 implements Screen{
 	protected Box2DDebugRenderer b2dr;
 	
 	protected Player player;
-	protected Melee enemyMelee;
-	protected Speed enemySpeed;
-	protected Ranged enemyRanged;
+	protected ArrayList<Melee> enemyMelee;
+	protected ArrayList<Speed> enemySpeed;
+	protected ArrayList<Ranged> enemyRanged;
 
 	protected TextureAtlas atlas;
 	
@@ -81,8 +81,15 @@ public class Level_1 implements Screen{
 		world.step(1/60f, 6, 2);
 		
 		player.update(dt);
-		//enemyRanged.update(dt);
+		for(int i=0;i<enemyRanged.size();i++)
+			enemyRanged.get(i).update(dt);
 
+		for(int i=0;i<enemySpeed.size();i++)
+			enemySpeed.get(i).update(dt);
+		
+		for(int i=0;i<enemyMelee.size();i++)
+			enemyMelee.get(i).update(dt);
+		
 		hud.update(dt);
 		
 		for(int i=0;i<chestCreator.size();i++)
@@ -106,6 +113,11 @@ public class Level_1 implements Screen{
 	public Level_1(GazeintoAbyss game, World world,Player player, String filepath_tmx) {
 		this.game = game;
 		chestCreator = new ArrayList<ChestCreator>();
+		
+		//ArrayList Enemy
+		enemyMelee = new ArrayList<Melee>();
+		enemyRanged = new ArrayList<Ranged>();
+		enemySpeed = new ArrayList<Speed>();
 		
 		//Camera movement
 		gamecam = new OrthographicCamera();
@@ -144,7 +156,7 @@ public class Level_1 implements Screen{
 		new WorldCreator(world, map);
 
 		//Generate Enemy
-		enemyRanged = new Ranged(world, new Vector2(772, 551), 772, 1421, player);
+		enemyMelee.add(new Melee(world, new Vector2(772, 551), 772, 1421, player));
 
 		//Generate door-area
 		double newMaxRight = gamePort.getWorldWidth()*2 + 1;
@@ -192,6 +204,14 @@ public class Level_1 implements Screen{
 		game.batch.begin();
 		for(int i=0;i<chestCreator.size();i++)
 			chestCreator.get(i).getChestInteractive().getChest().draw(game.batch);
+		for(int i=0;i<enemyRanged.size();i++)
+			enemyRanged.get(i).draw(game.batch);
+
+		for(int i=0;i<enemySpeed.size();i++)
+			enemySpeed.get(i).draw(game.batch);
+		
+		for(int i=0;i<enemyMelee.size();i++)
+			enemyMelee.get(i).draw(game.batch);
 		player.draw(game.batch);
 		game.batch.end();
 	}

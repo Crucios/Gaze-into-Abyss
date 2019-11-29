@@ -25,10 +25,8 @@ public class Melee extends Enemy {
     }
 
     public void update(float dt) {
-        /*stateTime += dt;
-        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
-        setRegion((TextureRegion) WalkAnimation.getKeyFrame(stateTime, true));*/
         setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight() / 2);
+        setRegion(getFrame(dt));
         nowPosition = new Vector2(b2body.getPosition().x * GazeintoAbyss.PPM, b2body.getPosition().y * GazeintoAbyss.PPM);
         //System.out.println("Enemy Position: " + nowPosition.x + " , " + nowPosition.y);
         System.out.println("ENEMY POSITION: " + nowPosition);
@@ -36,6 +34,54 @@ public class Melee extends Enemy {
         enemyMovement();
     }
 
+    @Override
+    public void generateAnimation() {
+    	setBounds(0,0,75 / GazeintoAbyss.PPM,70 / GazeintoAbyss.PPM);
+		
+		Array<TextureRegion> frames = new Array<TextureRegion>();
+		for(int i=0;i<2;i++) {
+			for(int j=0;j<5;j++)
+				frames.add(new TextureRegion(getTexture(), j*75, 261 + i*75, 75, 70));
+		}
+		moveEnemy = new Animation(0.1f, frames);
+		attackEnemy = new Animation(0.1f, frames);
+		frames.clear();
+		
+		standEnemy = new TextureRegion(getTexture(), 0, 261, 75, 70);
+    }
+
+    @Override
+    public TextureRegion getFrame(float dt) {
+    	currentState = getState();
+		
+		TextureRegion region;
+		switch(currentState) {
+		case MOVE:
+			region = (TextureRegion) moveEnemy.getKeyFrame(stateTimer, true);
+
+			break;
+		case ATTACK:
+			region = (TextureRegion) attackEnemy.getKeyFrame(stateTimer, true);
+			break;
+			default:
+				region = standEnemy;
+				break;
+		}
+		
+		setSize((float) 1.4,(float) 1.4);
+		
+		if(!moveright && !region.isFlipX()) {
+			region.flip(true, false);
+		}
+		else if(moveright && region.isFlipX()) {
+			region.flip(true, false);
+		}
+		
+		stateTimer = currentState == previousState ? stateTimer + dt : 0;
+		previousState = currentState;
+		return region;
+    }
+    
     @Override
     public void enemyMovement() {
         if (moveright && b2body.getLinearVelocity().x <= 2) {

@@ -22,13 +22,58 @@ public class Speed extends Enemy {
         //DefineEnemy();
     }
 
+    @Override
+    public void generateAnimation() {
+    	setBounds(0,0,75 / GazeintoAbyss.PPM,70 / GazeintoAbyss.PPM);
+		
+		Array<TextureRegion> frames = new Array<TextureRegion>();
+		for(int i=0;i<3;i++) {
+			frames.add(new TextureRegion(getTexture(), 194 + i*31, 193, 31, 21));
+		}
+		moveEnemy = new Animation(0.1f, frames);
+		attackEnemy = new Animation(0.1f, frames);
+		frames.clear();
+		
+		standEnemy = new TextureRegion(getTexture(), 0, 261, 75, 70);
+    }
+
+    @Override
+    public TextureRegion getFrame(float dt) {
+    	currentState = getState();
+		
+		TextureRegion region;
+		switch(currentState) {
+		case MOVE:
+			region = (TextureRegion) moveEnemy.getKeyFrame(stateTimer, true);
+
+			break;
+		case ATTACK:
+			region = (TextureRegion) attackEnemy.getKeyFrame(stateTimer, true);
+			break;
+			default:
+				region = standEnemy;
+				break;
+		}
+		
+		setSize((float) 1.1,(float) 1.1);
+		
+		region.flip(true, false);
+		if(!moveright && !region.isFlipX()) {
+			region.flip(true, false);
+		}
+		else if(moveright && region.isFlipX()) {
+			region.flip(true, false);
+		}
+		
+		stateTimer = currentState == previousState ? stateTimer + dt : 0;
+		previousState = currentState;
+		return region;
+    }
+    
     public void update(float dt) {
-        /*stateTime += dt;
-        setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
-        setRegion((TextureRegion) WalkAnimation.getKeyFrame(stateTime, true));*/
-        setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight() / 2);
+        setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight()/2);
         nowPosition = new Vector2(b2body.getPosition().x * GazeintoAbyss.PPM, b2body.getPosition().y * GazeintoAbyss.PPM);
-        //setRegion(getFrame(dt));
+        setRegion(getFrame(dt));
         System.out.println("ENEMY POSITION: " + nowPosition);
         enemyMovement();
     }
