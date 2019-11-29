@@ -48,20 +48,30 @@ public class Hud implements Disposable{
 	private Integer cureCount;
 	private Integer healingCount;
 	
+	Image pistolImage;
+	Image rifleImage;
+	Label pistolAmmo;
+	Label rifleAmmo;
+	Label ammoPistolLabel;
+	Label ammoRifleLabel;
+	private Integer ammoPistolCount;
+	private Integer ammoRifleCount;
+	
 	Image slownessDebuff;
 	Image fearDebuff;
 	
 	public Hud(SpriteBatch sb, Player player) {
-		worldTimer = 300;
-		timeCount = 0;
-		score = 0;
-		level = 1;
-		cureCount = 0;
-		healingCount = 0;
-		
 		this.player = player;
 		
-		hitpoint = 100;
+		score = this.player.getScore();
+		level = this.player.getLevel();
+		cureCount = this.player.getCurePotionCount();
+		healingCount = this.player.getHealingPotionCount();
+		
+		hitpoint = this.player.getHitPoint();
+		
+		ammoPistolCount = this.player.getAmmoPistol();
+		ammoRifleCount = this.player.getAmmoRifle();
 		
 		viewPort = new FitViewport(GazeintoAbyss.V_WIDTH, GazeintoAbyss.V_HEIGHT, new OrthographicCamera());
 		stage = new Stage(viewPort,sb);
@@ -79,8 +89,7 @@ public class Hud implements Disposable{
 		healingPotion.setDrawable(new TextureRegionDrawable(new TextureRegion(texture, 410, 17, 32, 34)));
 		healingPotion.setSize(texture.getWidth(), texture.getHeight());
 		
-		//countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-		//scoreLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+		scoreLabel = new Label(String.format("%d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		healthLabel = new Label("HEALTH",new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		stageLabel = new Label("LEVEL       -  ", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		levelLabel = new Label(String.format("%d", level), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
@@ -89,6 +98,10 @@ public class Hud implements Disposable{
 		healingCountLabel = new Label(String.format("%d", healingCount), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		timesLabel1 = new Label("  X  ", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		timesLabel2 = new Label("  X  ", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+		ammoPistolLabel = new Label("  X  ", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+		
+		
+		texture = new Texture(Gdx.files.internal("Resources/Item/Weapon.png"));
 		
 		table.add(healthLabel).expandX().padTop(30).padLeft(-50);
 		table.add(hitpointsLabel).expandX().padTop(30).padLeft(-150);
@@ -99,6 +112,8 @@ public class Hud implements Disposable{
 		table.add(healingPotion).expandX().padLeft(-70);
 		table.add(timesLabel1).expandX().padLeft(-225);
 		table.add(healingCountLabel).expandX().padLeft(-400);
+		
+		
 		
 		table.add(curePotion).expandX();
 		table.add(timesLabel2).expandX();

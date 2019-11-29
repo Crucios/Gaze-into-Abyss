@@ -57,11 +57,29 @@ public class Player extends Sprite{
 	private Vector2 nowPosition;
 	private Vector2 bulletPosition;
 	
+	private int curePotionCount;
+	private int healingPotionCount;
+	private int ammoPistol;
+	private int ammoRifle;
+	
+	private int level;
+	private int score;
+	private int hitPoint;
+	
 	public Player(World world, Vector2 position) {
 		super(new AtlasRegion(new TextureAtlas("Resources/Player/Player.pack").findRegion("sprite-player")));
 		this.world = world;
 		
 		this.position = position;
+		
+		curePotionCount = 0;
+		healingPotionCount = 0;
+		ammoPistol = 0;
+		ammoRifle = 0;
+		
+		level = 1;
+		
+		hitPoint = 100;
 		
 		currentState = State.STANDING_PISTOL;
 		previousState = State.STANDING_PISTOL;
@@ -370,12 +388,12 @@ public class Player extends Sprite{
 			isHiding = false;
 		}
 		if(pistol && Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-			PBullet = new PistolBullet(world,bulletPosition);
+			PBullet = new PistolBullet(world,nowPosition);
 			shooting = true;
 		}
 		else if(rifle && Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
 			if(RBulletTimer>0.2f) {
-				RBullet = new RifleBullet(world,bulletPosition);
+				RBullet = new RifleBullet(world,nowPosition);
 				RBulletTimer = 0;
 			}
 			shooting = true;
@@ -415,5 +433,47 @@ public class Player extends Sprite{
 	
 	public void setCamGlitched(boolean camGlitched) {
 		this.camGlitched = camGlitched;
+	}
+	public int getCurePotionCount() {
+		return curePotionCount;
+	}
+	public void setCurePotionCount(int curePotionCount) {
+		this.curePotionCount = curePotionCount;
+	}
+	public int getHealingPotionCount() {
+		return healingPotionCount;
+	}
+	public void setHealingPotionCount(int healingPotionCount) {
+		this.healingPotionCount = healingPotionCount;
+	}
+	public int getAmmoPistol() {
+		return ammoPistol;
+	}
+	public void setAmmoPistol(int ammoPistol) {
+		this.ammoPistol = ammoPistol;
+	}
+	public int getAmmoRifle() {
+		return ammoRifle;
+	}
+	public void setAmmoRifle(int ammoRifle) {
+		this.ammoRifle = ammoRifle;
+	}
+	public int getLevel() {
+		return level;
+	}
+	public void setLevel(int level) {
+		this.level = level;
+	}
+	public int getScore() {
+		return score;
+	}
+	public void setScore(int score) {
+		this.score = score;
+	}
+	public int getHitPoint() {
+		return hitPoint;
+	}
+	public void setHitPoint(int hitPoint) {
+		this.hitPoint = hitPoint;
 	}
 }
