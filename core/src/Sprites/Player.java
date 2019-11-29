@@ -169,7 +169,7 @@ public class Player extends Sprite{
 		}
 		else if(!isHiding && !setToTeleport && !hidden){
 			setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight() / 2);
-			nowPosition = new Vector2(b2body.getWorldPoint(position).x, b2body.getWorldPoint(position).y);
+			nowPosition = new Vector2(b2body.getPosition().x * GazeintoAbyss.PPM, b2body.getPosition().y * GazeintoAbyss.PPM);
 			setRegion(getFrame(dt));
 		}
 		if(shooting) {
@@ -180,7 +180,7 @@ public class Player extends Sprite{
 			PBulletTimer += dt;
 			RBulletTimer += dt;
 		}
-		//System.out.println("Player Position: " + nowPosition.x + " , " + nowPosition.y);
+		System.out.println("Player Position: " + nowPosition.x + " , " + nowPosition.y);
 	}
 	
 	public TextureRegion getFrame(float dt) {
@@ -343,13 +343,13 @@ public class Player extends Sprite{
 			bulletPosition.x -= 11.0f;
 		}
 		//If D and Shift left Key Pressed
-		if(Gdx.input.isKeyPressed(Input.Keys.D) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x <= 3) {
-			b2body.applyLinearImpulse(new Vector2(1.0f,0), b2body.getWorldCenter(), true);
+		if(Gdx.input.isKeyPressed(Input.Keys.D) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x <= 4) {
+			b2body.applyLinearImpulse(new Vector2(2f,0), b2body.getWorldCenter(), true);
 			bulletPosition.x += 20f;
 		}
 		//If A and Shift left Key Pressed
-		else if(Gdx.input.isKeyPressed(Input.Keys.A) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x >= -3) {
-			b2body.applyLinearImpulse(new Vector2(-1f,0), b2body.getWorldCenter(), true);
+		else if(Gdx.input.isKeyPressed(Input.Keys.A) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x >= -4) {
+			b2body.applyLinearImpulse(new Vector2(-2f,0), b2body.getWorldCenter(), true);
 			bulletPosition.x -= 20.0f;
 		}
 		
