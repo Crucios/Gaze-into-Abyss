@@ -1,0 +1,12 @@
+
+Monster.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Monster
+  rotate: false
+  xy: 1, 1
+  size: 384, 256
+  orig: 384, 256
+  offset: 0, 0
+  index: -1

@@ -2,6 +2,9 @@ package Screens.Level_1;
 
 import java.util.ArrayList;
 
+import Sprites.Melee;
+import Sprites.Ranged;
+import Sprites.Speed;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -27,6 +30,7 @@ import Tools.DoorHideCreator;
 import Tools.DoorLevelCreator;
 import Tools.WorldContactListener;
 import Tools.WorldCreator;
+import org.w3c.dom.ranges.Range;
 
 public class Level_1 implements Screen{
 	protected GazeintoAbyss game;
@@ -52,7 +56,10 @@ public class Level_1 implements Screen{
 	protected Box2DDebugRenderer b2dr;
 	
 	protected Player player;
-	
+	protected Melee enemyMelee;
+	protected Speed enemySpeed;
+	protected Ranged enemyRanged;
+
 	protected TextureAtlas atlas;
 	
 	//Chest
@@ -74,7 +81,8 @@ public class Level_1 implements Screen{
 		world.step(1/60f, 6, 2);
 		
 		player.update(dt);
-		
+		//enemyRanged.update(dt);
+
 		hud.update(dt);
 		
 		for(int i=0;i<chestCreator.size();i++)
@@ -134,7 +142,10 @@ public class Level_1 implements Screen{
 		
 		//Generate Wall and Ground
 		new WorldCreator(world, map);
-				
+
+		//Generate Enemy
+		enemyRanged = new Ranged(world, new Vector2(772, 551), 772, 1421, player);
+
 		//Generate door-area
 		double newMaxRight = gamePort.getWorldWidth()*2 + 1;
 		Vector2 newCamera = new Vector2((gamePort.getWorldWidth()/2),(gamePort.getWorldHeight()/4)); 

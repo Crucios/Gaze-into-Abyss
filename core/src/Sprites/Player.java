@@ -456,7 +456,7 @@ public class Player extends Sprite{
 	public Vector2 getPosition() {
 		return position;
 	}
-	
+	public Vector2 getNowPosition() { return nowPosition; }
 	public boolean isCamGlitched() {
 		return camGlitched;
 	}

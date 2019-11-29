@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.3.0" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="200" height="17" tilewidth="16" tileheight="16" infinite="0" nextlayerid="20" nextobjectid="10">
+ <tileset firstgid="1" source="../../World/Dungeon-Door.tsx"/>
+ <layer id="1" name="ground" width="200" height="17">
+  <data encoding="base64" compression="zlib">
+   eAHt0ulWjgEYheEXmaIMUSpFE06DDE1SQopGFadBhsyKZpSKOkzXUfT92c9a1/9n3WsXRS4FUiAFUiAFUiAFUiAFUiAFUiAFUiAFUiAFUiAFUiAFUiAFUiAFUiAFUiAFUiAFUiAFUiAFUiAFUiAFUiAFUmC/ChwoK4qDHKKMwxzhKMc4TjknOEkFlZziNGc4SxXnOE81NVygljrquUgDjVziMk0000IrbVzhKtfIf+lXyv1dt8EbtHOTW9zmDh100kU3Pdyll3v00c99BnjAQx4xyGOGGOYJTxlhlDHGmWCSZ0wxzQzPeUH+S79S7u+lDb5ilte84S3vmOM9H/jIJz7zha98Y54FvvODRZZYZoVV1ljnJ7/4zQab/GGLbXb4yz922SP/pV8p9/cf2hDPbQ==
+  </data>
+ </layer>
+ <layer id="7" name="background" width="200" height="17">
+  <data encoding="base64" compression="zlib">
+   eAHt2jmO6zAQhGHNvJN4HV/Lu6+lXdfSrmPMnzyACcmgh1kZ+KJCd9AoBgLcZFnWokOOAiUq1GjwPw9lmtWtfL1J2Y3Ybmu+0P8VG3oMGDFhhpuHMs3qVr7epOxGbLc1P39l2Q8u2GGPA444wc1DmWZ1K19vUnYjttuav3gDb3xwxQ13PPCEm4cyzepWvt6k7EZstzVveAMtOuQoUKJCDTcPZZrVrXy9SdmN2G5rvvAGVmzoMWDEhBluHso0q1v5epOyG7Hd1vz8zfcHLthhjwOOOMHNQ5lmdStfb1J2I7bbmr94A298cMUNdzzwhJuHMs3qVr7epOxGbLc1b3gDLTrkKFCiQg03D2Wa1a18vUnZjdhua77wBlZs6DFgxIQZbh7KNKtb+XqTshux3db8/I/vD1ywwx4HHHGCm4cyzepWvt6k7EZstzV/8Qbe+OCKG+544Ak3D2Wa1a18vUnZjdhua97wBlp0yFGgRIUabh7KNKtb+XqTshux3dZ84Q2s2NBjwIgJM9w8lGlWt/L1JmU3YrutOX9B1E8X0AV0AV1AF9AFdAFd4A8v8AuzryLX
+  </data>
+ </layer>
+ <layer id="6" name="door" width="200" height="17">
+  <data encoding="base64" compression="zlib">
+   eAHt18dKGFEUBmCTYKwQY4MktjyMXbCkQBIT48PYBbtg14exC3bBrm+Sz+1sZ+4swv3h2557+A+zmIKCmNhAbCA2EBuIDeTbQOGrgoK3FFFMCaWUUU5WyeudrPaNc2IDLw00+wZaaKWNdjropIusktc7We0b58QGXhoY8g0MM8IoY4wzwSRZJa93puw8zQyzzDHPAoukzZIZy6ywyhrrbLDJFjHhGgh93+Tm2+65wy577HPAIUdklbzeObbzCaeccc4Fl1yRNtdm3HDLHfc88MgTz8SEayD0fZObF772/0ERxZRQShnlZJW83nln5wreU0kV1dRQS9p8MOMjn6ijngYaaeIzMeEaCH3f5ObN7tlCK22000EnXWSVvN7ptnMPvfTxha984ztp88OMn/yin9/8YYC/DBITroHQ901uPuSew4wwyhjjTDBJVsnrnSk7TzPDLHPMs8AiabNkxjIrrLLGOhtsskVMuAZC3ze5+bZ77rDLHvsccMgRWSWvd47tfMIpZ5xzwSVXpM21GTfccsc9DzzyxDMx4RoIfd/k5oVv/H9QRDEllFJGOVklr3fe2bmC91RSRTU11JI2H8z4yCfqqKeBRpr4TEy4BkLfN7l5s3u20Eob7XTQSRdZJa93uu3cQy99fOEr3/hO2vww4ye/6Oc3fxjgL4PEhGsg9H2Tmw+55zAjjDLGOBNMklXyemfKztPMMMsc8yywSNosmbHMCqussc4Gm2wRE66B0PdNbr7tnjvsssc+BxxyRFbJ651jO59wyhnnXHDJFWlzbcYNt9xxzwOPPPFMTLgGQt833OZxcmwgNhAbiA3EBmIDsYH/p4F/uzPSCQ==
+  </data>
+ </layer>
+ <objectgroup id="14" name="door-level-object">
+  <object id="3" x="657.333" y="38.6667" width="129.333" height="185.333"/>
+ </objectgroup>
+ <objectgroup id="15" name="door-area-object">
+  <object id="5" x="1072" y="66.6667" width="129.333" height="158.667"/>
+  <object id="6" x="2993.33" y="64" width="128" height="158.667"/>
+ </objectgroup>
+ <objectgroup id="16" name="door-hide-object">
+  <object id="7" x="1469.33" y="64" width="124" height="157.333"/>
+ </objectgroup>
+ <objectgroup id="17" name="chest-object">
+  <object id="8" x="2072" y="165.333" width="66" height="58"/>
+ </objectgroup>
+ <objectgroup id="18" name="ground-object">
+  <object id="9" x="0.333333" y="224" width="3200" height="48"/>
+ </objectgroup>
+</map>
