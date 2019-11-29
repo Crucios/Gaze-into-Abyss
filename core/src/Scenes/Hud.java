@@ -89,34 +89,51 @@ public class Hud implements Disposable{
 		healingPotion.setDrawable(new TextureRegionDrawable(new TextureRegion(texture, 410, 17, 32, 34)));
 		healingPotion.setSize(texture.getWidth(), texture.getHeight());
 		
+		texture = new Texture(Gdx.files.internal("Resources/Item/Weapon.png"));
+		pistolImage = new Image();
+		pistolImage.setDrawable(new TextureRegionDrawable(new TextureRegion(texture, 62, 0, 66, 40)));
+		pistolImage.setSize(texture.getWidth(), texture.getWidth());
+		
+		rifleImage = new Image();
+		rifleImage.setDrawable(new TextureRegionDrawable(new TextureRegion(texture, 476, 0, 60, 28)));
+		rifleImage.setSize(texture.getWidth(), texture.getWidth());
+		rifleImage.setScale(1.2f);
+		
 		scoreLabel = new Label(String.format("%d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		healthLabel = new Label("HEALTH",new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		stageLabel = new Label("LEVEL       -  ", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		levelLabel = new Label(String.format("%d", level), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-		hitpointsLabel = new Label (String.format("%3d", hitpoint), new Label.LabelStyle(new BitmapFont() , Color.WHITE));
+		hitpointsLabel = new Label (String.format("%d", hitpoint), new Label.LabelStyle(new BitmapFont() , Color.WHITE));
 		cureCountLabel = new Label(String.format("%d", cureCount), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		healingCountLabel = new Label(String.format("%d", healingCount), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		timesLabel1 = new Label("  X  ", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		timesLabel2 = new Label("  X  ", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+		
+		pistolAmmo = new Label(String.format("%d", ammoPistolCount), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+		rifleAmmo = new Label(String.format("%d", ammoRifleCount), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		ammoPistolLabel = new Label("  X  ", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+		ammoRifleLabel = new Label("  X  ", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 		
-		
-		texture = new Texture(Gdx.files.internal("Resources/Item/Weapon.png"));
-		
-		table.add(healthLabel).expandX().padTop(30).padLeft(-50);
-		table.add(hitpointsLabel).expandX().padTop(30).padLeft(-150);
-		table.add(stageLabel).expandX().padTop(30).padRight(-800);
-		table.add(levelLabel).expandX().padTop(30).padRight(-650);
+		table.add(healthLabel).expandX().padTop(30).padLeft(-10);
+		table.add(hitpointsLabel).expandX().padTop(30).padLeft(-30);
+		table.add(stageLabel).expandX().padTop(30).padRight(-1100);
+		table.add(levelLabel).expandX().padTop(30).padRight(-1100);
 		
 		table.row();
-		table.add(healingPotion).expandX().padLeft(-70);
-		table.add(timesLabel1).expandX().padLeft(-225);
-		table.add(healingCountLabel).expandX().padLeft(-400);
+		table.add(healingPotion).expandX().padLeft(-50);
+		table.add(timesLabel1).expandX().padLeft(-100);
+		table.add(healingCountLabel).expandX().padLeft(-100);
 		
+		table.add(pistolImage).expandX().padLeft(75);
+		table.add(ammoPistolLabel).expandX().padLeft(-50);
+		table.add(pistolAmmo).expandX().padLeft(-50);
 		
+		table.add(rifleImage).expandX();
+		table.add(ammoRifleLabel).expandX().padRight(75);
+		table.add(rifleAmmo).expandX().padLeft(-150);
 		
-		table.add(curePotion).expandX();
-		table.add(timesLabel2).expandX();
+		table.add(curePotion).expandX().padRight(-10);
+		table.add(timesLabel2).expandX().padRight(-10);
 		table.add(cureCountLabel).expandX();
 		stage.addActor(table);
 	}
