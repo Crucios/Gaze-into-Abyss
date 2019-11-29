@@ -27,7 +27,6 @@ public class DoorHide extends InteractiveTileObject{
 
 	@Override
 	public void onHit() {
-		Gdx.app.log("Door Hide", "Collide");
 		if(Gdx.input.isKeyJustPressed(Input.Keys.E)) {
 			player.setHiding(true);
 		}

@@ -75,6 +75,8 @@ public class Level_1 implements Screen{
 		
 		player.update(dt);
 		
+		hud.update(dt);
+		
 		for(int i=0;i<chestCreator.size();i++)
 			chestCreator.get(i).update(dt);
 		

@@ -66,6 +66,9 @@ public class Player extends Sprite{
 	private int score;
 	private int hitPoint;
 	
+	private boolean debuffSlowness;
+	private boolean debuffFear;
+	
 	public Player(World world, Vector2 position) {
 		super(new AtlasRegion(new TextureAtlas("Resources/Player/Player.pack").findRegion("sprite-player")));
 		this.world = world;
@@ -98,6 +101,9 @@ public class Player extends Sprite{
 		hidden = false;
 		camGlitched = false;
 		teleportNextLevel = false;
+		
+		debuffSlowness = false;
+		debuffFear = false;
 		
 		generateAnimation();
 		
@@ -398,6 +404,13 @@ public class Player extends Sprite{
 			pistol = false;
 		}
 		
+		if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
+			
+		}
+		if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
+			
+		}
+		
 		if(Gdx.input.isKeyJustPressed(Input.Keys.E) && isHiding) {
 			isHiding = false;
 		}
@@ -492,5 +505,17 @@ public class Player extends Sprite{
 	}
 	public void setHitPoint(int hitPoint) {
 		this.hitPoint = hitPoint;
+	}
+	public boolean isDebuffSlowness() {
+		return debuffSlowness;
+	}
+	public void setDebuffSlowness(boolean debuffSlowness) {
+		this.debuffSlowness = debuffSlowness;
+	}
+	public boolean isDebuffFear() {
+		return debuffFear;
+	}
+	public void setDebuffFear(boolean debuffFear) {
+		this.debuffFear = debuffFear;
 	}
 }
