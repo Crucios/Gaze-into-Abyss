@@ -73,6 +73,9 @@ public class MainMenuScreen implements Screen {
         if (Gdx.input.getX() <= 710 && Gdx.input.getX() >= 570 && Gdx.input.getY() <= 390 && Gdx.input.getY() >= 340)
         {
             game.batch.draw(LoadButtonActive,ExitX,200, ExitB_WIDTH, ExitB_HEIGHT);
+            if (Gdx.input.isTouched()) {
+                game.setScreen(new GameOver(game));
+            }
         }else {
             game.batch.draw(LoadButtonInactive,ExitX,200, ExitB_WIDTH, ExitB_HEIGHT);
         }

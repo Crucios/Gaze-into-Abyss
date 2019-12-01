@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.5" orientation="orthogonal" renderorder="right-down" width="162" height="108" tilewidth="16" tileheight="16" infinite="0" nextlayerid="29" nextobjectid="30">
+ <tileset firstgid="1" source="../../World/Dungeon-Door.tsx"/>
+ <layer id="11" name="background" width="162" height="108">
+  <data encoding="base64" compression="zlib">
+   eJzt3DmO6zAQhGFKuonHz/a5vJ9LXs8lr8eYAl7KydhgN/h/QAWqDpgqqpRSOisX5arclDudSRf929pTeSlv5aN86Uy66N/W5l1K/5SFslRWHZ1FF/3b2lZv7JS9clCOHZ1FF/3b2llvXJSrclPuHZ1FF/3b2lNvvJS38lG+HZ1FF/3b2rzXv4CyUJbKqqez6KJ/W9vqjZ2yVw7Ksaez6KJ/WzvrjYtyVW7Kvaez6KJ/W3vqjZfyVj7Kt6ez6KJ/W5sP+hdQFspSWQ10Fl30b2tbvbFT9spBOQ50Fl30b2tnvXFRrspNuQ90Fl30b2tPvfFS3spH+Q50Fl30bwAAAAAAAAAAAAAAAPznaXuDrnwXhaftDbryXRSetjfoyndReNreoCvfReFpe4OufBeFp+0NuvJdFJ62N+jKd1F42t6gK99F4Wl7g658F4Wn7Q268l0UnrY36Mp3UXja3qAr30XhaXuDrnwXhaftDbryHQAAAAAAAAAAAAAAAMoalVPKb1Jwa/NWw6Q8Un6TglubtxpmXUo/XX6TglubtxrWenfT5TcpuLV5q2HUu6cuv0nBrc1bDZPefXT5TQpubd5qmPX6T+jzmxTc2rzVsNa7mz6/ScGtzVsNo9499flNCm5t3mqY9O6jz29ScGvzVsNs0H/CkN+k4NbmrYa13t0M+U0Kbm3eahj17mnIb1Jwa/NWw6R3H0N+k4JbmzcAAAAAAAAAAAAAAAD8bUx+9iy4xdgAsTAlP3sW3GJsgFjwtGfBLcYGiAVPexbcYmyAWPC0Z8EtxgaIBU97FtxibIBY8LRnwS3GBogFT3sW3GJsgFjwtGfBLcYGiAVPexbcYmyAWPC0Z8EtxgaIBU97FtxibIBY8LRnwS3GBogFT3sW3NgAAQAAAAAAAAAAAAAA8OwX4sCFgA==
+  </data>
+ </layer>
+ <layer id="12" name="ground" width="162" height="108">
+  <data encoding="base64" compression="zlib">
+   eJzt3NeyFAUYRtEBG0XFBEZMICq8BmBCEQwIiKgoqLzGAQyoYMSAksyPyb45t1OHC2q6j2tV7avu6vnmBf7ZDAAAAAAAAAAAuBFrhtlsbd1SQ62rW+u2Wl+31x11Z22ou+ruuqfurftqY22q++uBerAeqofrkdpcj9Zj9Xg9UU/WltpaT9W2erqeqWdre+0Ypr9v+flKvzfW9262nf3Grtpdz9Xz9UK9WC/Vnnq5Xqm99Wrtq/31Wr1eb9SbdaDeqoN1qA7X23Wk3qmj9W69V+/XsfqgPqzjdaI+qo/rkzo5TH/f8vOVfm+s791sS/3GqTpdZ+rT+qw+ry/qbH1ZX9XXda7O1zf1bX1X39cP9WNdqJ/q5/qlfq2L9Vv9Xpfqcl2pq3Wt/qg/66/6u/6pf+u/Yfr7lp+v9HtjfQ8AAAAAAAAAAAAAAAAAAGAqpn63w775+6Zi6nc77Ju/byqmfrfDvvn7AAAAAAAAAAAAAAAAAAAA/m/Geg/DrsXtWoSx3sOwa3G7FmGs9zDsWtwuAAAAAAAAAAAAAAAAAACAKVszzGZrh/Hey7Bv/r7VYmf/Zdcw3nsZ9s3ft1os9V9ODeO9l2Hf/H0AAAAAAACsftcBDmcOIQ==
+  </data>
+ </layer>
+ <layer id="13" name="door-area" width="162" height="108">
+  <data encoding="base64" compression="zlib">
+   eJzt3LdSG3scR3GwQUSNswvnhwGRxDi7cH4YkEQaMgX5YcgSQ6Yg+lHuqTW30l2PfnP3nJlPu/vdXRU0/BsazMzsv9TU2NDQjAxa0Io2tKMDncg21nul/d/r4jfWjRx60Is+9GMAeQz6O7S/3BC/sWEUUEQJIxjFGMYxUaff4ST3ncI0ZjCLOcxjoYZNSV/PkmuD97+JLWxjB7vYQxkV7NfpGx1w30Mc4RgnOMUZzmvYlPT1LLma7vD3ITJoQSva0I4OdCJ7pz7b7nHf+3iAh3iEx3iCpzVsSvp6llxdvP9u5NCDXvShHwPIY7BO3+gt932H9/iAj/iEz/hSw6akr2fJNcT7H0YBRZQwglGMYRwTdfpGk9x3CtOYwSzmMI+FGjYlfT1Lrg3e/ya2sI0d7GIPZVSwX6dvdMB9D3GEY5zgFGc4r2FT0tez5Gq6y9+HyKAFrWhDOzrQiezd+my7x33v4wEe4hEe4wme1rAp6etZcnXx/ruRQw960Yd+DCCPwTp9o7fc9x3e4wM+4hM+40sNm5K+niXXEO9/GAUUUcIIRjGGcUzU6RtNct8pTGMGs5jDPBZq2JT09Sy5Nnj/m9jCNnawiz2UUcF+nb7RAfc9xBGOcYJTnOG8hk1JX8/MzMzMzMzMzMzMzMzMzMzMzMzMzMzSWRrP2EjjM0cvjWdspPGZo5fGMzbS+MzRS+MZG2l85uil8YyNND5z9NJ4xkYanzl6aTxjI43PHL00nrGRxmeOXhrP2EjjM0cvjWdspPGZzczMzMzMzMzMzMzMzMzMzMzMzMzMLPk8Y8Mi5BkbFiHP2LAIecaGRcgzNixCnrFhEfKMDYuQZ2xYhDxjwyLkGRtmZmZmZmZmZmZmZmZmZmZmZmZmZvWrqbGhoRkZtKAVbWhHBzqR9X/C7S/XxW+sGzn0oBd96McA8hj0d/ivRT9XZJENS1jGClaxhvUA26obYtMwCiiihBGMYgzjmAi4O0LRzxW5YMMlrnCNG9ziT4Bt1W2waRNb2MYOdrGHMirYD7g7QtHPFXnGhud4gZd4hdd4E2BbdU1sakYGLWhFG9rRgU5kA+6OUPRzRb6y4Ru+4wd+4hd+B9hWXRebupFDD3rRh34MII/BgLsjFP1ckUU2LGEZK1jFGtYDbKtuiE3DKKCIEkYwijGMYyLg7ghFP1fkgg2XuMI1bnCLPwG2VbfBpk1sYRs72MUeyqhgP+DuCEU/V+QZG57jBV7iFV7jTYBt1TWxqRkZtKAVbWhHBzqRDbg7QtHPFfnKhm/4jh/4iV/4HWBbdV1s6kYOPehFH/oxgDwGA+6OUPRzRRbZsIRlrGAVa1gPsK26ITYNo4AiShjBKMYwjomAuyMU/VyRCzZc4grXuMEt/gTYVt0GmzaxhW3sYBd7KKOC/YC7zczMzMzMzMzMzMzMzMzMzNLcP7N/fQA=
+  </data>
+ </layer>
+ <layer id="14" name="door-hide" width="162" height="108">
+  <data encoding="base64" compression="zlib">
+   eJzt1slRQgEURcGvZKGixqUoxsUcF3Monig+VdBddfZvcRdvGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOB+LJ6GYVmrWtemtrV7uvVlPJJ9ezvUsU51rktd7ZARvTwPw2u91bTe66M+n299GY/kq71916x+6rfm9WeHjGjR3pa1qnVtals7O2RE+/Z2qGOd6lyXutohI3qZ9B/WW03rvT7qc3Lry3gkX+3tu2b1U781rz87ZESL9rasVa1rU9va2SEj2re3Qx3rVOe61NUOAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAO7CP6YVJkk=
+  </data>
+ </layer>
+ <layer id="15" name="door-level" width="162" height="108">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T20IX6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgNcAEW8AAQ==
+  </data>
+ </layer>
+ <objectgroup id="18" name="ground">
+  <object id="7" x="16" y="224" width="2208" height="48"/>
+  <object id="13" x="16" y="656" width="1920" height="48"/>
+  <object id="20" x="17.3333" y="1086.67" width="2128" height="48"/>
+  <object id="21" x="16" y="1520" width="1792" height="48"/>
+ </objectgroup>
+ <objectgroup id="19" name="chest-object-area1">
+  <object id="8" x="2121.33" y="176" width="86.6667" height="46.6667"/>
+ </objectgroup>
+ <objectgroup id="16" name="door-area2-object-area1">
+  <object id="4" x="1182" y="70" width="100" height="150"/>
+ </objectgroup>
+ <objectgroup id="17" name="door-area3-object-area1">
+  <object id="6" x="860" y="74.6667" width="104" height="146.667"/>
+ </objectgroup>
+ <objectgroup id="20" name="door-area1-object-area2">
+  <object id="9" x="1580" y="-592"/>
+  <object id="11" x="202" y="506" width="110" height="146"/>
+ </objectgroup>
+ <objectgroup id="21" name="door-area4-object-area2">
+  <object id="12" x="1180" y="506.667" width="104" height="146.667"/>
+ </objectgroup>
+ <objectgroup id="22" name="chest-object-area2">
+  <object id="14" x="1808" y="608" width="96" height="48"/>
+ </objectgroup>
+ <objectgroup id="23" name="door-area1-object-area3">
+  <object id="17" x="204" y="937.333" width="102.667" height="148"/>
+ </objectgroup>
+ <objectgroup id="24" name="door-hide-object-area3">
+  <object id="18" x="1156" y="933.333" width="106.667" height="152"/>
+ </objectgroup>
+ <objectgroup id="25" name="chest-object-area3">
+  <object id="19" x="2032" y="1040" width="96" height="48"/>
+ </objectgroup>
+ <objectgroup id="26" name="door-area2-object-area4">
+  <object id="23" x="204" y="1368" width="102" height="146"/>
+ </objectgroup>
+ <objectgroup id="27" name="door-hide-object-area4">
+  <object id="24" x="838" y="1364" width="108" height="158"/>
+ </objectgroup>
+ <objectgroup id="28" name="door-level5-object-area4">
+  <object id="27" x="1536" y="1328" width="128" height="192"/>
+ </objectgroup>
+</map>

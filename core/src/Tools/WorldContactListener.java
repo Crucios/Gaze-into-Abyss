@@ -1,14 +1,11 @@
 package Tools;
 
+import Sprites.*;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
-
-import Sprites.InteractiveTileObject;
-import Sprites.PistolBullet;
-import Sprites.RifleBullet;
 
 public class WorldContactListener implements ContactListener{
 
@@ -30,6 +27,18 @@ public class WorldContactListener implements ContactListener{
 			}
 			if(object.getUserData() != null && PistolBullet.class.isAssignableFrom(object.getUserData().getClass())) {
 				((PistolBullet) object.getUserData()).onHit();
+			}
+			if (object.getUserData() != null && Melee.class.isAssignableFrom(object.getUserData().getClass())) {
+				((Melee) object.getUserData()).onHit();
+			}
+			if (object.getUserData() != null && Speed.class.isAssignableFrom(object.getUserData().getClass())) {
+				((Speed) object.getUserData()).onHit();
+			}
+			if (object.getUserData() != null && Ranged.class.isAssignableFrom(object.getUserData().getClass())) {
+				((Ranged) object.getUserData()).onHit();
+			}
+			if (object.getUserData() != null && EnemyFire.class.isAssignableFrom(object.getUserData().getClass())) {
+				((EnemyFire) object.getUserData()).onHit();
 			}
 		}
 	}
