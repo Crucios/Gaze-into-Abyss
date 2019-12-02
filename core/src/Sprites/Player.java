@@ -81,8 +81,8 @@ public class Player extends Sprite{
 		
 		curePotionCount = 0;
 		healingPotionCount = 0;
-		ammoPistol = 0;
-		ammoRifle = 0;
+		ammoPistol = 100;
+		ammoRifle = 100;
 		
 		level = 1;
 		
@@ -218,10 +218,9 @@ public class Player extends Sprite{
 				bul.update(dt);
 			}
 		}
-		if(shooting) { 
-			bulletPosition = nowPosition;
-			if(pistol) {
-				
+		bulletPosition = nowPosition;
+		if(shooting) { 	
+			if(pistol) {			
 				bulletPosition.y += 39f;
 				if(toRight) {
 					bulletPosition.x += 30f;
@@ -436,16 +435,18 @@ public class Player extends Sprite{
 			isHiding = false;
 		}
 		if(pistol && Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D)) {
-			if(PBulletTimer>0.4f) {
+			if(PBulletTimer>0.4f && ammoPistol > 0) {
 				PBullet.add(new PistolBullet(world,bulletPosition));
 				PBulletTimer = 0;
+				ammoPistol--;
 			}
 			shooting = true;
 		}
 		else if(rifle && Gdx.input.isKeyPressed(Input.Keys.SPACE) && !Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D)) {
-			if(RBulletTimer>0.2f) {
+			if(RBulletTimer>0.2f && ammoRifle > 0) {
 				RBullet.add(new RifleBullet(world,bulletPosition));
 				RBulletTimer = 0;
+				ammoRifle--;
 			}
 			shooting = true;
 		}
