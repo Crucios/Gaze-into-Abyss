@@ -219,25 +219,23 @@ public class Player extends Sprite{
 			}
 		}
 		bulletPosition = nowPosition;
-		if(shooting) { 	
-			if(pistol) {			
-				bulletPosition.y += 39f;
-				if(toRight) {
-					bulletPosition.x += 30f;
-				}
-				else {
-					bulletPosition.x -= 30f;
-				}
+		if(pistol) {			
+			bulletPosition.y += 39f;
+			if(toRight) {
+				bulletPosition.x += 30f;
 			}
 			else {
-				
-				bulletPosition.y += 28f;
-				if(toRight) {
-					bulletPosition.x += 30f;
-				}
-				else {
-					bulletPosition.x -= 30f;
-				}
+				bulletPosition.x -= 30f;
+			}
+		}
+		else {
+			
+			bulletPosition.y += 28f;
+			if(toRight) {
+				bulletPosition.x += 30f;
+			}
+			else {
+				bulletPosition.x -= 30f;
 			}
 		}
 		PBulletTimer += dt;
@@ -309,7 +307,7 @@ public class Player extends Sprite{
 			break;
 		case HIDDING:
 			region = (TextureRegion) playerHidding.getKeyFrame(stateTimer);
-			setSize((float) 1.4,(float) 1.4);
+			setSize((float) 1.4,(float) 1.4);  
 			break;
 			default:
 				region = playerStand;

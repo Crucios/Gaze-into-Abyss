@@ -550,7 +550,7 @@
  <objectgroup id="21" name="door-hide-object-area4-2">
   <object id="30" x="1520" y="1360" width="112" height="160"/>
  </objectgroup>
- <objectgroup id="22" name="door-level-object">
+ <objectgroup id="22" name="door-level-object-toLevel4">
   <object id="32" x="1168" y="899" width="128" height="189"/>
  </objectgroup>
  <objectgroup id="23" name="chest-object-area1">

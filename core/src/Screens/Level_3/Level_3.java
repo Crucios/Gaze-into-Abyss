@@ -5,10 +5,12 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
 import Screens.Level_1.Level_1;
+import Screens.Level_4.Level_4;
 import Sprites.Player;
 import Tools.ChestCreator;
 import Tools.DoorAreaCreator;
 import Tools.DoorHideCreator;
+import Tools.DoorLevelCreator;
 import Tools.WorldCreator;
 
 public class Level_3 extends Level_1{
@@ -61,11 +63,11 @@ public class Level_3 extends Level_1{
 		chestCreator.add(new ChestCreator(game, world, map, "chest-object-mimic-area3"));
 		chestCreator.add(new ChestCreator(game, world, map, "chest-object-mimic-area4"));
 		
-		//Generate door-level
-//		Level_1 nextLevel = new Level_4(game, new World(new Vector2(0, -10),true), player,"Resources/Levels/Level 4/Level 4.tmx");
-//		newCamera = new Vector2(nextLevel.getGamePort().getWorldWidth()/2, nextLevel.getGamePort().getWorldHeight() + 9.4f);
-//		newMaxRight = nextLevel.getGamePort().getWorldWidth() + 20.3;		
-//		Vector2 newPosition = new Vector2(1639, 1428);
-//		new DoorLevelCreator(game, world, map, player, nextLevel, newCamera, newMaxRight, newPosition,"door-level-object-toLevel3");
+		//enerate door-level
+		Level_4 nextLevel = new Level_4(game, new World(new Vector2(0, -10),true), player,"Resources/Levels/Level 4/Level 4.tmx");
+		newCamera = new Vector2((gamePort.getWorldWidth()/2 - gamePort.getWorldWidth()/3 - 12f),(gamePort.getWorldHeight() + 9.4f)); 
+		newMaxRight = nextLevel.getGamePort().getWorldWidth() + 20.3;		
+		Vector2 newPosition = new Vector2(300, 1400);
+		new DoorLevelCreator(game, world, map, player, nextLevel, newCamera, newMaxRight, newPosition,"door-level-object-toLevel4",false,"");
 	}
 }
