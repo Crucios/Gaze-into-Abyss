@@ -570,7 +570,7 @@
  <objectgroup id="28" name="Chest-object-mimic-area4">
   <object id="46" x="1952" y="1456" width="68" height="59"/>
  </objectgroup>
- <objectgroup id="29" name="Wall-object">
+ <objectgroup id="29" name="wall-object">
   <object id="8" x="3216" y="0" width="16" height="272"/>
   <object id="9" x="3216" y="432" width="16" height="272"/>
   <object id="10" x="3216" y="864" width="16" height="272"/>

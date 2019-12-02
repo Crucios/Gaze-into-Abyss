@@ -393,7 +393,7 @@
  <objectgroup id="13" name="door-area-object-f3-t2">
   <object id="19" x="1067" y="938.667" width="105.333" height="149"/>
  </objectgroup>
- <objectgroup id="16" name="door-level-obect-toLevel3">
+ <objectgroup id="16" name="door-level-object-toLevel3">
   <object id="28" x="664" y="24" width="142" height="197"/>
  </objectgroup>
  <objectgroup id="17" name="door-hide-area1">

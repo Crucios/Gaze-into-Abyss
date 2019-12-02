@@ -2,9 +2,6 @@ package Screens.Level_1;
 
 import java.util.ArrayList;
 
-import Sprites.Melee;
-import Sprites.Ranged;
-import Sprites.Speed;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -22,15 +19,18 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
 import Scenes.Hud;
+import Screens.GameOver;
 import Screens.Level2.Level_2;
+import Sprites.Melee;
 import Sprites.Player;
+import Sprites.Ranged;
+import Sprites.Speed;
 import Tools.ChestCreator;
 import Tools.DoorAreaCreator;
 import Tools.DoorHideCreator;
 import Tools.DoorLevelCreator;
 import Tools.WorldContactListener;
 import Tools.WorldCreator;
-import org.w3c.dom.ranges.Range;
 
 public class Level_1 implements Screen{
 	protected GazeintoAbyss game;
@@ -64,6 +64,8 @@ public class Level_1 implements Screen{
 	
 	//Chest
 	protected ArrayList<ChestCreator> chestCreator;
+	
+	protected boolean gameOver;
 	
 	public void handleInput(float dt) {
 		player.handleinput();
@@ -103,6 +105,15 @@ public class Level_1 implements Screen{
 			player.setCamGlitched(false);
 		}
 		
+		if(player.getHitPoint() <= 0 )
+			gameOver = true;
+		
+		if(gameOver) {
+			gameOver = false;
+			game.setScreen(new GameOver(game));
+		}
+			
+			
 		//Update camera every iteration
 		gamecam.update();
 		
@@ -142,6 +153,8 @@ public class Level_1 implements Screen{
 		
 		this.world = world;
 		b2dr = new Box2DDebugRenderer();
+		
+		gameOver = false;
 		
 		generateLevel();
 		

@@ -238,6 +238,7 @@ public class Player extends Sprite{
 		}
 		PBulletTimer += dt;
 		RBulletTimer += dt;
+		
 		System.out.println("Player Position: " + nowPosition.x + " , " + nowPosition.y);
 	}
 	
@@ -537,4 +538,12 @@ public class Player extends Sprite{
 	public void setDebuffFear(boolean debuffFear) {
 		this.debuffFear = debuffFear;
 	}
+	@Override
+	public String toString() {
+		return level + "\n" + score + "\n" + hitPoint + "\n" + (int)position.x + "\n" + (int)position.y + "\n" 
+				+ curePotionCount + "\n" + healingPotionCount + "\n" +
+				ammoPistol + "\n" + ammoRifle;
+	}
+	
+	
 }

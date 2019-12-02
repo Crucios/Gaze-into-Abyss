@@ -1,8 +1,10 @@
 package Sprites;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
@@ -41,6 +43,12 @@ public class DoorLevel extends InteractiveTileObject{
 			player.setNextLevelPosition(nextPlayerPosition, nextLevel.getWorld());
 			player.setLevel(player.getLevel()+1);
 			player.setScore(player.getScore()+100);
+			
+			try(FileWriter fileWriter = new FileWriter("Save_Files.txt")){
+				fileWriter.write(player.toString());
+			} catch (IOException e) {
+				System.out.println("File Error!");
+			}
 		}
 	}
 }

@@ -1,4 +1,9 @@
 package Screens;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -7,6 +12,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
+import Screens.Level2.Level_2;
+import Screens.Level4.Level_4;
 import Screens.Level_1.Level_1;
 import Sprites.Player;
 
@@ -74,7 +81,65 @@ public class MainMenuScreen implements Screen {
         {
             game.batch.draw(LoadButtonActive,ExitX,200, ExitB_WIDTH, ExitB_HEIGHT);
             if (Gdx.input.isTouched()) {
-                game.setScreen(new GameOver(game));
+                BufferedReader reader;
+                try {
+                	reader = new BufferedReader(new FileReader("Save_Files.txt"));
+                	int playerLevel = Integer.parseInt(reader.readLine());
+                	int playerScore = Integer.parseInt(reader.readLine());
+                	int playerHitPoints = Integer.parseInt(reader.readLine());
+                	int playerPositionX = Integer.parseInt(reader.readLine());
+                	int playerPositionY = Integer.parseInt(reader.readLine());
+                	int playerCurePotionCount = Integer.parseInt(reader.readLine());
+                	int playerHealingPotionCount = Integer.parseInt(reader.readLine());
+                	int playerAmmoPistol = Integer.parseInt(reader.readLine());
+                	int playerAmmoRifle = Integer.parseInt(reader.readLine());
+                	
+                	World tempWorld = new World(new Vector2(0, -10),true);
+                	Player player = new Player(tempWorld, new Vector2(playerPositionX, playerPositionY));
+                	player.setLevel(playerLevel);
+                	player.setScore(playerScore);
+                	player.setHitPoint(playerHitPoints);
+                	player.setCurePotionCount(playerCurePotionCount);
+                	player.setHealingPotionCount(playerHealingPotionCount);
+                	player.setAmmoPistol(playerAmmoPistol);
+                	player.setAmmoRifle(playerAmmoRifle);
+                	
+                	if(playerLevel == 1) {
+                		Level_1 nextLevel = new Level_1(game, tempWorld, player,"Resources/Levels/Level 1/Level 1.tmx");
+                		Vector2 newCamera = new Vector2(nextLevel.getGamePort().getWorldWidth()/2, nextLevel.getGamePort().getWorldHeight() + 5);
+                		double newMaxRight = nextLevel.getGamePort().getWorldWidth() + 20.3;
+                		nextLevel.setMaxRight(newMaxRight);
+                		nextLevel.getGamecam().position.set(newCamera,0);
+                		
+            			try(FileWriter fileWriter = new FileWriter("Save_Files.txt")){
+            				fileWriter.write(player.toString());
+            				fileWriter.close();
+            			} catch (IOException e) {
+            				System.out.println("File Error!");
+            			}
+                		game.setScreen(nextLevel);
+                	}
+                	else if(playerLevel == 2) {
+                		Level_2 nextLevel = new Level_2(game, tempWorld, player,"Resources/Levels/Level 2/Level 2.tmx");
+                		Vector2 newCamera = new Vector2(nextLevel.getGamePort().getWorldWidth()/2, nextLevel.getGamePort().getWorldHeight() + 5);
+                		double newMaxRight = nextLevel.getGamePort().getWorldWidth() + 20.3;
+                		nextLevel.setMaxRight(newMaxRight);
+                		nextLevel.getGamecam().position.set(newCamera,0);
+                		game.setScreen(nextLevel);
+                	}
+                	else if(playerLevel == 3) {
+                	}
+                	else if(playerLevel == 4) {
+                	
+                	}
+                	else if(playerLevel == 5) {
+                	}
+                	
+                    reader.close();
+                } 
+                catch(IOException e) {
+                	e.printStackTrace();
+                }
             }
         }else {
             game.batch.draw(LoadButtonInactive,ExitX,200, ExitB_WIDTH, ExitB_HEIGHT);
