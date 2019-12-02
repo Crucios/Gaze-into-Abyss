@@ -60,5 +60,12 @@ public class Level_3 extends Level_1{
 		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area4"));
 		chestCreator.add(new ChestCreator(game, world, map, "chest-object-mimic-area3"));
 		chestCreator.add(new ChestCreator(game, world, map, "chest-object-mimic-area4"));
+		
+		//Generate door-level
+//		Level_1 nextLevel = new Level_4(game, new World(new Vector2(0, -10),true), player,"Resources/Levels/Level 4/Level 4.tmx");
+//		newCamera = new Vector2(nextLevel.getGamePort().getWorldWidth()/2, nextLevel.getGamePort().getWorldHeight() + 9.4f);
+//		newMaxRight = nextLevel.getGamePort().getWorldWidth() + 20.3;		
+//		Vector2 newPosition = new Vector2(1639, 1428);
+//		new DoorLevelCreator(game, world, map, player, nextLevel, newCamera, newMaxRight, newPosition,"door-level-object-toLevel3");
 	}
 }

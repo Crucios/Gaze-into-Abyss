@@ -20,7 +20,7 @@ import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
 import Scenes.Hud;
 import Screens.GameOver;
-import Screens.Level2.Level_2;
+import Screens.Level_2.Level_2;
 import Sprites.Melee;
 import Sprites.PistolBullet;
 import Sprites.Player;
