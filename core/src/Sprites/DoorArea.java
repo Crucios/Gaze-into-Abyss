@@ -1,5 +1,7 @@
 package Sprites;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -20,8 +22,10 @@ public class DoorArea extends InteractiveTileObject{
 	protected Vector2 newPosition;
 	protected Level_1 screen;
 	protected double newMaxRight;
+	protected String lock;
+	protected boolean isLock;
 	
-	public DoorArea(GazeintoAbyss game,World world, TiledMap map,MapObject object, Player player, OrthographicCamera gamecam, Vector2 newCameraPosition, Vector2 newPosition, Level_1 level, double newMaxRight) {
+	public DoorArea(GazeintoAbyss game,World world, TiledMap map,MapObject object, Player player, OrthographicCamera gamecam, Vector2 newCameraPosition, Vector2 newPosition, Level_1 level, double newMaxRight,boolean isLock, String lock) {
 		super(world, map , object, true);
 		this.game = game;
 		this.player = player;
@@ -30,15 +34,37 @@ public class DoorArea extends InteractiveTileObject{
 		this.newPosition = newPosition;
 		this.screen = level;
 		this.newMaxRight = newMaxRight;
+		this.isLock = isLock;
+		this.lock = lock;
 		fixture.setUserData(this);
 	}
-
 	@Override
 	public void onHit() {
 		if(Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-			player.setPosition(newPosition);
-			gamecam.position.set(newCameraPosition.x, newCameraPosition.y, 0);
-			screen.setMaxRight(newMaxRight);
+			//cek if door locked
+			if(isLock) {
+				ArrayList<Key> keys;
+				keys = player.getKeys();
+				boolean cek = false;
+				for(Key key: keys) {
+					if(key.getId() == lock) {
+						System.out.println("Door open");
+						isLock = false;
+						player.setPosition(newPosition);
+						gamecam.position.set(newCameraPosition.x, newCameraPosition.y, 0);
+						screen.setMaxRight(newMaxRight);
+						cek = true;
+					}
+				}
+				if(!cek) {
+					System.out.println("Door Locked");
+				}
+			}
+			else {
+				player.setPosition(newPosition);
+				gamecam.position.set(newCameraPosition.x, newCameraPosition.y, 0);
+				screen.setMaxRight(newMaxRight);
+			}
 		}
 	}
 }

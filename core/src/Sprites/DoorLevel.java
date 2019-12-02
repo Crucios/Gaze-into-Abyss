@@ -2,6 +2,7 @@ package Sprites;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -20,10 +21,12 @@ public class DoorLevel extends InteractiveTileObject{
 	private Vector2 newGameCamPosition;
 	private double nextMaxRight;
 	private Vector2 nextPlayerPosition;
+	protected String lock;
+	protected boolean isLock;
 	
 	public DoorLevel(GazeintoAbyss game, World world, TiledMap map, MapObject object, 
 			Player player, Level_1 nextLevel, Vector2 newGameCamPosition, double nextMaxRight, 
-			Vector2 nextPlayerPosition) {
+			Vector2 nextPlayerPosition,boolean isLock,String lock) {
 		super(world, map , object, true);
 		fixture.setUserData(this);
 		this.game = game;
@@ -32,22 +35,54 @@ public class DoorLevel extends InteractiveTileObject{
 		this.nextMaxRight = nextMaxRight;
 		this.newGameCamPosition = newGameCamPosition;
 		this.nextPlayerPosition = nextPlayerPosition;
+		this.isLock = isLock;
+		this.lock = lock;
 	}
 
 	@Override
 	public void onHit() {
 		if(Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-			game.setScreen(nextLevel);
-			nextLevel.getGamecam().position.set(newGameCamPosition,0);
-			nextLevel.setMaxRight(nextMaxRight);
-			player.setNextLevelPosition(nextPlayerPosition, nextLevel.getWorld());
-			player.setLevel(player.getLevel()+1);
-			player.setScore(player.getScore()+100);
-			
-			try(FileWriter fileWriter = new FileWriter("Save_Files.txt")){
-				fileWriter.write(player.toString());
-			} catch (IOException e) {
-				System.out.println("File Error!");
+			//cek if door locked
+			if(isLock) {
+				ArrayList<Key> keys;
+				keys = player.getKeys();
+				boolean cek = false;
+				for(Key key: keys) {
+					if(key.getId() == lock) {
+						System.out.println("Door open");
+						isLock = false;
+						game.setScreen(nextLevel);
+						nextLevel.getGamecam().position.set(newGameCamPosition,0);
+						nextLevel.setMaxRight(nextMaxRight);
+						player.setNextLevelPosition(nextPlayerPosition, nextLevel.getWorld());
+						player.setLevel(player.getLevel()+1);
+						player.setScore(player.getScore()+100);
+						
+						try(FileWriter fileWriter = new FileWriter("Save_Files.txt")){
+							fileWriter.write(player.toString());
+						} catch (IOException e) {
+							System.out.println("File Error!");
+						}
+						cek = true;
+					}
+				}
+				if(!cek) {
+					System.out.println("Door Locked");
+				}
+			}
+			else {
+				game.setScreen(nextLevel);
+				nextLevel.getGamecam().position.set(newGameCamPosition,0);
+				nextLevel.setMaxRight(nextMaxRight);
+				player.setNextLevelPosition(nextPlayerPosition, nextLevel.getWorld());
+				player.setLevel(player.getLevel()+1);
+				player.setScore(player.getScore()+100);
+				
+				try(FileWriter fileWriter = new FileWriter("Save_Files.txt")){
+					fileWriter.write(player.toString());
+				} catch (IOException e) {
+					System.out.println("File Error!");
+				}
 			}
 		}
 	}

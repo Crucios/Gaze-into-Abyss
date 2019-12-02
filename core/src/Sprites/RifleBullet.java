@@ -9,6 +9,9 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
 import Sprites.Player.State;
@@ -16,7 +19,7 @@ import Sprites.Player.State;
 public class RifleBullet extends Sprite {
 	public World world;
 	public Body b2body;
-	
+	private TextureRegion bullet;
 	private Vector2 position;
 	
 	private boolean toRight;
@@ -27,23 +30,25 @@ public class RifleBullet extends Sprite {
 	private float timer;
 
 	public RifleBullet(World world, Vector2 position) {
-		this.world = world;
-		
+		super(new AtlasRegion(new TextureAtlas("Resources/Item/bullet.pack").findRegion("bullet")));
+		this.world = world;		
 		this.toRight = true;
 		this.stopTimer = false;
 		this.destroy = false;
 		isHit = false;
 		timer = 0;
 		this.position = position;
-
+		bullet = new TextureRegion(getTexture(), 0,0,12,4);
+		setBounds(0,0,12 / GazeintoAbyss.PPM,4 / GazeintoAbyss.PPM);
 		definePistolBullet();
 	}
 	public void update(float dt) {
+		setPosition(position.x - getWidth()/8,position.y - getHeight()/2);
 		if(toRight) {
-			b2body.setLinearVelocity(8f, 0);
+			b2body.setLinearVelocity(6f, 0);
 		}
 		else {
-			b2body.setLinearVelocity(-8f,0);
+			b2body.setLinearVelocity(-6f,0);
 		}
 		if(isHit) {
 			world.destroyBody(b2body);

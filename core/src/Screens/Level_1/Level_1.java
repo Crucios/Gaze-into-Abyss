@@ -22,8 +22,10 @@ import Scenes.Hud;
 import Screens.GameOver;
 import Screens.Level2.Level_2;
 import Sprites.Melee;
+import Sprites.PistolBullet;
 import Sprites.Player;
 import Sprites.Ranged;
+import Sprites.RifleBullet;
 import Sprites.Speed;
 import Tools.ChestCreator;
 import Tools.DoorAreaCreator;
@@ -59,6 +61,8 @@ public class Level_1 implements Screen{
 	protected ArrayList<Melee> enemyMelee;
 	protected ArrayList<Speed> enemySpeed;
 	protected ArrayList<Ranged> enemyRanged;
+	protected ArrayList<PistolBullet> PBullet;
+	protected ArrayList<RifleBullet> RBullet;
 
 	protected TextureAtlas atlas;
 	
@@ -91,7 +95,6 @@ public class Level_1 implements Screen{
 		
 		for(int i=0;i<enemyMelee.size();i++)
 			enemyMelee.get(i).update(dt);
-		
 		hud.update(dt);
 		
 		for(int i=0;i<chestCreator.size();i++)
@@ -113,7 +116,6 @@ public class Level_1 implements Screen{
 			game.setScreen(new GameOver(game));
 		}
 			
-			
 		//Update camera every iteration
 		gamecam.update();
 		
@@ -129,6 +131,10 @@ public class Level_1 implements Screen{
 		enemyMelee = new ArrayList<Melee>();
 		enemyRanged = new ArrayList<Ranged>();
 		enemySpeed = new ArrayList<Speed>();
+		
+		//ArrayList Bullet
+		PBullet = player.getPistolBullet();
+		RBullet = player.getRifleBullet();
 		
 		//Camera movement
 		gamecam = new OrthographicCamera();
@@ -174,11 +180,11 @@ public class Level_1 implements Screen{
 		//Generate door-area
 		double newMaxRight = gamePort.getWorldWidth()*2 + 1;
 		Vector2 newCamera = new Vector2((gamePort.getWorldWidth()/2),(gamePort.getWorldHeight()/4)); 
-		new DoorAreaCreator(game, world, map, player, gamecam, newCamera, "door-area-object_area1", new Vector2(100,129), this, newMaxRight);
+		new DoorAreaCreator(game, world, map, player, gamecam, newCamera, "door-area-object_area1", new Vector2(100,129), this, newMaxRight, true, "1");
 
 		newMaxRight = gamePort.getWorldWidth()/2 - gamePort.getWorldWidth()/3 + 12.55;
 		newCamera = new Vector2((gamePort.getWorldWidth()/2),(gamePort.getWorldHeight() + 0.75f)); 
-		new DoorAreaCreator(game, world, map, player, gamecam, newCamera, "door-area-object_area2", new Vector2(1600,525), this, newMaxRight);
+		new DoorAreaCreator(game, world, map, player, gamecam, newCamera, "door-area-object_area2", new Vector2(1600,525), this, newMaxRight, false, "");
 		
 		//Generate door-hide
 		new DoorHideCreator(game, world, map, player, "door-hide-object_area2");
@@ -192,7 +198,7 @@ public class Level_1 implements Screen{
 		newCamera = new Vector2(nextLevel.getGamePort().getWorldWidth()/2, nextLevel.getGamePort().getWorldHeight() + 5);
 		newMaxRight = nextLevel.getGamePort().getWorldWidth() + 20.3;
 		Vector2 newPosition = new Vector2(300, 1000);
-		new DoorLevelCreator(game, world, map, player, nextLevel, newCamera, newMaxRight, newPosition,"door-level-object_area2");
+		new DoorLevelCreator(game, world, map, player, nextLevel, newCamera, newMaxRight, newPosition,"door-level-object_area2", false, "");
 	}
 	
 	@Override
@@ -225,6 +231,19 @@ public class Level_1 implements Screen{
 		
 		for(int i=0;i<enemyMelee.size();i++)
 			enemyMelee.get(i).draw(game.batch);
+		
+		for(PistolBullet bullet :PBullet) {
+			if(!bullet.getDestroy()) {
+				bullet.draw(game.batch);
+			}
+		}
+		
+		for(RifleBullet bullet: RBullet) {
+			if(!bullet.getDestroy()) {
+				bullet.draw(game.batch);
+			}
+		}
+		
 		player.draw(game.batch);
 		game.batch.end();
 	}

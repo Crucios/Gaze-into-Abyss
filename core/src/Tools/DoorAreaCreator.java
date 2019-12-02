@@ -14,10 +14,10 @@ import Sprites.DoorArea;
 import Sprites.Player;
 
 public class DoorAreaCreator {
-	public DoorAreaCreator(GazeintoAbyss game, World world, TiledMap map, Player player, OrthographicCamera gamecam, Vector2 newCameraPosition, String nameObject,Vector2 newPosition, Level_1 screen,double newMaxRight) {
+	public DoorAreaCreator(GazeintoAbyss game, World world, TiledMap map, Player player, OrthographicCamera gamecam, Vector2 newCameraPosition, String nameObject,Vector2 newPosition, Level_1 screen,double newMaxRight,boolean isLock,String lock) {
 		//Set for door-area-object
 		for(MapObject object : map.getLayers().get(nameObject).getObjects().getByType(RectangleMapObject.class)) {
-			new DoorArea(game,world, map, object, player, gamecam, newCameraPosition, newPosition, screen, newMaxRight);
+			new DoorArea(game,world, map, object, player, gamecam, newCameraPosition, newPosition, screen, newMaxRight,isLock,lock);
 		}
 	}
 }

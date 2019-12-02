@@ -27,8 +27,6 @@ public class Player extends Sprite{
 	public State previousState;
 	public World world;
 	public Body b2body;
-	public ArrayList<PistolBullet> PBullet;
-	public ArrayList<RifleBullet> RBullet;
 	private TextureRegion playerStand;
 	private Animation playerRunPistol;
 	private Animation playerRunRifle;
@@ -70,6 +68,10 @@ public class Player extends Sprite{
 	
 	private boolean debuffSlowness;
 	private boolean debuffFear;
+	
+	private ArrayList<PistolBullet> PBullet;
+	private ArrayList<RifleBullet> RBullet;
+	private ArrayList<Key> keys;
 	
 	public Player(World world, Vector2 position) {
 		super(new AtlasRegion(new TextureAtlas("Resources/Player/Player.pack").findRegion("sprite-player")));
@@ -121,6 +123,9 @@ public class Player extends Sprite{
 		
 		PBullet = new ArrayList<PistolBullet>();
 		RBullet = new ArrayList<RifleBullet>();
+		keys = new ArrayList<Key>();
+		keys.add(new Key("1"));
+		
 		setRegion(playerStand);
 	}
 	public void generateAnimation() {
@@ -397,22 +402,18 @@ public class Player extends Sprite{
 		//If D Key Pressed
 		if(Gdx.input.isKeyPressed(Input.Keys.D) && b2body.getLinearVelocity().x <= 2) {
 			b2body.applyLinearImpulse(new Vector2(0.5f,0), b2body.getWorldCenter(), true);
-			bulletPosition.x += 11.0f;
 		}
 		//If A Key Pressed
 		else if(Gdx.input.isKeyPressed(Input.Keys.A) && b2body.getLinearVelocity().x >= -2) {
 			b2body.applyLinearImpulse(new Vector2(-0.5f,0), b2body.getWorldCenter(), true);
-			bulletPosition.x -= 11.0f;
 		}
 		//If D and Shift left Key Pressed
 		if(Gdx.input.isKeyPressed(Input.Keys.D) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x <= 6) {
 			b2body.applyLinearImpulse(new Vector2(3f,0), b2body.getWorldCenter(), true);
-			bulletPosition.x += 20f;
 		}
 		//If A and Shift left Key Pressed
 		else if(Gdx.input.isKeyPressed(Input.Keys.A) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x >= -6) {
 			b2body.applyLinearImpulse(new Vector2(-3f,0), b2body.getWorldCenter(), true);
-			bulletPosition.x -= 20.0f;
 		}
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.Q) && !pistol) {
@@ -451,6 +452,18 @@ public class Player extends Sprite{
 		else {
 			shooting = false;
 		}
+	}
+	
+	public ArrayList<PistolBullet> getPistolBullet() {
+		return PBullet;
+	}
+	
+	public ArrayList<RifleBullet> getRifleBullet(){
+		return RBullet;
+	}
+	
+	public ArrayList<Key> getKeys(){
+		return keys;
 	}
 	
 	public boolean getHiding() {
