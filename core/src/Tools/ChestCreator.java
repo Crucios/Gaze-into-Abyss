@@ -13,9 +13,9 @@ import Sprites.Player;
 public class ChestCreator {
 	private ChestInteractiveObject chestInteractive;
 	
-	public ChestCreator(GazeintoAbyss game, World world, TiledMap map, String nameObject, Player player, Key key,int PAmmo,int RAmmo){
+	public ChestCreator(GazeintoAbyss game, World world, TiledMap map, String nameObject, Player player, Key key,int PAmmo,int RAmmo, int healP, int cureP){
 		for(MapObject object : map.getLayers().get(nameObject).getObjects().getByType(RectangleMapObject.class)) {
-			this.chestInteractive = new ChestInteractiveObject(game, world, map, object,player,key,PAmmo,RAmmo); 
+			this.chestInteractive = new ChestInteractiveObject(game, world, map, object, player, key, PAmmo, RAmmo, healP, cureP); 
 		}
 	}
 	

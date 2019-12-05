@@ -464,7 +464,19 @@ public class Player extends Sprite{
 			debuffSlowness = true;
 		}
 		if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)) {
-			isCured();
+			if(curePotionCount > 0) {
+				isCured();
+				curePotionCount--;
+			}
+		}
+		if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_4)) {
+			if(healingPotionCount > 0) {
+				hitPoint += 30;
+				if(hitPoint > 100) {
+					hitPoint = 100;
+				}
+				healingPotionCount--;
+			}
 		}
 		if(Gdx.input.isKeyJustPressed(Input.Keys.E) && isHiding) {
 			isHiding = false;

@@ -194,8 +194,8 @@ public class Level_1 implements Screen{
 		new DoorHideCreator(game, world, map, player, "door-hide-object_area2");
 		
 		//Generate Chest
-		chestCreator.add(new ChestCreator(game, world, map, "chest-object_area1", player, new Key("1"), 200, 0));
-		chestCreator.add(new ChestCreator(game, world, map, "chest-object_area2", player, new Key("1"), 200, 0));
+		chestCreator.add(new ChestCreator(game, world, map, "chest-object_area1", player, new Key("1"), 200, 0, 5, 0));
+		chestCreator.add(new ChestCreator(game, world, map, "chest-object_area2", player, new Key("1"), 200, 0, 0, 5));
 		
 		//Generate door-level
 		Level_2 nextLevel = new Level_2(game, new World(new Vector2(0, -10),true), player,"Resources/Levels/Level 2/Level 2.tmx");
