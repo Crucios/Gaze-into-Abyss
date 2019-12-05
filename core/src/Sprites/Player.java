@@ -194,6 +194,7 @@ public class Player extends Sprite{
 			camGlitched = true;
 		}
 		else if(isHiding && !hidden) {
+			position = nowPosition;
 			world.destroyBody(b2body);
 			hidden = true;
 			setRegion(getFrame(dt));
@@ -218,7 +219,7 @@ public class Player extends Sprite{
 				bul.update(dt);
 			}
 		}
-		bulletPosition = nowPosition;
+		bulletPosition = new Vector2(nowPosition);
 		if(pistol) {			
 			bulletPosition.y += 39f;
 			if(toRight) {
@@ -471,7 +472,6 @@ public class Player extends Sprite{
 	
 	public void setHiding(boolean isHiding) {
 		this.isHiding = isHiding;
-		position = nowPosition;
 	}
 	
 	public void setPosition(Vector2 positions) {
