@@ -22,7 +22,7 @@ public class Level_4 extends Level_1{
 	@Override
 	public void generateLevel() {
 		this.maxRight = gamePort.getWorldWidth()/2 - gamePort.getWorldWidth()/3 + 12.55;
-		this.maxLeft = gamePort.getWorldWidth()/2;
+		this.maxLeft = gamePort.getWorldWidth()/2 + 0.1f;
 		
 		//Generate Wall and Ground
 		new WorldCreator(world, map);

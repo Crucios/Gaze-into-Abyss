@@ -1,6 +1,7 @@
 package Sprites;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.text.html.HTMLDocument.HTMLReader.SpecialAction;
 
@@ -68,10 +69,18 @@ public class Player extends Sprite{
 	
 	private boolean debuffSlowness;
 	private boolean debuffFear;
+	private float movementSpeed;
+	private int limitMovementSpeed;
+	private float slownessSpeed;
+	private double limitSlownessSpeed;
 	
 	private ArrayList<PistolBullet> PBullet;
 	private ArrayList<RifleBullet> RBullet;
 	private ArrayList<Key> keys;
+	
+	private boolean isFreetoHit;
+	private boolean hasHit;
+	private float elapsed;
 	
 	public Player(World world, Vector2 position) {
 		super(new AtlasRegion(new TextureAtlas("Resources/Player/Player.pack").findRegion("sprite-player")));
@@ -109,6 +118,15 @@ public class Player extends Sprite{
 		debuffSlowness = false;
 		debuffFear = false;
 		
+		movementSpeed = 0.5f;
+		limitMovementSpeed = 2;
+		
+		slownessSpeed = 0;
+		limitSlownessSpeed = 0;
+		
+		isFreetoHit = true;
+		hasHit = false;
+		elapsed = 0;
 		generateAnimation();
 		
 		this.position = position;
@@ -183,6 +201,7 @@ public class Player extends Sprite{
 		
 	}
 	public void update(float dt) {
+		elapsed+=dt;
 		if(teleportNextLevel) {
 			definePlayer(40,70);
 			teleportNextLevel = false;
@@ -209,6 +228,18 @@ public class Player extends Sprite{
 			setRegion(getFrame(dt));
 		}
 
+		if(hasHit) {
+			isFreetoHit = false;
+			elapsed = 0;
+			hasHit = false;
+		}
+		if(!isFreetoHit && elapsed > 1.0) {
+			isFreetoHit = true;
+		}
+		
+		if(debuffSlowness)
+			debuffedSlowness();
+		
 		for(PistolBullet bul : PBullet) {
 			if(!bul.getDestroy()) {
 				bul.update(dt);
@@ -242,7 +273,7 @@ public class Player extends Sprite{
 		PBulletTimer += dt;
 		RBulletTimer += dt;
 		
-		System.out.println("Player Position: " + nowPosition.x + " , " + nowPosition.y);
+		//System.out.println("Player Position: " + nowPosition.x + " , " + nowPosition.y);
 	}
 	
 	public TextureRegion getFrame(float dt) {
@@ -397,21 +428,22 @@ public class Player extends Sprite{
 	}
 	
 	public void handleinput() {
+		//Movement here
 		//If D Key Pressed
-		if(Gdx.input.isKeyPressed(Input.Keys.D) && b2body.getLinearVelocity().x <= 2) {
-			b2body.applyLinearImpulse(new Vector2(0.5f,0), b2body.getWorldCenter(), true);
+		if(Gdx.input.isKeyPressed(Input.Keys.D) && b2body.getLinearVelocity().x <= limitMovementSpeed - limitSlownessSpeed) {
+			b2body.applyLinearImpulse(new Vector2(movementSpeed - slownessSpeed,0), b2body.getWorldCenter(), true);
 		}
 		//If A Key Pressed
-		else if(Gdx.input.isKeyPressed(Input.Keys.A) && b2body.getLinearVelocity().x >= -2) {
-			b2body.applyLinearImpulse(new Vector2(-0.5f,0), b2body.getWorldCenter(), true);
+		else if(Gdx.input.isKeyPressed(Input.Keys.A) && b2body.getLinearVelocity().x >= -(limitMovementSpeed - limitSlownessSpeed)) {
+			b2body.applyLinearImpulse(new Vector2(-(movementSpeed - slownessSpeed),0), b2body.getWorldCenter(), true);
 		}
 		//If D and Shift left Key Pressed
-		if(Gdx.input.isKeyPressed(Input.Keys.D) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x <= 6) {
-			b2body.applyLinearImpulse(new Vector2(3f,0), b2body.getWorldCenter(), true);
+		if(Gdx.input.isKeyPressed(Input.Keys.D) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x <= limitMovementSpeed - limitSlownessSpeed+ 4) {
+			b2body.applyLinearImpulse(new Vector2(movementSpeed - slownessSpeed + 2.5f,0), b2body.getWorldCenter(), true);
 		}
 		//If A and Shift left Key Pressed
-		else if(Gdx.input.isKeyPressed(Input.Keys.A) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x >= -6) {
-			b2body.applyLinearImpulse(new Vector2(-3f,0), b2body.getWorldCenter(), true);
+		else if(Gdx.input.isKeyPressed(Input.Keys.A) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x >= -(limitMovementSpeed - limitSlownessSpeed + 4)) {
+			b2body.applyLinearImpulse(new Vector2(-(movementSpeed - slownessSpeed + 2.5f), 0), b2body.getWorldCenter(), true);
 		}
 		
 		if(Gdx.input.isKeyPressed(Input.Keys.Q) && !pistol) {
@@ -423,19 +455,32 @@ public class Player extends Sprite{
 			pistol = false;
 		}
 		
+		//Health Potion
 		if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
-			
+			debuffFear = true;
 		}
+		//Cure Potion
 		if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
-			
+			debuffSlowness = true;
 		}
-		
+		if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)) {
+			isCured();
+		}
 		if(Gdx.input.isKeyJustPressed(Input.Keys.E) && isHiding) {
 			isHiding = false;
 		}
 		if(pistol && Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D)) {
 			if(PBulletTimer>0.4f && ammoPistol > 0) {
-				PBullet.add(new PistolBullet(world,bulletPosition));
+				boolean miss = false;
+				if(debuffFear) {
+					Random random = new Random();
+					int randomInteger = random.nextInt(11);
+					if(randomInteger >= 3)
+						miss = false;
+					else
+						miss = true;
+				}
+				PBullet.add(new PistolBullet(world,bulletPosition, miss));
 				PBulletTimer = 0;
 				ammoPistol--;
 			}
@@ -443,7 +488,16 @@ public class Player extends Sprite{
 		}
 		else if(rifle && Gdx.input.isKeyPressed(Input.Keys.SPACE) && !Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D)) {
 			if(RBulletTimer>0.2f && ammoRifle > 0) {
-				RBullet.add(new RifleBullet(world,bulletPosition));
+				boolean miss = false;
+				if(debuffFear) {
+					Random random = new Random();
+					int randomInteger = random.nextInt(11);
+					if(randomInteger >= 3)
+						miss = false;
+					else
+						miss = true;
+				}
+				RBullet.add(new RifleBullet(world,bulletPosition,miss));
 				RBulletTimer = 0;
 				ammoRifle--;
 			}
@@ -452,6 +506,18 @@ public class Player extends Sprite{
 		else {
 			shooting = false;
 		}
+	}
+
+	public void debuffedSlowness() {
+		slownessSpeed = 0.2f;
+		limitSlownessSpeed = 0.3;
+	}
+	
+	public void isCured() {
+		debuffFear = false;
+		debuffSlowness = false;
+		slownessSpeed = 0;
+		limitSlownessSpeed = 0;
 	}
 	
 	public ArrayList<PistolBullet> getPistolBullet() {
@@ -549,6 +615,18 @@ public class Player extends Sprite{
 	}
 	public void setDebuffFear(boolean debuffFear) {
 		this.debuffFear = debuffFear;
+	}
+	public boolean isFreetoHit() {
+		return isFreetoHit;
+	}
+	public void setFreetoHit(boolean isFreetoHit) {
+		this.isFreetoHit = isFreetoHit;
+	}
+	public boolean isHasHit() {
+		return hasHit;
+	}
+	public void setHasHit(boolean hasHit) {
+		this.hasHit = hasHit;
 	}
 	@Override
 	public String toString() {

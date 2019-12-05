@@ -94,6 +94,10 @@ public abstract class Enemy extends Sprite {
 		
 	}
 	
+	public void update(float dt) {
+		
+	}
+	
     public abstract void DefineEnemy();
     public abstract void defineHitBox(int x, int y);
     public abstract void enemyMovement();

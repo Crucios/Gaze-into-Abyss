@@ -74,6 +74,7 @@ public class Ranged extends Enemy {
 		return region;
     }
     
+    @Override
     public void update(float dt) {
         setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(dt));
@@ -153,8 +154,10 @@ public class Ranged extends Enemy {
 
     @Override
     public void onHit() {
-        player.setHitPoint(player.getHitPoint() - damage);
-        System.out.println("TAK DOR KOWE");
+    	if(player.isFreetoHit()) {
+    		player.setHitPoint(player.getHitPoint() - damage);
+    		player.setHasHit(true);
+    	}
     }
 
     @Override

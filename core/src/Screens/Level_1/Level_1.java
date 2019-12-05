@@ -21,6 +21,7 @@ import com.mygdx.gazeintoabyss.GazeintoAbyss;
 import Scenes.Hud;
 import Screens.GameOver;
 import Screens.Level_2.Level_2;
+import Sprites.Enemy;
 import Sprites.Melee;
 import Sprites.PistolBullet;
 import Sprites.Player;
@@ -58,9 +59,7 @@ public class Level_1 implements Screen{
 	protected Box2DDebugRenderer b2dr;
 	
 	protected Player player;
-	protected ArrayList<Melee> enemyMelee;
-	protected ArrayList<Speed> enemySpeed;
-	protected ArrayList<Ranged> enemyRanged;
+	protected ArrayList<Enemy> enemy;
 	protected ArrayList<PistolBullet> PBullet;
 	protected ArrayList<RifleBullet> RBullet;
 
@@ -70,6 +69,8 @@ public class Level_1 implements Screen{
 	protected ArrayList<ChestCreator> chestCreator;
 	
 	protected boolean gameOver;
+	
+	protected float elapsed;
 	
 	public void handleInput(float dt) {
 		player.handleinput();
@@ -83,19 +84,14 @@ public class Level_1 implements Screen{
 	public void update(float dt) {
 		handleInput(dt);
 		
+		elapsed += dt;
 		
 		world.step(1/60f, 6, 2);
 		
 		player.update(dt);
-		for(int i=0;i<enemyRanged.size();i++)
-			enemyRanged.get(i).update(dt);
-
-		for(int i=0;i<enemySpeed.size();i++)
-			enemySpeed.get(i).update(dt);
 		
-		for(int i=0;i<enemyMelee.size();i++)
-			enemyMelee.get(i).update(dt);
-		hud.update(dt);
+		for(int i=0;i<enemy.size();i++)
+			enemy.get(i).update(dt);
 		
 		for(int i=0;i<chestCreator.size();i++)
 			chestCreator.get(i).update(dt);
@@ -108,6 +104,14 @@ public class Level_1 implements Screen{
 			player.setCamGlitched(false);
 		}
 		
+		//Jika di level waktunya sudah 60 detik
+		if(elapsed > 120.0 && !player.isDebuffSlowness()) {
+			player.setDebuffFear(true);
+		}
+		else if(elapsed > 240.0 && !player.isDebuffFear()) {
+			player.setDebuffSlowness(true);
+		}
+		
 		if(player.getHitPoint() <= 0 )
 			gameOver = true;
 		
@@ -118,19 +122,18 @@ public class Level_1 implements Screen{
 			
 		//Update camera every iteration
 		gamecam.update();
-		
+		hud.update(dt);
 		renderer.setView(gamecam);
 		
 	}
 	
 	public Level_1(GazeintoAbyss game, World world,Player player, String filepath_tmx) {
 		this.game = game;
+		elapsed = 0;
 		chestCreator = new ArrayList<ChestCreator>();
 		
 		//ArrayList Enemy
-		enemyMelee = new ArrayList<Melee>();
-		enemyRanged = new ArrayList<Ranged>();
-		enemySpeed = new ArrayList<Speed>();
+		enemy = new ArrayList<Enemy>();
 		
 		//ArrayList Bullet
 		PBullet = player.getPistolBullet();
@@ -175,7 +178,7 @@ public class Level_1 implements Screen{
 		new WorldCreator(world, map);
 
 		//Generate Enemy
-		enemyMelee.add(new Melee(world, new Vector2(772, 551), 772, 1421, player));
+		enemy.add(new Melee(world, new Vector2(772, 551), 772, 1421, player));
 
 		//Generate door-area
 		double newMaxRight = gamePort.getWorldWidth()*2 + 1;
@@ -223,14 +226,9 @@ public class Level_1 implements Screen{
 		game.batch.begin();
 		for(int i=0;i<chestCreator.size();i++)
 			chestCreator.get(i).getChestInteractive().getChest().draw(game.batch);
-		for(int i=0;i<enemyRanged.size();i++)
-			enemyRanged.get(i).draw(game.batch);
 
-		for(int i=0;i<enemySpeed.size();i++)
-			enemySpeed.get(i).draw(game.batch);
-		
-		for(int i=0;i<enemyMelee.size();i++)
-			enemyMelee.get(i).draw(game.batch);
+		for(int i=0;i<enemy.size();i++)
+			enemy.get(i).draw(game.batch);
 		
 		for(PistolBullet bullet :PBullet) {
 			if(!bullet.getDestroy()) {

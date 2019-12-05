@@ -70,6 +70,7 @@ public class Speed extends Enemy {
 		return region;
     }
     
+    @Override
     public void update(float dt) {
         setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight()/2);
         nowPosition = new Vector2(b2body.getPosition().x * GazeintoAbyss.PPM, b2body.getPosition().y * GazeintoAbyss.PPM);
@@ -123,8 +124,10 @@ public class Speed extends Enemy {
 
     @Override
     public void onHit() {
-        player.setHitPoint(player.getHitPoint() - damage);
-        System.out.println("MATEK KON BANGSAT");
+    	if(player.isFreetoHit()) {
+    		player.setHitPoint(player.getHitPoint() - damage);
+    		player.setHasHit(true);
+    	}
     }
     public Vector2 getPosition() {
         return position;

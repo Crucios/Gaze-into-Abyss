@@ -24,13 +24,14 @@ public class Melee extends Enemy {
         //DefineEnemy();
     }
 
+    @Override
     public void update(float dt) {
         setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(dt));
         nowPosition = new Vector2(b2body.getPosition().x * GazeintoAbyss.PPM, b2body.getPosition().y * GazeintoAbyss.PPM);
         //System.out.println("Enemy Position: " + nowPosition.x + " , " + nowPosition.y);
-        System.out.println("ENEMY POSITION: " + nowPosition);
-        System.out.println("Xawal: " + xawal + "Akhir: " + xakhir);
+//        System.out.println("ENEMY POSITION: " + nowPosition);
+//        System.out.println("Xawal: " + xawal + "Akhir: " + xakhir);
         enemyMovement();
     }
 
@@ -129,8 +130,10 @@ public class Melee extends Enemy {
 
     @Override
     public void onHit() {
-        player.setHitPoint(player.getHitPoint() - damage);
-        System.out.println("MATEK KON COK");
+    	if(player.isFreetoHit()) {
+    		player.setHitPoint(player.getHitPoint() - damage);
+    		player.setHasHit(true);
+    	}	
     }
     public Vector2 getPosition() {
         return position;

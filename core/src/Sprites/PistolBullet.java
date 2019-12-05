@@ -23,18 +23,20 @@ public class PistolBullet extends Sprite {
 	private Vector2 position;
 	
 	private boolean toRight;
-	private boolean demage;
+	private boolean damage;
 	private boolean isHit;
 	private boolean stopTimer;
 	private boolean destroy;
 	private float timer;
+	private boolean miss;
 
-	public PistolBullet(World world, Vector2 position) {
+	public PistolBullet(World world, Vector2 position, boolean miss) {
 		super(new AtlasRegion(new TextureAtlas("Resources/Item/bullet.pack").findRegion("bullet")));
 		this.world = world;		
 		this.toRight = true;
 		this.stopTimer = false;
 		this.destroy = false;
+		this.miss = miss;
 		isHit = false;
 		timer = 0;
 		this.position = position;
@@ -95,7 +97,10 @@ public class PistolBullet extends Sprite {
 		return destroy;
 	}
 	public void onHit() {
-		System.out.println("Bullet hit");
+		if(miss)
+			System.out.println("Bullet Miss");
+		else
+			System.out.println("Bullet hit");
 	}
 	
 	public void setHit(boolean hit) {
