@@ -580,11 +580,22 @@ public class Player extends Sprite{
 	public void setAmmoPistol(int ammoPistol) {
 		this.ammoPistol = ammoPistol;
 	}
+	public void addAmmoPistol(int ammoPistol) {
+		this.ammoPistol += ammoPistol;
+	}
 	public int getAmmoRifle() {
 		return ammoRifle;
 	}
 	public void setAmmoRifle(int ammoRifle) {
 		this.ammoRifle = ammoRifle;
+	}
+	public void addAmmoRIfle(int ammoRifle) {
+		this.ammoRifle += ammoRifle;
+	}
+	public void addKey(Key key) {
+		if(key.getId() != "") {
+			this.keys.add(key);
+		}
 	}
 	public int getLevel() {
 		return level;

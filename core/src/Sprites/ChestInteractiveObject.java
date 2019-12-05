@@ -14,18 +14,29 @@ import com.mygdx.gazeintoabyss.GazeintoAbyss;
 public class ChestInteractiveObject extends InteractiveTileObject{
 	GazeintoAbyss game;
 	Chest chest;
+	Player player;
 
-	public ChestInteractiveObject(GazeintoAbyss game,World world, TiledMap map, MapObject object) {
+	public ChestInteractiveObject(GazeintoAbyss game,World world, TiledMap map, MapObject object, Player player, Key key, int PAmmo, int RAmmo) {
 		super(world, map , object, true);
 		fixture.setUserData(this);
 		this.game = game;
+		this.player = player;
 		chest = new Chest(world, this);
+		chest.setKey(key);
+		chest.setPistolAmmo(PAmmo);
+		chest.setRifleAmmo(RAmmo);
 	}
 
 	@Override
 	public void onHit() {
 		if(Gdx.input.isKeyJustPressed(Input.Keys.E)) {
 			chest.opening();
+			if(!chest.getOpened()) {
+				player.addKey(chest.getKey());
+				player.addAmmoPistol(chest.getPAmmo());
+				player.addAmmoRIfle(chest.getRAmmo());
+			}
+			
 		}
 	}
 	

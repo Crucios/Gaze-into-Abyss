@@ -7,13 +7,15 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
 import Sprites.ChestInteractiveObject;
+import Sprites.Key;
+import Sprites.Player;
 
 public class ChestCreator {
 	private ChestInteractiveObject chestInteractive;
 	
-	public ChestCreator(GazeintoAbyss game, World world, TiledMap map, String nameObject){
+	public ChestCreator(GazeintoAbyss game, World world, TiledMap map, String nameObject, Player player, Key key,int PAmmo,int RAmmo){
 		for(MapObject object : map.getLayers().get(nameObject).getObjects().getByType(RectangleMapObject.class)) {
-			this.chestInteractive = new ChestInteractiveObject(game, world, map, object); 
+			this.chestInteractive = new ChestInteractiveObject(game, world, map, object,player,key,PAmmo,RAmmo); 
 		}
 	}
 	

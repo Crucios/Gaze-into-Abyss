@@ -32,6 +32,10 @@ public class Chest extends Sprite{
 	private boolean opening;
 	private boolean closed;
 	
+	private Key key;
+	private int PistolAmmo;
+	private int RifleAmmo;
+	
 	Chest(World world, ChestInteractiveObject chestInteractive){
 		super(new AtlasRegion(new TextureAtlas("Resources/World/Chest/Chest.pack").findRegion("Chests")));
 		this.world = world;
@@ -114,5 +118,26 @@ public class Chest extends Sprite{
 	public void opening() {
 		closed = false;
 		opening = true;
+	}
+	public void setKey(Key key) {
+		this.key = key;
+	}
+	public void setPistolAmmo(int PAmmo) {
+		this.PistolAmmo = PAmmo;
+	}
+	public void setRifleAmmo(int RAmmo) {
+		this.RifleAmmo = RAmmo;
+	}
+	public Key getKey() {
+		return key;
+	}
+	public int getPAmmo() {
+		return PistolAmmo;
+	}
+	public int getRAmmo() {
+		return RifleAmmo;
+	}
+	public boolean getOpened() {
+		return opened;
 	}
 }

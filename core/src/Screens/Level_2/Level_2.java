@@ -6,6 +6,7 @@ import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
 import Screens.Level_1.Level_1;
 import Screens.Level_3.Level_3;
+import Sprites.Key;
 import Sprites.Player;
 import Tools.ChestCreator;
 import Tools.DoorAreaCreator;
@@ -48,9 +49,9 @@ public class Level_2 extends Level_1{
 		new DoorHideCreator(game, world, map, player, "door-hide-area3");
 		 
 		//Generate Chest
-		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area1"));
-		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area2"));
-		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area3"));
+		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area1", player, new Key("1"), 200, 0));
+		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area2", player, new Key("1"), 200, 0));
+		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area3", player, new Key("1"), 200, 0));
 		
 		//Generate door-Level
 		Level_3 nextLevel = new Level_3(game, new World(new Vector2(0, -10),true), player,"Resources/Levels/Level 3/Level 3.tmx");

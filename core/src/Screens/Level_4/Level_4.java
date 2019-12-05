@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
 import Screens.Level_1.Level_1;
+import Sprites.Key;
 import Sprites.Player;
 import Tools.ChestCreator;
 import Tools.DoorAreaCreator;
@@ -52,9 +53,9 @@ public class Level_4 extends Level_1{
 		new DoorHideCreator(game, world, map, player, "door-hide-object-area4");
 		
 		//Generate Chest
-		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area1"));
-		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area2"));
-		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area3"));
+		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area1", player, new Key("1"), 200, 0));
+		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area2", player, new Key("1"), 200, 0));
+		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area3", player, new Key("1"), 200, 0));
 		
 		//Generate door-level
 		/*Level_1 nextLevel = new Level_4(game, new World(new Vector2(0, -10),true), player,"Resources/Levels/Level 4/Level 4.tmx");

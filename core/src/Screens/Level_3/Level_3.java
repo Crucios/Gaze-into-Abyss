@@ -6,6 +6,7 @@ import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
 import Screens.Level_1.Level_1;
 import Screens.Level_4.Level_4;
+import Sprites.Key;
 import Sprites.Player;
 import Tools.ChestCreator;
 import Tools.DoorAreaCreator;
@@ -56,12 +57,12 @@ public class Level_3 extends Level_1{
 		new DoorHideCreator(game, world, map, player, "door-hide-object-area4-2");
 		
 		//Generate Chest
-		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area1"));
-		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area2"));
-		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area3"));
-		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area4"));
-		chestCreator.add(new ChestCreator(game, world, map, "chest-object-mimic-area3"));
-		chestCreator.add(new ChestCreator(game, world, map, "chest-object-mimic-area4"));
+		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area1", player, new Key("1"), 200, 0));
+		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area2", player, new Key("1"), 200, 0));
+		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area3", player, new Key("1"), 200, 0));
+		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area4", player, new Key("1"), 200, 0));
+		chestCreator.add(new ChestCreator(game, world, map, "chest-object-mimic-area3", player, new Key("1"), 200, 0));
+		chestCreator.add(new ChestCreator(game, world, map, "chest-object-mimic-area4", player, new Key("1"), 200, 0));
 		
 		//enerate door-level
 		Level_4 nextLevel = new Level_4(game, new World(new Vector2(0, -10),true), player,"Resources/Levels/Level 4/Level 4.tmx");
