@@ -73,6 +73,9 @@ public class Level_1 implements Screen{
 	
 	protected float elapsed;
 	
+	protected boolean hasDebuffedFear;
+	protected boolean hasDebuffedSlowness;
+	
 	public void handleInput(float dt) {
 		player.handleinput();
 		//Print Mouse Position
@@ -125,11 +128,20 @@ public class Level_1 implements Screen{
 		}
 		
 		//Jika di level waktunya sudah 60 detik
-		if(elapsed > 120.0 && !player.isDebuffSlowness()) {
-			player.setDebuffFear(true);
-		}
-		else if(elapsed > 240.0 && !player.isDebuffFear()) {
+		if(elapsed > 60.0 && !hasDebuffedSlowness) {
 			player.setDebuffSlowness(true);
+			hasDebuffedSlowness = true;
+		}
+		else if(elapsed > 180.0 && !player.isDebuffFear()) {
+			player.setDebuffFear(true);
+			hasDebuffedFear = false;
+		}
+		
+		if(player.hasCured()) {
+			elapsed = 0;
+			player.setCured(false);
+			hasDebuffedSlowness = false;
+			hasDebuffedFear = false;
 		}
 		
 		if(player.getHitPoint() <= 0 )
@@ -186,6 +198,9 @@ public class Level_1 implements Screen{
 		gameOver = false;
 		
 		generateLevel();
+		
+		hasDebuffedFear = false;
+		hasDebuffedSlowness = false;
 		
 		world.setContactListener(new WorldContactListener());
 	}

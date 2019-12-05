@@ -73,6 +73,7 @@ public class Player extends Sprite{
 	private int limitMovementSpeed;
 	private float slownessSpeed;
 	private double limitSlownessSpeed;
+	private boolean cured;
 	
 	private ArrayList<PistolBullet> PBullet;
 	private ArrayList<RifleBullet> RBullet;
@@ -117,6 +118,7 @@ public class Player extends Sprite{
 		
 		debuffSlowness = false;
 		debuffFear = false;
+		cured = false;
 		
 		movementSpeed = 0.5f;
 		limitMovementSpeed = 2;
@@ -532,6 +534,7 @@ public class Player extends Sprite{
 		debuffSlowness = false;
 		slownessSpeed = 0;
 		limitSlownessSpeed = 0;
+		cured = true;
 	}
 	
 	public ArrayList<PistolBullet> getPistolBullet() {
@@ -652,6 +655,12 @@ public class Player extends Sprite{
 	}
 	public void setHasHit(boolean hasHit) {
 		this.hasHit = hasHit;
+	}
+	public void setCured(boolean cured) {
+		this.cured = cured;
+	}
+	public boolean hasCured() {
+		return cured;
 	}
 	@Override
 	public String toString() {
