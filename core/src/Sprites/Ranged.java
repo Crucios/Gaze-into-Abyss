@@ -96,7 +96,13 @@ public class Ranged extends Enemy {
         }
 
         bullettimer += dt;
-        System.out.println("POSISTION ENEMY: " + nowPosition);
+        if(HP <= 0) {
+        	isDead = true;
+        }
+        if(isDead && !hasDestroyed) {
+        	world.destroyBody(b2body);
+        	hasDestroyed = true;
+        }
         enemyMovement();
     }
 

@@ -29,9 +29,14 @@ public class Melee extends Enemy {
         setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(dt));
         nowPosition = new Vector2(b2body.getPosition().x * GazeintoAbyss.PPM, b2body.getPosition().y * GazeintoAbyss.PPM);
-        //System.out.println("Enemy Position: " + nowPosition.x + " , " + nowPosition.y);
-//        System.out.println("ENEMY POSITION: " + nowPosition);
-//        System.out.println("Xawal: " + xawal + "Akhir: " + xakhir);
+        //Destroy if HP drop to 0
+        if(HP <= 0) {
+        	isDead = true;
+        }
+        if(isDead && !hasDestroyed) {
+        	world.destroyBody(b2body);
+        	hasDestroyed = true;
+        }
         enemyMovement();
     }
 
@@ -108,7 +113,7 @@ public class Melee extends Enemy {
         fdef.friction = 1.0f;
         fdef.isSensor = true;
         b2body.createFixture(fdef);
-        //fdef.isSensor = true;
+        fdef.isSensor = true;
         b2body.createFixture(fdef).setUserData(this);
     }
 

@@ -22,12 +22,6 @@ public class WorldContactListener implements ContactListener{
 			if(object.getUserData() != null && InteractiveTileObject.class.isAssignableFrom(object.getUserData().getClass())){
 				((InteractiveTileObject) object.getUserData()).onHit();
 			}
-			if(object.getUserData() != null && RifleBullet.class.isAssignableFrom(object.getUserData().getClass())) {
-				((RifleBullet) object.getUserData()).onHit();
-			}
-			if(object.getUserData() != null && PistolBullet.class.isAssignableFrom(object.getUserData().getClass())) {
-				((PistolBullet) object.getUserData()).onHit();
-			}
 			if (object.getUserData() != null && Melee.class.isAssignableFrom(object.getUserData().getClass())) {
 				((Melee) object.getUserData()).onHit();
 			}

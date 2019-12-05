@@ -39,6 +39,11 @@ public abstract class Enemy extends Sprite {
 	protected boolean attacking;
 	protected boolean standing;
 	
+	protected boolean hitbyBullet;
+	
+	protected boolean isDead;
+	protected boolean hasDestroyed;
+	
     public Enemy(World world,  Vector2 position, float xawal, float xakhir, Player player) {
     	super(new AtlasRegion(new TextureAtlas("Resources/Monster/Monsters.pack").findRegion("Monsters")));
         this.world = world;
@@ -46,6 +51,8 @@ public abstract class Enemy extends Sprite {
         this.xawal = xawal;
         this.xakhir = xakhir;
         this.player = player;
+        isDead = false;
+        hasDestroyed = false;
         moveright = true;
         nowPosition = new Vector2();
         DefineEnemy();
@@ -107,4 +114,32 @@ public abstract class Enemy extends Sprite {
     public abstract void setHP(int hp);
     public abstract int getDamage();
     public abstract void setDamage(int dmg);
+
+	public Vector2 getNowPosition() {
+		return nowPosition;
+	}
+
+	public void setNowPosition(Vector2 nowPosition) {
+		this.nowPosition = nowPosition;
+	}
+
+	public boolean isMoveright() {
+		return moveright;
+	}
+
+	public void setMoveright(boolean moveright) {
+		this.moveright = moveright;
+	}
+
+	public void setPosition(Vector2 position) {
+		this.position = position;
+	}
+
+	public boolean isHasDestroyed() {
+		return hasDestroyed;
+	}
+
+	public void setHasDestroyed(boolean hasDestroyed) {
+		this.hasDestroyed = hasDestroyed;
+	}
 }

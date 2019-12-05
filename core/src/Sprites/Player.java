@@ -363,11 +363,13 @@ public class Player extends Sprite{
 		if(shooting) {
 			if(pistol) {
 				int bulIndex = PBullet.size();
-				PBullet.get(bulIndex-1 ).setToRight(toRight);
+				if(bulIndex > 0)
+					PBullet.get(bulIndex-1 ).setToRight(toRight);
 			}
 			else {
 				int bulIndex = RBullet.size();
-				RBullet.get(bulIndex-1 ).setToRight(toRight);
+				if(bulIndex > 0)
+					RBullet.get(bulIndex-1 ).setToRight(toRight);
 			}
 		}
 		
@@ -470,7 +472,7 @@ public class Player extends Sprite{
 			isHiding = false;
 		}
 		if(pistol && Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D)) {
-			if(PBulletTimer>0.4f && ammoPistol > 0) {
+			if(PBulletTimer>0.5f && ammoPistol > 0) {
 				boolean miss = false;
 				if(debuffFear) {
 					Random random = new Random();
@@ -487,7 +489,7 @@ public class Player extends Sprite{
 			shooting = true;
 		}
 		else if(rifle && Gdx.input.isKeyPressed(Input.Keys.SPACE) && !Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D)) {
-			if(RBulletTimer>0.2f && ammoRifle > 0) {
+			if(RBulletTimer>0.4f && ammoRifle > 0) {
 				boolean miss = false;
 				if(debuffFear) {
 					Random random = new Random();

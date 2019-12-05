@@ -23,12 +23,16 @@ public class RifleBullet extends Sprite {
 	private Vector2 position;
 	
 	private boolean toRight;
-	private boolean demage;
+	private int damage;
 	private boolean isHit;
 	private boolean stopTimer;
 	private boolean destroy;
 	private float timer;
 	private boolean miss;
+	private Vector2 nowPosition;
+	
+	private Enemy enemy;
+	private boolean hasDamaged;
 	
 	public RifleBullet(World world, Vector2 position, boolean miss) {
 		super(new AtlasRegion(new TextureAtlas("Resources/Item/bullet.pack").findRegion("bullet")));
@@ -37,6 +41,8 @@ public class RifleBullet extends Sprite {
 		this.stopTimer = false;
 		this.destroy = false;
 		this.miss = miss;
+		this.damage = 3;
+		hasDamaged = false;
 		isHit = false;
 		timer = 0;
 		this.position = position;
@@ -52,6 +58,10 @@ public class RifleBullet extends Sprite {
 		else {
 			b2body.setLinearVelocity(-6f,0);
 		}
+		if(hasDamaged) {
+			enemy.setHP(enemy.getHP() - damage);
+			hasDamaged = false;
+		}
 		if(isHit) {
 			world.destroyBody(b2body);
 			destroy = true;
@@ -64,11 +74,9 @@ public class RifleBullet extends Sprite {
 		}
 		if(timer > 40f) {
 			isHit = true;
-
-			System.out.println("hilang");
-			
 		}
 		setPosition(new Vector2(b2body.getPosition().x, b2body.getPosition().y));
+		nowPosition = new Vector2(b2body.getPosition().x * GazeintoAbyss.PPM, b2body.getPosition().y * GazeintoAbyss.PPM);
 	}
 	public void defineHitBox(int x, int y) {
 		FixtureDef fdef = new FixtureDef();
@@ -96,11 +104,12 @@ public class RifleBullet extends Sprite {
 	public boolean getDestroy() {
 		return destroy;
 	}
-	public void onHit() {
-		if(miss)
-			System.out.println("Bullet Miss");
-		else
-			System.out.println("Bullet hit");
+	public void onHit(Enemy enemy) {
+		isHit = true;
+		if(!miss) {
+			this.enemy = enemy;
+			hasDamaged = true;
+		}
 	}
 	
 	public void setHit(boolean hit) {
@@ -112,5 +121,11 @@ public class RifleBullet extends Sprite {
 	
 	public Vector2 getPosition() {
 		return position;
+	}
+	public Vector2 getNowPosition() {
+		return nowPosition;
+	}
+	public void setNowPosition(Vector2 nowPosition) {
+		this.nowPosition = nowPosition;
 	}
 }

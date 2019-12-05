@@ -75,7 +75,14 @@ public class Speed extends Enemy {
         setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight()/2);
         nowPosition = new Vector2(b2body.getPosition().x * GazeintoAbyss.PPM, b2body.getPosition().y * GazeintoAbyss.PPM);
         setRegion(getFrame(dt));
-        System.out.println("ENEMY POSITION: " + nowPosition);
+        
+        if(HP <= 0) {
+        	isDead = true;
+        }
+        if(isDead && !hasDestroyed) {
+        	world.destroyBody(b2body);
+        	hasDestroyed = true;
+        }
         enemyMovement();
     }
 

@@ -91,11 +91,30 @@ public class Level_1 implements Screen{
 		
 		player.update(dt);
 		
-		for(int i=0;i<enemy.size();i++)
+		for(int i=0;i<enemy.size();i++) {
 			enemy.get(i).update(dt);
+			//Collision Detection
+			System.out.println("Enemy HP: " + enemy.get(i).getHP());
+			for(int j=0;j<PBullet.size();j++) {
+				if(PBullet.get(j).getNowPosition().x >= enemy.get(i).getNowPosition().x - 40 && PBullet.get(j).getNowPosition().x <= enemy.get(i).getNowPosition().x + 40
+					&&	PBullet.get(j).getNowPosition().y >= enemy.get(i).getNowPosition().y - 70 && PBullet.get(j).getNowPosition().y <= enemy.get(i).getNowPosition().y + 70) {
+					PBullet.get(j).onHit(enemy.get(i));
+				}
+				//System.out.println("Bullet Position: " + PBullet.get(j).getNowPosition());
+			}
+			
+			for(int j=0;j<RBullet.size();j++) {
+				if(RBullet.get(j).getNowPosition().x >= enemy.get(i).getNowPosition().x - 40 && RBullet.get(j).getNowPosition().x <= enemy.get(i).getNowPosition().x + 40
+						&& RBullet.get(j).getNowPosition().y >= enemy.get(i).getNowPosition().y - 70 && RBullet.get(j).getNowPosition().y <= enemy.get(i).getNowPosition().y + 70) {
+					RBullet.get(j).onHit(enemy.get(i));         
+				}
+			}
+		}
+			
 		
 		for(int i=0;i<chestCreator.size();i++)
 			chestCreator.get(i).update(dt);
+		
 		
 		if((player.b2body.getPosition().x < maxRight && player.b2body.getPosition().x > maxLeft)) {
 			gamecam.position.x = player.b2body.getPosition().x;
@@ -225,24 +244,34 @@ public class Level_1 implements Screen{
 		hud.stage.draw();
 		game.batch.setProjectionMatrix(gamecam.combined);
 		game.batch.begin();
+		
 		for(int i=0;i<chestCreator.size();i++)
 			chestCreator.get(i).getChestInteractive().getChest().draw(game.batch);
 
-		for(int i=0;i<enemy.size();i++)
-			enemy.get(i).draw(game.batch);
-		
-		for(PistolBullet bullet :PBullet) {
-			if(!bullet.getDestroy()) {
-				bullet.draw(game.batch);
+		for(int i=0;i<enemy.size();i++) {
+			if(!enemy.get(i).isHasDestroyed())
+				enemy.get(i).draw(game.batch);
+			else
+				enemy.remove(i);
+		}
+			
+
+		for(int i=0;i<PBullet.size();i++) {
+			if(!PBullet.get(i).getDestroy()) {
+				PBullet.get(i).draw(game.batch);
 			}
+			else
+				PBullet.remove(i);
 		}
 		
-		for(RifleBullet bullet: RBullet) {
-			if(!bullet.getDestroy()) {
-				bullet.draw(game.batch);
+		for(int i=0;i<RBullet.size();i++) {
+			if(!RBullet.get(i).getDestroy()) {
+				RBullet.get(i).draw(game.batch);
 			}
+			else
+				RBullet.remove(i);
 		}
-		
+
 		player.draw(game.batch);
 		game.batch.end();
 	}
