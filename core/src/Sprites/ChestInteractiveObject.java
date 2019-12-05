@@ -16,15 +16,12 @@ public class ChestInteractiveObject extends InteractiveTileObject{
 	Chest chest;
 	Player player;
 
-	public ChestInteractiveObject(GazeintoAbyss game,World world, TiledMap map, MapObject object, Player player, Key key, int PAmmo, int RAmmo) {
+	public ChestInteractiveObject(GazeintoAbyss game, World world, TiledMap map, MapObject object, Player player, Key key, int PAmmo, int RAmmo, int healP, int cureP) {
 		super(world, map , object, true);
 		fixture.setUserData(this);
 		this.game = game;
 		this.player = player;
-		chest = new Chest(world, this);
-		chest.setKey(key);
-		chest.setPistolAmmo(PAmmo);
-		chest.setRifleAmmo(RAmmo);
+		chest = new Chest(world, this, key, PAmmo, RAmmo, healP, cureP);
 	}
 
 	@Override
@@ -35,6 +32,8 @@ public class ChestInteractiveObject extends InteractiveTileObject{
 				player.addKey(chest.getKey());
 				player.addAmmoPistol(chest.getPAmmo());
 				player.addAmmoRIfle(chest.getRAmmo());
+				player.setHealingPotionCount(player.getHealingPotionCount() + chest.getHealPotion());
+				player.setCurePotionCount(player.getCurePotionCount() + chest.getCurePotion());
 			}
 			
 		}
