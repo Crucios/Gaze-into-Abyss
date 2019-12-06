@@ -7,7 +7,10 @@ import com.mygdx.gazeintoabyss.GazeintoAbyss;
 import Screens.Level_1.Level_1;
 import Screens.Level_4.Level_4;
 import Sprites.Key;
+import Sprites.Melee;
 import Sprites.Player;
+import Sprites.Ranged;
+import Sprites.Speed;
 import Tools.ChestCreator;
 import Tools.DoorAreaCreator;
 import Tools.DoorHideCreator;
@@ -25,6 +28,15 @@ public class Level_3 extends Level_1{
 	public void generateLevel() {
 		this.maxRight = gamePort.getWorldWidth()/2 - gamePort.getWorldWidth()/3 + 12.55;
 		this.maxLeft = gamePort.getWorldWidth()/2;
+		
+		//Generate Enemy
+		enemy.add(new Ranged(world, new Vector2((2400+2936)/2, 1415), 2400, 2936, player, 500));
+		enemy.add(new Melee(world, new Vector2((710+1360)/2, 1415), 710, 1360, player));
+		enemy.add(new Speed(world, new Vector2((57+808)/2, 1415), 47, 808, player));
+		enemy.add(new Speed(world, new Vector2((2211+2972)/2, 983), 2211, 2972, player));
+		enemy.add(new Melee(world, new Vector2((2159+2851)/2, 551), 2159, 2851, player));
+		enemy.add(new Ranged(world, new Vector2((2700+3174)/2, 119), 2700, 3174, player, 500));
+		enemy.add(new Speed(world, new Vector2((442+1247)/2, 119), 442, 1247, player));
 		
 		//Generate Wall and Ground
 		new WorldCreator(world, map);

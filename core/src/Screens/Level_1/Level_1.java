@@ -213,7 +213,7 @@ public class Level_1 implements Screen{
 		new WorldCreator(world, map);
 
 		//Generate Enemy
-		enemy.add(new Melee(world, new Vector2(772, 551), 772, 1421, player));
+		enemy.add(new Melee(world, new Vector2((829+1702)/2, 119), 829, 1702, player));
 
 		//Generate door-area
 		double newMaxRight = gamePort.getWorldWidth()*2 + 1;

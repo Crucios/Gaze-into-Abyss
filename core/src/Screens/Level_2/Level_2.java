@@ -7,7 +7,10 @@ import com.mygdx.gazeintoabyss.GazeintoAbyss;
 import Screens.Level_1.Level_1;
 import Screens.Level_3.Level_3;
 import Sprites.Key;
+import Sprites.Melee;
 import Sprites.Player;
+import Sprites.Ranged;
+import Sprites.Speed;
 import Tools.ChestCreator;
 import Tools.DoorAreaCreator;
 import Tools.DoorHideCreator;
@@ -48,6 +51,13 @@ public class Level_2 extends Level_1{
 		new DoorHideCreator(game, world, map, player, "door-hide-area2");
 		new DoorHideCreator(game, world, map, player, "door-hide-area3");
 		 
+		//Generate Enemy
+		enemy.add(new Melee(world, new Vector2((56+850)/2, 984), 56, 850, player));
+		enemy.add(new Ranged(world, new Vector2((1800+2559)/2, 984), 1800, 2559, player, 500));
+		enemy.add(new Melee(world, new Vector2((226+1208)/2, 551), 226, 1208, player));
+		enemy.add(new Melee(world, new Vector2((2500+3174)/2, 551), 2500, 3174, player));
+		enemy.add(new Speed(world, new Vector2((1134+2471)/2, 119), 1134, 2471, player));
+		
 		//Generate Chest
 		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area1", player, new Key("1"), 200, 0, 0, 0));
 		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area2", player, new Key("1"), 200, 0, 0, 0));

@@ -503,7 +503,7 @@ public class Player extends Sprite{
 			shooting = true;
 		}
 		else if(rifle && Gdx.input.isKeyPressed(Input.Keys.SPACE) && !Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D)) {
-			if(RBulletTimer>0.4f && ammoRifle > 0) {
+			if(RBulletTimer>0.2f && ammoRifle > 0) {
 				boolean miss = false;
 				if(debuffFear) {
 					Random random = new Random();
