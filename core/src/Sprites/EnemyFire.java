@@ -57,8 +57,10 @@ public class EnemyFire extends Sprite {
     }
 
     public void onHit() {
-        player.setHitPoint(player.getHitPoint() - damage);
-        System.out.println("MUSUH E NEMBAK KOWE");
+    	if(player.isFreetoHit()) {
+    		player.setHitPoint(player.getHitPoint() - damage);
+    		player.setHasHit(true);
+    	}
     }
 
     public void setPosition(Vector2 positions) {

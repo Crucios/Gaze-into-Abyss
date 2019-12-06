@@ -50,7 +50,7 @@
   <object id="15" x="1884" y="506.667" width="104" height="142.667"/>
  </objectgroup>
  <objectgroup id="17" name="door-area4-object-area2">
-  <object id="16" x="3546.67" y="506.667" width="105.333" height="142.667"/>
+  <object id="16" x="3546.67" y="506.667" width="105.333" height="147.667"/>
  </objectgroup>
  <objectgroup id="18" name="door-hide-object-area2">
   <object id="17" x="2725.33" y="504" width="106.667" height="146.667"/>
@@ -65,15 +65,15 @@
   <object id="21" x="1492" y="937.333" width="105.333" height="148"/>
  </objectgroup>
  <objectgroup id="23" name="chest-object-area4">
-  <object id="27" x="512" y="1457.41" width="81.1818" height="61.5909"/>
+  <object id="27" x="528.5" y="1457.41" width="64.6818" height="61.5909"/>
  </objectgroup>
  <objectgroup id="22" name="door-area2-object-area4">
   <object id="24" x="185.333" y="1369.33" width="108" height="148"/>
  </objectgroup>
  <objectgroup id="29" name="chest-object-area5">
-  <object id="29" x="1045.45" y="1900" width="78.7879" height="45.4545"/>
+  <object id="29" x="1055.95" y="1890.5" width="68.2879" height="58.9545"/>
  </objectgroup>
- <objectgroup id="30" name="door-area1-area5">
+ <objectgroup id="30" name="door-area1-object-area5">
   <object id="30" x="187.879" y="1803.03" width="106.061" height="145.455"/>
  </objectgroup>
  <objectgroup id="31" name="finish-door">

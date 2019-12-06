@@ -18,13 +18,15 @@ public class Ranged extends Enemy {
     private boolean cekFire;
     private EnemyFire enemybullet;
     private float bullettimer;
+    private float range;
 
-    public Ranged(World world, Vector2 position, float xawal, float xakhir, Player player) {
+    public Ranged(World world, Vector2 position, float xawal, float xakhir, Player player, float range) {
         super(world, position, xawal, xakhir, player);
         cekFire = false;
         bullettimer = 2;
         HP = 4;
         damage = 2;
+        this.range = range;
     }
     
     @Override
@@ -147,11 +149,11 @@ public class Ranged extends Enemy {
     }
 
     public void Fire() {
-        if(!player.getHiding() && moveright && (player.getNowPosition().x < nowPosition.x + 500 && player.getNowPosition().x > nowPosition.x)){
+        if(!player.getHiding() && moveright && (player.getNowPosition().x < nowPosition.x + range && player.getNowPosition().x > nowPosition.x) && (player.getNowPosition().y <= nowPosition.y + 70 && player.getNowPosition().y >= nowPosition.y - 70)){
             cekFire = true;
             enemybullet = new EnemyFire(world, nowPosition, player);
         }
-        else if (!player.getHiding() && !moveright && (player.getNowPosition().x > nowPosition.x - 500 && player.getNowPosition().x < nowPosition.x)) {
+        else if (!player.getHiding() && !moveright && (player.getNowPosition().x > nowPosition.x - range && player.getNowPosition().x < nowPosition.x) && (player.getNowPosition().y <= nowPosition.y + 70 && player.getNowPosition().y >= nowPosition.y - 70)) {
             cekFire = true;
             enemybullet = new EnemyFire(world, nowPosition, player);
         }

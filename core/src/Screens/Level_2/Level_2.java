@@ -31,16 +31,16 @@ public class Level_2 extends Level_1{
 				
 		//Generate door-area
 		double newMaxRight = gamePort.getWorldWidth()*3 + 4.3;
-		Vector2 newCamera = new Vector2((gamePort.getWorldWidth()/2),(gamePort.getWorldHeight() + 0.7f)); 
+		Vector2 newCamera = new Vector2((gamePort.getWorldWidth()/2),5.71f); 
 		new DoorAreaCreator(game, world, map, player, gamecam, newCamera, "door-area-object-f1-t2", new Vector2(730,560), this, newMaxRight,false,"");
 		
-		newCamera = new Vector2((gamePort.getWorldWidth()/2),(gamePort.getWorldHeight()/4)); 
+		newCamera = new Vector2((gamePort.getWorldWidth()/2),1.39f); 
 		new DoorAreaCreator(game, world, map, player, gamecam, newCamera, "door-area-object-f2-t3", new Vector2(1115,119), this, newMaxRight,false,"");
 		
-		newCamera = new Vector2((gamePort.getWorldWidth()/2),(gamePort.getWorldHeight() + 5)); 
+		newCamera = new Vector2((gamePort.getWorldWidth()/2), 10.04f); 
 		new DoorAreaCreator(game, world, map, player, gamecam, newCamera, "door-area-object-f2-t1", new Vector2(1152,984), this, newMaxRight,false,"");
 		
-		newCamera = new Vector2((gamePort.getWorldWidth()/2),(gamePort.getWorldHeight() + 0.7f)); 
+		newCamera = new Vector2((gamePort.getWorldWidth()/2),5.71f); 
 		new DoorAreaCreator(game, world, map, player, gamecam, newCamera, "door-area-object-f3-t2", new Vector2(2852,560), this, newMaxRight,false,"");
 		
 		//Generate door-hide
@@ -55,7 +55,7 @@ public class Level_2 extends Level_1{
 		
 		//Generate door-Level
 		Level_3 nextLevel = new Level_3(game, new World(new Vector2(0, -10),true), player,"Resources/Levels/Level 3/Level 3.tmx");
-		newCamera = new Vector2(nextLevel.getGamePort().getWorldWidth()/2, nextLevel.getGamePort().getWorldHeight() + 9.5f);
+		newCamera = new Vector2(nextLevel.getGamePort().getWorldWidth()/2, 14.35f);
 		newMaxRight = nextLevel.getGamePort().getWorldWidth() + 20.3;
 		Vector2 newPosition = new Vector2(1648, 1400);
 		new DoorLevelCreator(game, world, map, player, nextLevel, newCamera, newMaxRight, newPosition,"door-level-object-toLevel3",true,"1");

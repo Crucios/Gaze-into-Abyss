@@ -275,7 +275,7 @@ public class Player extends Sprite{
 		PBulletTimer += dt;
 		RBulletTimer += dt;
 		
-		//System.out.println("Player Position: " + nowPosition.x + " , " + nowPosition.y);
+		System.out.println("Player Position: " + nowPosition.x + " , " + nowPosition.y);
 	}
 	
 	public TextureRegion getFrame(float dt) {

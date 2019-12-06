@@ -217,11 +217,11 @@ public class Level_1 implements Screen{
 
 		//Generate door-area
 		double newMaxRight = gamePort.getWorldWidth()*2 + 1;
-		Vector2 newCamera = new Vector2((gamePort.getWorldWidth()/2),(gamePort.getWorldHeight()/4)); 
+		Vector2 newCamera = new Vector2((gamePort.getWorldWidth()/2),1.39f); 
 		new DoorAreaCreator(game, world, map, player, gamecam, newCamera, "door-area-object_area1", new Vector2(100,129), this, newMaxRight, true, "1");
 
 		newMaxRight = gamePort.getWorldWidth()/2 - gamePort.getWorldWidth()/3 + 12.55;
-		newCamera = new Vector2((gamePort.getWorldWidth()/2),(gamePort.getWorldHeight() + 0.75f)); 
+		newCamera = new Vector2((gamePort.getWorldWidth()/2),5.71f); 
 		new DoorAreaCreator(game, world, map, player, gamecam, newCamera, "door-area-object_area2", new Vector2(1600,525), this, newMaxRight, false, "");
 		
 		//Generate door-hide
@@ -233,7 +233,7 @@ public class Level_1 implements Screen{
 		
 		//Generate door-level
 		Level_2 nextLevel = new Level_2(game, new World(new Vector2(0, -10),true), player,"Resources/Levels/Level 2/Level 2.tmx");
-		newCamera = new Vector2(nextLevel.getGamePort().getWorldWidth()/2, nextLevel.getGamePort().getWorldHeight() + 5);
+		newCamera = new Vector2(nextLevel.getGamePort().getWorldWidth()/2, 10.04f);
 		newMaxRight = nextLevel.getGamePort().getWorldWidth() + 20.3;
 		Vector2 newPosition = new Vector2(300, 1000);
 		new DoorLevelCreator(game, world, map, player, nextLevel, newCamera, newMaxRight, newPosition,"door-level-object_area2", false, "");

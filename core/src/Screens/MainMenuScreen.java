@@ -69,8 +69,10 @@ public class MainMenuScreen implements Screen {
             if (Gdx.input.isTouched()) {
                 this.dispose();
                 World tempWorld = new World(new Vector2(0, -10),true);
-                
-                game.setScreen(new Level_1(game, tempWorld, new Player(tempWorld, new Vector2(100,520)),"Resources/Levels/Level 1/Level 1.tmx"));
+                Level_1 nextLevel = new Level_1(game, tempWorld, new Player(tempWorld, new Vector2(100,520)),"Resources/Levels/Level 1/Level 1.tmx");
+                Vector2 newCamera = new Vector2(nextLevel.getGamePort().getWorldWidth()/2, 5.71f);
+                nextLevel.getGamecam().position.set(newCamera,0);
+                game.setScreen(nextLevel);
             }
         }else {
             game.batch.draw(PlayButtonInactive,ExitX,300, ExitB_WIDTH, ExitB_HEIGHT);
@@ -106,7 +108,7 @@ public class MainMenuScreen implements Screen {
                 	
                 	if(playerLevel == 1) {
                 		Level_1 nextLevel = new Level_1(game, tempWorld, player,"Resources/Levels/Level 1/Level 1.tmx");
-                		Vector2 newCamera = new Vector2(nextLevel.getGamePort().getWorldWidth()/2, nextLevel.getGamePort().getWorldHeight() + 5);
+                		Vector2 newCamera = new Vector2(nextLevel.getGamePort().getWorldWidth()/2, 5.61f);
                 		double newMaxRight = nextLevel.getGamePort().getWorldWidth() + 20.3;
                 		nextLevel.setMaxRight(newMaxRight);
                 		nextLevel.getGamecam().position.set(newCamera,0);
