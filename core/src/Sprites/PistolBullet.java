@@ -62,13 +62,7 @@ public class PistolBullet extends Sprite {
 			enemy.setHP(enemy.getHP() - damage);
 			hasDamaged = false;
 		}
-		if(isHit) {
-			world.destroyBody(b2body);
-			destroy = true;
-			isHit = false;
-			stopTimer = true;
-			timer = 0; 
-		}
+		
 		if(!stopTimer) {
 			timer++;
 		}
@@ -77,6 +71,13 @@ public class PistolBullet extends Sprite {
 		}
 		setPosition(new Vector2(b2body.getPosition().x, b2body.getPosition().y));
 		nowPosition = new Vector2(b2body.getPosition().x * GazeintoAbyss.PPM, b2body.getPosition().y * GazeintoAbyss.PPM);
+		if(isHit) {
+			world.destroyBody(b2body);
+			destroy = true;
+			isHit = false;
+			stopTimer = true;
+			timer = 0; 
+		}
 	}
 	public void defineHitBox(int x, int y) {
 		FixtureDef fdef = new FixtureDef();

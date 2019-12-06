@@ -12,9 +12,17 @@ import Sprites.DoorLevel;
 import Sprites.Player;
 
 public class DoorLevelCreator {
-	public DoorLevelCreator(GazeintoAbyss game, World world, TiledMap map, Player player, Level_1 nextLevel, Vector2 newGameCamPosition, double nextMaxRight, Vector2 nextPlayerPosition, String nameObject,boolean isLock,String lock){
+	DoorLevel doorlevel;
+	public DoorLevelCreator(GazeintoAbyss game, World world, TiledMap map, Player player, Level_1 nextLevel, Vector2 newGameCamPosition, double nextMaxRight, Vector2 nextPlayerPosition, String nameObject,boolean isLock,String lock, Level_1 prevLevel){
 		for(MapObject object : map.getLayers().get(nameObject).getObjects().getByType(RectangleMapObject.class)) {
-			new DoorLevel(game, world, map, object, player, nextLevel, newGameCamPosition, nextMaxRight, nextPlayerPosition,isLock,lock);
+			doorlevel = new DoorLevel(game, world, map, object, player, nextLevel, newGameCamPosition, nextMaxRight, nextPlayerPosition,isLock,lock, prevLevel);
 		}
 	}
+	public DoorLevel getDoorlevel() {
+		return doorlevel;
+	}
+	public void setDoorlevel(DoorLevel doorlevel) {
+		this.doorlevel = doorlevel;
+	}
+	
 }

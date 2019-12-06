@@ -23,10 +23,13 @@ public class DoorLevel extends InteractiveTileObject{
 	private Vector2 nextPlayerPosition;
 	protected String lock;
 	protected boolean isLock;
+	protected Level_1 prevLevel;
+	protected boolean setToDispose;
+	protected boolean hasDestroyed;
 	
 	public DoorLevel(GazeintoAbyss game, World world, TiledMap map, MapObject object, 
 			Player player, Level_1 nextLevel, Vector2 newGameCamPosition, double nextMaxRight, 
-			Vector2 nextPlayerPosition,boolean isLock,String lock) {
+			Vector2 nextPlayerPosition,boolean isLock,String lock, Level_1 prevLevel) {
 		super(world, map , object, true);
 		fixture.setUserData(this);
 		this.game = game;
@@ -37,6 +40,9 @@ public class DoorLevel extends InteractiveTileObject{
 		this.nextPlayerPosition = nextPlayerPosition;
 		this.isLock = isLock;
 		this.lock = lock;
+		this.prevLevel = prevLevel;
+		setToDispose = false;
+		hasDestroyed = false;
 	}
 
 	@Override
@@ -51,12 +57,11 @@ public class DoorLevel extends InteractiveTileObject{
 					if(key.getId() == lock) {
 						System.out.println("Door open");
 						isLock = false;
+						setToDispose = true;
 						game.setScreen(nextLevel);
 						nextLevel.getGamecam().position.set(newGameCamPosition,0);
 						nextLevel.setMaxRight(nextMaxRight);
 						player.setNextLevelPosition(nextPlayerPosition, nextLevel.getWorld());
-						player.setLevel(player.getLevel()+1);
-						player.setScore(player.getScore()+100);
 						
 						try(FileWriter fileWriter = new FileWriter("Save_Files.txt")){
 							fileWriter.write(player.toString());
@@ -71,12 +76,11 @@ public class DoorLevel extends InteractiveTileObject{
 				}
 			}
 			else {
+				setToDispose = true;
 				game.setScreen(nextLevel);
 				nextLevel.getGamecam().position.set(newGameCamPosition,0);
 				nextLevel.setMaxRight(nextMaxRight);
 				player.setNextLevelPosition(nextPlayerPosition, nextLevel.getWorld());
-				player.setLevel(player.getLevel()+1);
-				player.setScore(player.getScore()+100);
 				
 				try(FileWriter fileWriter = new FileWriter("Save_Files.txt")){
 					fileWriter.write(player.toString());
@@ -85,5 +89,21 @@ public class DoorLevel extends InteractiveTileObject{
 				}
 			}
 		}
+	}
+
+	public boolean isSetToDispose() {
+		return setToDispose;
+	}
+
+	public void setSetToDispose(boolean setToDispose) {
+		this.setToDispose = setToDispose;
+	}
+
+	public boolean isHasDestroyed() {
+		return hasDestroyed;
+	}
+
+	public void setHasDestroyed(boolean hasDestroyed) {
+		this.hasDestroyed = hasDestroyed;
 	}
 }

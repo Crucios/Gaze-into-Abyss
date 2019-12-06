@@ -81,6 +81,6 @@ public class Level_3 extends Level_1{
 		newCamera = new Vector2(gamePort.getWorldWidth()/2 + 0.1f,14.35f); 
 		newMaxRight = nextLevel.getGamePort().getWorldWidth() * 2 + 2.3f;		
 		Vector2 newPosition = new Vector2(301, 1415);
-		new DoorLevelCreator(game, world, map, player, nextLevel, newCamera, newMaxRight, newPosition,"door-level-object-toLevel4",false,"");
+		doorlevelcreator = new DoorLevelCreator(game, world, map, player, nextLevel, newCamera, newMaxRight, newPosition,"door-level-object-toLevel4",false,"", this);
 	}
 }

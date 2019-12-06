@@ -76,6 +76,8 @@ public class Level_1 implements Screen{
 	protected boolean hasDebuffedFear;
 	protected boolean hasDebuffedSlowness;
 	
+	protected DoorLevelCreator doorlevelcreator;
+	
 	public void handleInput(float dt) {
 		player.handleinput();
 		//Print Mouse Position
@@ -94,22 +96,47 @@ public class Level_1 implements Screen{
 		
 		player.update(dt);
 		
+		//Delete Destroyed
 		for(int i=0;i<enemy.size();i++) {
-			enemy.get(i).update(dt);
-			//Collision Detection
-			System.out.println("Enemy HP: " + enemy.get(i).getHP());
-			for(int j=0;j<PBullet.size();j++) {
-				if(PBullet.get(j).getNowPosition().x >= enemy.get(i).getNowPosition().x - 40 && PBullet.get(j).getNowPosition().x <= enemy.get(i).getNowPosition().x + 40
-					&&	PBullet.get(j).getNowPosition().y >= enemy.get(i).getNowPosition().y - 70 && PBullet.get(j).getNowPosition().y <= enemy.get(i).getNowPosition().y + 70) {
-					PBullet.get(j).onHit(enemy.get(i));
-				}
-				//System.out.println("Bullet Position: " + PBullet.get(j).getNowPosition());
-			}
+			if(enemy.get(i).isHasDestroyed())
+				enemy.remove(i);
+		}
 			
-			for(int j=0;j<RBullet.size();j++) {
-				if(RBullet.get(j).getNowPosition().x >= enemy.get(i).getNowPosition().x - 40 && RBullet.get(j).getNowPosition().x <= enemy.get(i).getNowPosition().x + 40
-						&& RBullet.get(j).getNowPosition().y >= enemy.get(i).getNowPosition().y - 70 && RBullet.get(j).getNowPosition().y <= enemy.get(i).getNowPosition().y + 70) {
-					RBullet.get(j).onHit(enemy.get(i));         
+
+		for(int i=0;i<PBullet.size();i++) {
+			if(!PBullet.get(i).getDestroy()) {
+				PBullet.remove(i);
+			}
+		}
+		
+		for(int i=0;i<RBullet.size();i++) {
+			if(RBullet.get(i).getDestroy()) {
+				RBullet.remove(i);
+			}
+		}
+		
+		for(int i=0;i<enemy.size();i++) {
+			if(!enemy.get(i).isHasDestroyed()) {
+				enemy.get(i).update(dt);
+				//Collision Detection
+				System.out.println("Enemy HP: " + enemy.get(i).getHP());
+				for(int j=0;j<PBullet.size();j++) {
+					if(!PBullet.get(j).getDestroy()) {
+						if(PBullet.get(j).getNowPosition().x >= enemy.get(i).getNowPosition().x - 40 && PBullet.get(j).getNowPosition().x <= enemy.get(i).getNowPosition().x + 40
+								&&	PBullet.get(j).getNowPosition().y >= enemy.get(i).getNowPosition().y - 70 && PBullet.get(j).getNowPosition().y <= enemy.get(i).getNowPosition().y + 70) {
+								PBullet.get(j).onHit(enemy.get(i));
+							}
+							//System.out.println("Bullet Position: " + PBullet.get(j).getNowPosition());
+					}
+				}
+				
+				for(int j=0;j<RBullet.size();j++) {
+					if(!RBullet.get(j).getDestroy()) {
+						if(RBullet.get(j).getNowPosition().x >= enemy.get(i).getNowPosition().x - 40 && RBullet.get(j).getNowPosition().x <= enemy.get(i).getNowPosition().x + 40
+								&& RBullet.get(j).getNowPosition().y >= enemy.get(i).getNowPosition().y - 70 && RBullet.get(j).getNowPosition().y <= enemy.get(i).getNowPosition().y + 70) {
+							RBullet.get(j).onHit(enemy.get(i));         
+						}
+					}
 				}
 			}
 		}
@@ -236,7 +263,7 @@ public class Level_1 implements Screen{
 		newCamera = new Vector2(nextLevel.getGamePort().getWorldWidth()/2, 10.04f);
 		newMaxRight = nextLevel.getGamePort().getWorldWidth() + 20.3;
 		Vector2 newPosition = new Vector2(300, 1000);
-		new DoorLevelCreator(game, world, map, player, nextLevel, newCamera, newMaxRight, newPosition,"door-level-object_area2", false, "");
+		doorlevelcreator = new DoorLevelCreator(game, world, map, player, nextLevel, newCamera, newMaxRight, newPosition,"door-level-object_area2", false, "", this);
 	}
 	
 	@Override
@@ -289,6 +316,19 @@ public class Level_1 implements Screen{
 
 		player.draw(game.batch);
 		game.batch.end();
+		
+		try{
+			if(doorlevelcreator.getDoorlevel().isSetToDispose() && !doorlevelcreator.getDoorlevel().isHasDestroyed()) {
+				doorlevelcreator.getDoorlevel().setHasDestroyed(true);
+				player.setLevel(player.getLevel()+1);
+				player.setScore(player.getScore()+100);
+				dispose();
+			}
+		}
+		catch(NullPointerException t) {
+			System.out.println("Pointer NULL");
+		}
+		
 	}
 
 	@Override

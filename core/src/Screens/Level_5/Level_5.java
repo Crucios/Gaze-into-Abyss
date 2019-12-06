@@ -10,6 +10,7 @@ import Sprites.Player;
 import Tools.ChestCreator;
 import Tools.DoorAreaCreator;
 import Tools.DoorHideCreator;
+import Tools.DoorLevelCreator;
 import Tools.WorldCreator;
 
 public class Level_5 extends Level_1{
@@ -67,7 +68,6 @@ public class Level_5 extends Level_1{
 		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area5", player, new Key("1"), 200, 0, 0, 0));
 		
 		//Generate door-level
-		
 	}
 }
 

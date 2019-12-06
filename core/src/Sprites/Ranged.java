@@ -98,6 +98,9 @@ public class Ranged extends Enemy {
         }
 
         bullettimer += dt;
+        
+        enemyMovement();
+        
         if(HP <= 0) {
         	isDead = true;
         }
@@ -105,7 +108,6 @@ public class Ranged extends Enemy {
         	world.destroyBody(b2body);
         	hasDestroyed = true;
         }
-        enemyMovement();
     }
 
     @Override
