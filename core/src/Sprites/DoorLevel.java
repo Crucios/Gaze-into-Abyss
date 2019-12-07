@@ -26,6 +26,7 @@ public class DoorLevel extends InteractiveTileObject{
 	protected Level_1 prevLevel;
 	protected boolean setToDispose;
 	protected boolean hasDestroyed;
+	protected boolean hasScored;
 	
 	public DoorLevel(GazeintoAbyss game, World world, TiledMap map, MapObject object, 
 			Player player, Level_1 nextLevel, Vector2 newGameCamPosition, double nextMaxRight, 
@@ -43,6 +44,7 @@ public class DoorLevel extends InteractiveTileObject{
 		this.prevLevel = prevLevel;
 		setToDispose = false;
 		hasDestroyed = false;
+		hasScored = false;
 	}
 
 	@Override
@@ -63,6 +65,12 @@ public class DoorLevel extends InteractiveTileObject{
 						nextLevel.setMaxRight(nextMaxRight);
 						player.setNextLevelPosition(nextPlayerPosition, nextLevel.getWorld());
 						
+						if(!hasScored) {
+							player.setLevel(player.getLevel()+1);
+							player.setScore(player.getScore()+100);
+							hasScored = true;
+						}
+						
 						try(FileWriter fileWriter = new FileWriter("Save_Files.txt")){
 							fileWriter.write(player.toString());
 						} catch (IOException e) {
@@ -81,6 +89,12 @@ public class DoorLevel extends InteractiveTileObject{
 				nextLevel.getGamecam().position.set(newGameCamPosition,0);
 				nextLevel.setMaxRight(nextMaxRight);
 				player.setNextLevelPosition(nextPlayerPosition, nextLevel.getWorld());
+				
+				if(!hasScored) {
+					player.setLevel(player.getLevel()+1);
+					player.setScore(player.getScore()+100);
+					hasScored = true;
+				}
 				
 				try(FileWriter fileWriter = new FileWriter("Save_Files.txt")){
 					fileWriter.write(player.toString());

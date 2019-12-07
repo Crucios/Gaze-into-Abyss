@@ -326,8 +326,7 @@ public class Level_1 implements Screen{
 		try{
 			if(doorlevelcreator.getDoorlevel().isSetToDispose() && !doorlevelcreator.getDoorlevel().isHasDestroyed()) {
 				doorlevelcreator.getDoorlevel().setHasDestroyed(true);
-				player.setLevel(player.getLevel()+1);
-				player.setScore(player.getScore()+100);
+				
 				dispose();
 			}
 		}
