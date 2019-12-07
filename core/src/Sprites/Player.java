@@ -7,6 +7,7 @@ import javax.swing.text.html.HTMLDocument.HTMLReader.SpecialAction;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -38,9 +39,12 @@ public class Player extends Sprite{
 	private Animation playerShootPistol;
 	private Animation playerShootRifle;
 	private Animation playerHidding;
+	
 	private float stateTimer;
 	private float PBulletTimer;
 	private float RBulletTimer;
+	private float WalkTimer;
+	
 	private boolean walking;
 	private boolean running;
 	private boolean shooting;
@@ -63,6 +67,7 @@ public class Player extends Sprite{
 	private int healingPotionCount;
 	private int ammoPistol;
 	private int ammoRifle;
+	private int nowStep;
 	
 	private int level;
 	private int score;
@@ -94,8 +99,9 @@ public class Player extends Sprite{
 		
 		curePotionCount = 0;
 		healingPotionCount = 0;
-		ammoPistol = 100;
-		ammoRifle = 100;
+		ammoPistol = 0;
+		ammoRifle = 0;
+		nowStep = 0;
 		
 		level = 1;
 		
@@ -106,6 +112,7 @@ public class Player extends Sprite{
 		stateTimer = 0;
 		PBulletTimer = 2;
 		RBulletTimer = 2;
+		WalkTimer = 0;
 		toRight = true;
 		pistol = true;
 		rifle = false;
@@ -149,7 +156,6 @@ public class Player extends Sprite{
 		PBullet = new ArrayList<PistolBullet>();
 		RBullet = new ArrayList<RifleBullet>();
 		keys = new ArrayList<Key>();
-		keys.add(new Key("1"));
 		
 		setRegion(playerStand);
 	}
@@ -285,7 +291,9 @@ public class Player extends Sprite{
 				hasDestroyed = true;
 				world.destroyBody(b2body);
 			}
-
+			
+			WalkTimer += dt;
+			
 			isDead();
 
 			//System.out.println("Player Position: " + nowPosition.x + " , " + nowPosition.y);
@@ -454,18 +462,62 @@ public class Player extends Sprite{
 			//Movement here
 			//If D Key Pressed
 			if(Gdx.input.isKeyPressed(Input.Keys.D) && b2body.getLinearVelocity().x <= limitMovementSpeed - limitSlownessSpeed) {
+				if(WalkTimer > 0.35f && !Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+					if(nowStep == 0){
+						GazeintoAbyss.manager.get("Resources/Sound/walk2.ogg",Sound.class).play();
+						nowStep =  1;
+					}
+					else {
+						GazeintoAbyss.manager.get("Resources/Sound/walk1.ogg",Sound.class).play();
+						nowStep = 0;
+					}
+					WalkTimer = 0;
+				}
 				b2body.applyLinearImpulse(new Vector2(movementSpeed - slownessSpeed,0), b2body.getWorldCenter(), true);
 			}
 			//If A Key Pressed
 			else if(Gdx.input.isKeyPressed(Input.Keys.A) && b2body.getLinearVelocity().x >= -(limitMovementSpeed - limitSlownessSpeed)) {
+				if(WalkTimer > 0.35f && !Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+					if(nowStep == 0){
+						GazeintoAbyss.manager.get("Resources/Sound/walk2.ogg",Sound.class).play();
+						nowStep =  1;
+					}
+					else {
+						GazeintoAbyss.manager.get("Resources/Sound/walk1.ogg",Sound.class).play();
+						nowStep = 0;
+					}
+					WalkTimer = 0;
+				}
 				b2body.applyLinearImpulse(new Vector2(-(movementSpeed - slownessSpeed),0), b2body.getWorldCenter(), true);
 			}
 			//If D and Shift left Key Pressed
 			if(Gdx.input.isKeyPressed(Input.Keys.D) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x <= limitMovementSpeed - limitSlownessSpeed+ 4) {
+				if(WalkTimer > 0.2f) {
+					if(nowStep == 0){
+						GazeintoAbyss.manager.get("Resources/Sound/walk2.ogg",Sound.class).play();
+						nowStep =  1;
+					}
+					else {
+						GazeintoAbyss.manager.get("Resources/Sound/walk1.ogg",Sound.class).play();
+						nowStep = 0;
+					}
+					WalkTimer = 0;
+				}
 				b2body.applyLinearImpulse(new Vector2(movementSpeed - slownessSpeed + 2.5f,0), b2body.getWorldCenter(), true);
 			}
 			//If A and Shif t left Key Pressed
 			else if(Gdx.input.isKeyPressed(Input.Keys.A) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x >= -(limitMovementSpeed - limitSlownessSpeed + 4)) {
+				if(WalkTimer > 0.2f) {
+					if(nowStep == 0){
+						GazeintoAbyss.manager.get("Resources/Sound/walk2.ogg",Sound.class).play();
+						nowStep =  1;
+					}
+					else {
+						GazeintoAbyss.manager.get("Resources/Sound/walk1.ogg",Sound.class).play();
+						nowStep = 0;
+					}
+					WalkTimer = 0;
+				}
 				b2body.applyLinearImpulse(new Vector2(-(movementSpeed - slownessSpeed + 2.5f), 0), b2body.getWorldCenter(), true);
 			}
 
@@ -488,12 +540,14 @@ public class Player extends Sprite{
 			}
 			if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)) {
 				if(curePotionCount > 0) {
+					GazeintoAbyss.manager.get("Resources/Sound/drink.ogg",Sound.class).play();
 					isCured();
 					curePotionCount--;
 				}
 			}
 			if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_4)) {
 				if(healingPotionCount > 0) {
+					GazeintoAbyss.manager.get("Resources/Sound/drink.ogg",Sound.class).play();
 					hitPoint += 30;
 					if(hitPoint > 100) {
 						hitPoint = 100;
@@ -515,6 +569,7 @@ public class Player extends Sprite{
 						else
 							miss = true;
 					}
+					GazeintoAbyss.manager.get("Resources/Sound/shoot.mp3",Sound.class).play();
 					PBullet.add(new PistolBullet(world,bulletPosition, miss));
 					PBulletTimer = 0;
 					ammoPistol--;
@@ -532,6 +587,7 @@ public class Player extends Sprite{
 						else
 							miss = true;
 					}
+					GazeintoAbyss.manager.get("Resources/Sound/shoot.mp3",Sound.class).play();
 					RBullet.add(new RifleBullet(world,bulletPosition,miss));
 					RBulletTimer = 0;
 					ammoRifle--;

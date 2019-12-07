@@ -35,7 +35,7 @@ public class Level_4 extends Level_1{
 		
 		newCamera = new Vector2((gamePort.getWorldWidth()/2 + 0.1f), 5.72f);
 		newMaxRight = gamePort.getWorldWidth() * 2 + 1.5f;
-		new DoorAreaCreator(game, world, map, player, gamecam, newCamera, "door-area3-object-area1", new Vector2(255,560), this, newMaxRight,false,"");
+		new DoorAreaCreator(game, world, map, player, gamecam, newCamera, "door-area3-object-area1", new Vector2(255,560), this, newMaxRight,false,"Level 4 Key to Area 3");
 		
 		newCamera = new Vector2((gamePort.getWorldWidth()/2 + 0.1f),14.35f); 
 		newMaxRight = gamePort.getWorldWidth()/2 * 4f + 2.3f;
@@ -43,7 +43,7 @@ public class Level_4 extends Level_1{
 		
 		newCamera = new Vector2((gamePort.getWorldWidth()/2 + 0.1f),1.39f); 
 		newMaxRight = gamePort.getWorldWidth()/2 * 4f - 1.8f;
-		new DoorAreaCreator(game, world, map, player, gamecam, newCamera, "door-area4-object-area2", new Vector2(255,130), this, newMaxRight,false,"");
+		new DoorAreaCreator(game, world, map, player, gamecam, newCamera, "door-area4-object-area2", new Vector2(255,130), this, newMaxRight,false,"Level Key to Area 4");
 
 		newCamera = new Vector2((gamePort.getWorldWidth()/2 + 0.1f),14.35f);
 		newMaxRight = 18.3f;
@@ -68,15 +68,15 @@ public class Level_4 extends Level_1{
 		enemy.add(new Speed(world, new Vector2((1374+1862)/2, 552), 1374, 1862, player));
 
 		//Generate Chest
-		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area1", player, new Key("1"), 200, 0, 0, 0));
-		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area2", player, new Key("1"), 200, 0, 0, 0));
-		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area3", player, new Key("1"), 200, 0, 0, 0));
+		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area1", player, new Key("Key to Level 5"), 5, 0, 0, 0));
+		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area2", player, new Key("Level 4 Key to Area 3"), 0, 10, 1, 0));  
+		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area3", player, new Key("Level 4 Key to Area 4"), 2, 4, 0, 1));
 		
 		//Generate door-level
 		Level_5 nextLevel = new Level_5(game, new World(new Vector2(0, -10),true), player,"Resources/Levels/Level 5/Level 5.tmx");
 		newCamera = new Vector2(nextLevel.getGamePort().getWorldWidth()/2, 18.6f);
 		newMaxRight = 13.8f;
 		Vector2 newPosition = new Vector2(275, 1858);
-		doorlevelcreator = new DoorLevelCreator(game, world, map, player, nextLevel, newCamera, newMaxRight, newPosition,"door-level5-object-area4",false,"", this);
+		doorlevelcreator = new DoorLevelCreator(game, world, map, player, nextLevel, newCamera, newMaxRight, newPosition,"door-level5-object-area4",true,"Key to Level 5", this);
 	}
 }

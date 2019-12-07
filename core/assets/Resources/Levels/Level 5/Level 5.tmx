@@ -56,7 +56,7 @@
   <object id="17" x="2725.33" y="504" width="106.667" height="146.667"/>
  </objectgroup>
  <objectgroup id="21" name="chest-object-area3">
-  <object id="22" x="609.333" y="1025.33" width="61.6667" height="60.6667"/>
+  <object id="22" x="2736" y="1024" width="61.6667" height="60.6667"/>
  </objectgroup>
  <objectgroup id="19" name="door-area2-object-area3">
   <object id="20" x="300" y="937.333" width="105.333" height="148"/>

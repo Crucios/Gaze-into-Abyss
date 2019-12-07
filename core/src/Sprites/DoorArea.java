@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -48,6 +49,8 @@ public class DoorArea extends InteractiveTileObject{
 				boolean cek = false;
 				for(Key key: keys) {
 					if(key.getId() == lock) {
+						GazeintoAbyss.manager.get("Resources/Sound/door-unlock.mp3",Sound.class).play();
+						GazeintoAbyss.manager.get("Resources/Sound/door-open.ogg",Sound.class).play();
 						System.out.println("Door open");
 						isLock = false;
 						player.setPosition(newPosition);
@@ -57,10 +60,12 @@ public class DoorArea extends InteractiveTileObject{
 					}
 				}
 				if(!cek) {
+					GazeintoAbyss.manager.get("Resources/Sound/door-locked.mp3",Sound.class).play();
 					System.out.println("Door Locked");
 				}
 			}
 			else {
+				GazeintoAbyss.manager.get("Resources/Sound/door-open.ogg",Sound.class).play();
 				player.setPosition(newPosition);
 				gamecam.position.set(newCameraPosition.x, newCameraPosition.y, 0);
 				screen.setMaxRight(newMaxRight);

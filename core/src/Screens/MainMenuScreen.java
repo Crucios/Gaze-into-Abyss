@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,7 +18,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
 import Screens.Level_2.Level_2;
+import Screens.Level_3.Level_3;
 import Screens.Level_4.Level_4;
+import Screens.Level_5.Level_5;
 import Screens.Level_1.Level_1;
 import Sprites.Player;
 
@@ -25,6 +28,7 @@ public class MainMenuScreen implements Screen {
 
     private Viewport viewPort;
     private Stage stage;
+    private Music music;
 
     GazeintoAbyss game;
     /* Texture pada MainMenu dari Button, BG, Title*/
@@ -53,6 +57,11 @@ public class MainMenuScreen implements Screen {
         LoadButtonInactive = new Texture("Resources/MainMenu/Load-Transparent.png");
         Background = new Texture("Resources/MainMenu/Main_menuBG.jpg");
         Title = new Texture("Resources/MainMenu/Title-Transparent.png");
+        
+      //Music
+      		music = GazeintoAbyss.manager.get("Resources/Sound/main-menu.ogg", Music.class);
+      		music.setLooping(true);
+      		music.play();
     }
 
     @Override
@@ -77,6 +86,7 @@ public class MainMenuScreen implements Screen {
         {
             game.batch.draw(PlayButtonActive,ExitX,300, ExitB_WIDTH, ExitB_HEIGHT);
             if (Gdx.input.justTouched()) {
+            	music.stop();
                 this.dispose();
                 World tempWorld = new World(new Vector2(0, -10),true);
                 Level_1 nextLevel = new Level_1(game, tempWorld, new Player(tempWorld, new Vector2(100,520)),"Resources/Levels/Level 1/Level 1.tmx");
@@ -93,7 +103,8 @@ public class MainMenuScreen implements Screen {
         {
             game.batch.draw(LoadButtonActive,ExitX,200, ExitB_WIDTH, ExitB_HEIGHT);
             if (Gdx.input.justTouched()) {
-                BufferedReader reader;
+            	music.stop();
+            	BufferedReader reader;
 
                 try {
                 	reader = new BufferedReader(new FileReader("Save_Files.txt"));
@@ -141,12 +152,29 @@ public class MainMenuScreen implements Screen {
                 		game.setScreen(nextLevel);
                 	}
                 	else if(playerLevel == 3) {
-                	    
+                		Level_3 nextLevel = new Level_3(game, tempWorld, player,"Resources/Levels/Level 3/Level 3.tmx");
+                		Vector2 newCamera = new Vector2(nextLevel.getGamePort().getWorldWidth()/2, 14.35f);
+                		double newMaxRight = nextLevel.getGamePort().getWorldWidth() + 20.3;
+                		nextLevel.setMaxRight(newMaxRight);
+                		nextLevel.getGamecam().position.set(newCamera,0);
+                		game.setScreen(nextLevel);
                 	}
                 	else if(playerLevel == 4) {
+                		Level_4 nextLevel = new Level_4(game, tempWorld, player,"Resources/Levels/Level 4/Level 4.tmx");
+                		Vector2 newCamera = new Vector2(nextLevel.getGamePort().getWorldWidth()/2 + 0.1f,14.35f);
+                		double newMaxRight = nextLevel.getGamePort().getWorldWidth() * 2 + 2.3f;
+                		nextLevel.setMaxRight(newMaxRight);
+                		nextLevel.getGamecam().position.set(newCamera,0);
+                		game.setScreen(nextLevel);
                 	
                 	}
                 	else if(playerLevel == 5) {
+                		Level_5 nextLevel = new Level_5(game, tempWorld, player,"Resources/Levels/Level 5/Level 5.tmx");
+                		Vector2 newCamera = new Vector2(nextLevel.getGamePort().getWorldWidth()/2, 18.6f);
+                		double newMaxRight = 13.8f;
+                		nextLevel.setMaxRight(newMaxRight);
+                		nextLevel.getGamecam().position.set(newCamera,0);
+                		game.setScreen(nextLevel);
                 	}
                 	
                     reader.close();
@@ -165,6 +193,7 @@ public class MainMenuScreen implements Screen {
             game.batch.draw(ExitButtonActive,ExitX,100, ExitB_WIDTH, ExitB_HEIGHT);
             //Ketika exit diklik maka program tertutup
             if (Gdx.input.justTouched()) {
+            	music.stop();
                 Gdx.app.exit();
             }
         }else {

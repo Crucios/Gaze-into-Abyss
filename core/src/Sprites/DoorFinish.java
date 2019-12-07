@@ -4,6 +4,7 @@ import Screens.Level_1.Level_1;
 import Screens.WinScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
@@ -51,6 +52,8 @@ public class DoorFinish extends InteractiveTileObject {
                 boolean cek = false;
                 for(Key key: keys) {
                     if(key.getId() == lock) {
+                    	GazeintoAbyss.manager.get("Resources/Sound/door-unlock.mp3",Sound.class).play();
+                    	GazeintoAbyss.manager.get("Resources/Sound/door-open.mp3",Sound.class).play();
                         System.out.println("Door open");
                         isLock = false;
                         setToDispose = true;
@@ -68,10 +71,12 @@ public class DoorFinish extends InteractiveTileObject {
                     }
                 }
                 if(!cek) {
+                	GazeintoAbyss.manager.get("Resources/Sound/door-locked.mp3",Sound.class).play();
                     System.out.println("Door Locked");
                 }
             }
             else {
+            	GazeintoAbyss.manager.get("Resources/Sound/door-open.mp3",Sound.class).play();
                 setToDispose = true;
                 game.setScreen(WScreen);
                 /*nextLevel.getGamecam().position.set(newGameCamPosition,0);

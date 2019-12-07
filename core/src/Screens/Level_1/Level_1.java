@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -52,6 +53,8 @@ public class Level_1 implements Screen{
 	protected TmxMapLoader mapLoader;
 	protected TiledMap map;
 	protected OrthogonalTiledMapRenderer renderer;
+	
+	protected Music music;
 	
 	Texture texture;
 	
@@ -175,6 +178,7 @@ public class Level_1 implements Screen{
 			gameOver = true;
 		
 		if(gameOver) {
+			music.stop();
 			gameOver = false;
 			game.setScreen(new GameOver(game, player));
 		}
@@ -222,6 +226,11 @@ public class Level_1 implements Screen{
 		this.world = world;
 		b2dr = new Box2DDebugRenderer();
 		
+		//Music
+		music = GazeintoAbyss.manager.get("Resources/Sound/background-sound.ogg", Music.class);
+		music.setLooping(true);
+		music.play();
+		
 		gameOver = false;
 		
 		generateLevel();
@@ -245,7 +254,7 @@ public class Level_1 implements Screen{
 		//Generate door-area
 		double newMaxRight = gamePort.getWorldWidth()*2 + 1;
 		Vector2 newCamera = new Vector2((gamePort.getWorldWidth()/2),1.39f); 
-		new DoorAreaCreator(game, world, map, player, gamecam, newCamera, "door-area-object_area1", new Vector2(100,129), this, newMaxRight, true, "1");
+		new DoorAreaCreator(game, world, map, player, gamecam, newCamera, "door-area-object_area1", new Vector2(100,129), this, newMaxRight, false, "");
 
 		newMaxRight = gamePort.getWorldWidth()/2 - gamePort.getWorldWidth()/3 + 12.55;
 		newCamera = new Vector2((gamePort.getWorldWidth()/2),5.71f); 
@@ -255,15 +264,15 @@ public class Level_1 implements Screen{
 		new DoorHideCreator(game, world, map, player, "door-hide-object_area2");
 		
 		//Generate Chest
-		chestCreator.add(new ChestCreator(game, world, map, "chest-object_area1", player, new Key("1"), 200, 0, 5, 0));
-		chestCreator.add(new ChestCreator(game, world, map, "chest-object_area2", player, new Key("1"), 200, 0, 0, 5));
+		chestCreator.add(new ChestCreator(game, world, map, "chest-object_area1", player, new Key(""), 2, 5, 1, 0));
+		chestCreator.add(new ChestCreator(game, world, map, "chest-object_area2", player, new Key("Key to Level 2"), 2, 3, 0, 1));
 		
 		//Generate door-level
 		Level_2 nextLevel = new Level_2(game, new World(new Vector2(0, -10),true), player,"Resources/Levels/Level 2/Level 2.tmx");
 		newCamera = new Vector2(nextLevel.getGamePort().getWorldWidth()/2, 10.04f);
 		newMaxRight = nextLevel.getGamePort().getWorldWidth() + 20.3;
 		Vector2 newPosition = new Vector2(300, 1000);
-		doorlevelcreator = new DoorLevelCreator(game, world, map, player, nextLevel, newCamera, newMaxRight, newPosition,"door-level-object_area2", false, "", this);
+		doorlevelcreator = new DoorLevelCreator(game, world, map, player, nextLevel, newCamera, newMaxRight, newPosition,"door-level-object_area2", true, "Key to Level 2", this);
 	}
 	
 	@Override

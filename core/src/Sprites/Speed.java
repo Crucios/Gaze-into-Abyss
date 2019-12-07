@@ -1,5 +1,6 @@
 package Sprites;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -12,6 +13,7 @@ import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
 public class Speed extends Enemy {
     private float stateTime;
+    private float flapTimer;
     private Animation WalkAnimation;
     private Array<TextureRegion> frame;
 
@@ -20,6 +22,7 @@ public class Speed extends Enemy {
         HP = 4;
         damage = 8;
         score = 40;
+        flapTimer = 0;
         //DefineEnemy();
     }
 
@@ -87,6 +90,11 @@ public class Speed extends Enemy {
         	world.destroyBody(b2body);
         	hasDestroyed = true;
         }
+        /*flapTimer += dt;
+        if(flapTimer> 0.4f) {
+        	GazeintoAbyss.manager.get("Resources/Sound/flap.ogg",Sound.class).play();
+        	flapTimer = 0;
+        }*/
     }
 
     @Override

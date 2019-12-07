@@ -2,6 +2,7 @@ package Sprites;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -186,11 +187,13 @@ public class Ranged extends Enemy {
 
     public void Fire() {
         if(!player.getHiding() && moveright && (player.getNowPosition().x < nowPosition.x + range && player.getNowPosition().x > nowPosition.x) && (player.getNowPosition().y <= nowPosition.y + 70 && player.getNowPosition().y >= nowPosition.y - 70) && !fireHalt){
-            cekFire = true;
+        	GazeintoAbyss.manager.get("Resources/Sound/enemy-shoot.ogg",Sound.class).play();
+        	cekFire = true;
             enemybullet.add(new EnemyFire(world, nowPosition, player, range));
         }
         else if (!player.getHiding() && !moveright && (player.getNowPosition().x > nowPosition.x - range && player.getNowPosition().x < nowPosition.x) && (player.getNowPosition().y <= nowPosition.y + 70 && player.getNowPosition().y >= nowPosition.y - 70) && !fireHalt) {
-            cekFire = true;
+        	GazeintoAbyss.manager.get("Resources/Sound/enemy-shoot.ogg",Sound.class).play();
+        	cekFire = true;
             enemybullet.add(new EnemyFire(world, nowPosition, player, range)); 
         }
 

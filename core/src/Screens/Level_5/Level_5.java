@@ -37,7 +37,7 @@ public class Level_5 extends Level_1{
 		
 		newMaxRight = 10.3f;
 		newCamera = new Vector2((gamePort.getWorldWidth()/2), 1.4f); 
-		new DoorAreaCreator(game, world, map, player, gamecam, newCamera, "door-area5-object-area1", new Vector2(237,122), this, newMaxRight,false,"");
+		new DoorAreaCreator(game, world, map, player, gamecam, newCamera, "door-area5-object-area1", new Vector2(237,122), this, newMaxRight,true,"Level 5 Key to Area 5");
 		
 		newMaxRight = 13.5f;
 		newCamera = new Vector2((gamePort.getWorldWidth()/2), 18.6f); 
@@ -52,7 +52,7 @@ public class Level_5 extends Level_1{
 		newMaxRight = 7.4f;
 		//Tinggi kamera optimal : tinggi player + (20 || 0.20f)
 		newCamera = new Vector2((gamePort.getWorldWidth()/2),5.81f); 
-		new DoorAreaCreator(game, world, map, player, gamecam, newCamera, "door-area4-object-area2", new Vector2(240,558), this, newMaxRight,false,"");
+		new DoorAreaCreator(game, world, map, player, gamecam, newCamera, "door-area4-object-area2", new Vector2(240,558), this, newMaxRight,true,"Level 5 Key to Area 4");
 		
 		
 		//Generate door-hide
@@ -68,16 +68,16 @@ public class Level_5 extends Level_1{
 		enemy.add(new Melee(world, new Vector2((425+895)/2, 551), 425, 895, player));
 
 		//Generate Chest
-		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area1", player, new Key("1"), 200, 0, 0, 0));
-		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area3", player, new Key("1"), 200, 0, 0, 0));
-		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area4", player, new Key("1"), 200, 0, 0, 0));
-		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area5", player, new Key("1"), 200, 0, 0, 0));
+		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area1", player, new Key(""), 8, 10, 1, 0));
+		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area3", player, new Key("Level 5 Key to Area 5"), 5, 5, 0, 0));
+		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area4", player, new Key("Key to Finish"), 1, 2, 0, 0));
+		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area5", player, new Key("Level 5 Key to Area 4"), 1, 1, 0, 0));
 		
 		//Generate door-finish
 		int score = player.getScore();
 		System.out.println("SCORE: " + score);
 		WinScreen WScreen = new WinScreen(game, player);
-		doorFinishCreator = new DoorFinishCreator(game, world, map, player, WScreen,"finish-door",false,"", this);
+		doorFinishCreator = new DoorFinishCreator(game, world, map, player, WScreen,"finish-door",true,"Key to Finish", this);
 	}
 }
 

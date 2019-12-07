@@ -2,10 +2,20 @@ package Screens;
 
 import Screens.Level_1.Level_1;
 import Screens.Level_2.Level_2;
+import Screens.Level_3.Level_3;
+import Screens.Level_4.Level_4;
+import Screens.Level_5.Level_5;
 import Sprites.Player;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -58,6 +68,8 @@ public class GameOver implements Screen {
         RetryHoverButton = new Texture("Resources/GameOver/Retry-Hover.png");
         BackButton = new Texture("Resources/GameOver/ToTitle.png");
         BackHoverButton = new Texture("Resources/GameOver/ToTitle-Hover.png");
+        
+        GazeintoAbyss.manager.get("Resources/Sound/game-over.ogg",Sound.class).play();
     }
 
     @Override
@@ -79,62 +91,83 @@ public class GameOver implements Screen {
         if ((Gdx.input.getX() >= 540 && Gdx.input.getX() <= 740) && (Gdx.input.getY() >= 230 && Gdx.input.getY() <= 280)) {
             game.batch.draw(RetryHoverButton, GazeintoAbyss.WIDTH / 2 - 300, 300, 600, 300);
             if (Gdx.input.isTouched()) {
-                int playerLevel = player.getLevel();
-                int playerScore = player.getScore();
-                int playerHitPoint = player.getHitPoint();
-                int playerCurePotionCount = player.getCurePotionCount();
-                int playerHealingPotionCount = player.getHealingPotionCount();
-                int playerAmmoPistol = player.getAmmoPistol();
-                int playerAmmoRifle = player.getAmmoRifle();
+            	BufferedReader reader;
 
-                World tempWorld = new World(new Vector2(0, -10),true);
-
-                if (player.getLevel() == 1) {
-                    Player tempPlayer = new Player(tempWorld, new Vector2(100, 520));
-
-                    tempPlayer.setLevel(playerLevel);
-                    tempPlayer.setScore(playerScore);
-                    tempPlayer.setHitPoint(100);
-                    tempPlayer.setCurePotionCount(playerCurePotionCount);
-                    tempPlayer.setHealingPotionCount(playerHealingPotionCount);
-                    tempPlayer.setAmmoPistol(playerAmmoPistol);
-                    tempPlayer.setAmmoRifle(playerAmmoRifle);
-
-                    Level_1 nextLevel = new Level_1(game, tempWorld, tempPlayer,"Resources/Levels/Level 1/Level 1.tmx");
-                    Vector2 newCamera = new Vector2(nextLevel.getGamePort().getWorldWidth()/2, 5.71f);
-                    double newMaxRight = nextLevel.getGamePort().getWorldWidth() + 20.3;
-                    nextLevel.setMaxRight(newMaxRight);
-                    nextLevel.getGamecam().position.set(newCamera,0);
-
-                    game.setScreen(nextLevel);
-                }
-                else if (player.getLevel() == 2) {
-                    Player tempPlayer = new Player(tempWorld, new Vector2(300, 1000));
-
-                    tempPlayer.setLevel(playerLevel);
-                    tempPlayer.setScore(playerScore);
-                    tempPlayer.setHitPoint(playerHitPoint);
-                    tempPlayer.setCurePotionCount(playerCurePotionCount);
-                    tempPlayer.setHealingPotionCount(playerHealingPotionCount);
-                    tempPlayer.setAmmoPistol(playerAmmoPistol);
-                    tempPlayer.setAmmoRifle(playerAmmoRifle);
-
-                    Level_2 nextLevel = new Level_2(game, tempWorld, tempPlayer,"Resources/Levels/Level 2/Level 2.tmx");
-                    Vector2 newCamera = new Vector2(nextLevel.getGamePort().getWorldWidth()/2, nextLevel.getGamePort().getWorldHeight() + 5);
-                    double newMaxRight = nextLevel.getGamePort().getWorldWidth() + 20.3;
-                    nextLevel.setMaxRight(newMaxRight);
-                    nextLevel.getGamecam().position.set(newCamera,0);
-
-                    game.setScreen(nextLevel);
-                }
-                else if (player.getLevel() == 3) {
-
-                }
-                else if (player.getLevel() == 4) {
-
-                }
-                else if (player.getLevel() == 5) {
-
+                try {
+                	reader = new BufferedReader(new FileReader("Save_Files.txt"));
+                	int playerLevel = Integer.parseInt(reader.readLine());
+                	int playerScore = Integer.parseInt(reader.readLine());
+                	int playerHitPoints = Integer.parseInt(reader.readLine());
+                	int playerPositionX = Integer.parseInt(reader.readLine());
+                	int playerPositionY = Integer.parseInt(reader.readLine());
+                	int playerCurePotionCount = Integer.parseInt(reader.readLine());
+                	int playerHealingPotionCount = Integer.parseInt(reader.readLine());
+                	int playerAmmoPistol = Integer.parseInt(reader.readLine());
+                	int playerAmmoRifle = Integer.parseInt(reader.readLine());
+                	
+                	World tempWorld = new World(new Vector2(0, -10),true);
+                	Player player = new Player(tempWorld, new Vector2(playerPositionX, playerPositionY));
+                	player.setLevel(playerLevel);
+                	player.setScore(playerScore);
+                	player.setHitPoint(playerHitPoints);
+                	player.setCurePotionCount(playerCurePotionCount);
+                	player.setHealingPotionCount(playerHealingPotionCount);
+                	player.setAmmoPistol(playerAmmoPistol);
+                	player.setAmmoRifle(playerAmmoRifle);
+                	
+                	if(playerLevel == 1) {
+                		Level_1 nextLevel = new Level_1(game, tempWorld, player,"Resources/Levels/Level 1/Level 1.tmx");
+                		Vector2 newCamera = new Vector2(nextLevel.getGamePort().getWorldWidth()/2, 5.61f);
+                		double newMaxRight = nextLevel.getGamePort().getWorldWidth() + 20.3;
+                		nextLevel.setMaxRight(newMaxRight);
+                		nextLevel.getGamecam().position.set(newCamera,0);
+                		
+            			try(FileWriter fileWriter = new FileWriter("Save_Files.txt")){
+            				fileWriter.write(player.toString());
+            				fileWriter.close();
+            			} catch (IOException e) {
+            				System.out.println("File Error!");
+            			}
+                		game.setScreen(nextLevel);
+                	}
+                	else if(playerLevel == 2) {
+                		Level_2 nextLevel = new Level_2(game, tempWorld, player,"Resources/Levels/Level 2/Level 2.tmx");
+                		Vector2 newCamera = new Vector2(nextLevel.getGamePort().getWorldWidth()/2, nextLevel.getGamePort().getWorldHeight() + 5);
+                		double newMaxRight = nextLevel.getGamePort().getWorldWidth() + 20.3;
+                		nextLevel.setMaxRight(newMaxRight);
+                		nextLevel.getGamecam().position.set(newCamera,0);
+                		game.setScreen(nextLevel);
+                	}
+                	else if(playerLevel == 3) {
+                		Level_3 nextLevel = new Level_3(game, tempWorld, player,"Resources/Levels/Level 3/Level 3.tmx");
+                		Vector2 newCamera = new Vector2(nextLevel.getGamePort().getWorldWidth()/2, 14.35f);
+                		double newMaxRight = nextLevel.getGamePort().getWorldWidth() + 20.3;
+                		nextLevel.setMaxRight(newMaxRight);
+                		nextLevel.getGamecam().position.set(newCamera,0);
+                		game.setScreen(nextLevel);
+                	}
+                	else if(playerLevel == 4) {
+                		Level_4 nextLevel = new Level_4(game, tempWorld, player,"Resources/Levels/Level 4/Level 4.tmx");
+                		Vector2 newCamera = new Vector2(nextLevel.getGamePort().getWorldWidth()/2 + 0.1f,14.35f);
+                		double newMaxRight = nextLevel.getGamePort().getWorldWidth() * 2 + 2.3f;
+                		nextLevel.setMaxRight(newMaxRight);
+                		nextLevel.getGamecam().position.set(newCamera,0);
+                		game.setScreen(nextLevel);
+                	
+                	}
+                	else if(playerLevel == 5) {
+                		Level_5 nextLevel = new Level_5(game, tempWorld, player,"Resources/Levels/Level 5/Level 5.tmx");
+                		Vector2 newCamera = new Vector2(nextLevel.getGamePort().getWorldWidth()/2, 18.6f);
+                		double newMaxRight = 13.8f;
+                		nextLevel.setMaxRight(newMaxRight);
+                		nextLevel.getGamecam().position.set(newCamera,0);
+                		game.setScreen(nextLevel);
+                	}
+                	
+                    reader.close();
+                } 
+                catch(IOException e) {
+                	e.printStackTrace();
                 }
             }
         }

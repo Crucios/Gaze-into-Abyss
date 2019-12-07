@@ -2,6 +2,7 @@ package Sprites;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
@@ -27,6 +28,7 @@ public class ChestInteractiveObject extends InteractiveTileObject{
 	@Override
 	public void onHit() {
 		if(Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+			GazeintoAbyss.manager.get("Resources/Sound/chest-open.ogg",Sound.class).play();
 			chest.opening();
 			if(!chest.getOpened()) {
 				player.addKey(chest.getKey());

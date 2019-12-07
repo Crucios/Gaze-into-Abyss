@@ -2,6 +2,7 @@ package Sprites;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
@@ -28,6 +29,7 @@ public class DoorHide extends InteractiveTileObject{
 	@Override
 	public void onHit() {
 		if(Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+			GazeintoAbyss.manager.get("Resources/Sound/door-open.ogg",Sound.class).play();
 			player.setHiding(true);
 		}
 	}

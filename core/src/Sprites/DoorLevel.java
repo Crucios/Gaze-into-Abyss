@@ -1,11 +1,14 @@
 package Sprites;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
@@ -57,6 +60,8 @@ public class DoorLevel extends InteractiveTileObject{
 				boolean cek = false;
 				for(Key key: keys) {
 					if(key.getId() == lock) {
+						GazeintoAbyss.manager.get("Resources/Sound/door-unlock.mp3",Sound.class).play();
+						GazeintoAbyss.manager.get("Resources/Sound/door-open.ogg",Sound.class).play();
 						System.out.println("Door open");
 						isLock = false;
 						setToDispose = true;
@@ -71,21 +76,22 @@ public class DoorLevel extends InteractiveTileObject{
 							hasScored = true;
 						}
 						
-						try(FileWriter fileWriter = new FileWriter("Save_Files.txt")){
+						try(FileWriter fileWriter = new FileWriter("Save_Files.txt")){							
 							fileWriter.write(player.toString());
 							fileWriter.close();
 						} catch (IOException e) {
 							System.out.println("File Error!");
 						}
-
 						cek = true;
 					}
 				}
 				if(!cek) {
+					GazeintoAbyss.manager.get("Resources/Sound/door-locked.mp3",Sound.class).play();
 					System.out.println("Door Locked");
 				}
 			}
 			else {
+				GazeintoAbyss.manager.get("Resources/Sound/door-open.ogg",Sound.class).play();
 				setToDispose = true;
 				game.setScreen(nextLevel);
 				nextLevel.getGamecam().position.set(newGameCamPosition,0);
