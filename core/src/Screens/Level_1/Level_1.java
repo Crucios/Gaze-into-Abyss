@@ -104,7 +104,7 @@ public class Level_1 implements Screen{
 			
 
 		for(int i=0;i<PBullet.size();i++) {
-			if(!PBullet.get(i).getDestroy()) {
+			if(PBullet.get(i).getDestroy()) {
 				PBullet.remove(i);
 			}
 		}
