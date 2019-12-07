@@ -21,6 +21,7 @@ public class Melee extends Enemy {
         super(wolrd, position, xawal, xakhir, player);
         HP = 8;
         damage = 100;
+        score = 25;
         //DefineEnemy();
     }
 
@@ -35,6 +36,7 @@ public class Melee extends Enemy {
         //Destroy if HP drop to 0
         
         if(isDead && !hasDestroyed) {
+            player.setScore(player.getScore() + score);
         	world.destroyBody(b2body);
         	hasDestroyed = true;
         }
@@ -165,4 +167,6 @@ public class Melee extends Enemy {
     public void setDamage(int dmg) {
         damage = dmg;
     }
+    @Override
+    public int getScore() { return score;}
 }

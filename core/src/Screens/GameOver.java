@@ -78,7 +78,7 @@ public class GameOver implements Screen {
         game.batch.draw(RetryButton, GazeintoAbyss.WIDTH / 2 - 300, 300, 600, 300);
         if ((Gdx.input.getX() >= 540 && Gdx.input.getX() <= 740) && (Gdx.input.getY() >= 230 && Gdx.input.getY() <= 280)) {
             game.batch.draw(RetryHoverButton, GazeintoAbyss.WIDTH / 2 - 300, 300, 600, 300);
-            if (Gdx.input.isKeyPressed(Input.Keys.L)) {
+            if (Gdx.input.isTouched()) {
                 int playerLevel = player.getLevel();
                 int playerScore = player.getScore();
                 int playerHitPoint = player.getHitPoint();

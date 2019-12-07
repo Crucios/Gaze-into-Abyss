@@ -19,6 +19,7 @@ public class Speed extends Enemy {
         super(world, position, xawal, xakhir, player);
         HP = 4;
         damage = 8;
+        score = 40;
         //DefineEnemy();
     }
 
@@ -82,6 +83,7 @@ public class Speed extends Enemy {
         	isDead = true;
         }
         if(isDead && !hasDestroyed) {
+            player.setScore(player.getScore() + score);
         	world.destroyBody(b2body);
         	hasDestroyed = true;
         }
@@ -158,4 +160,6 @@ public class Speed extends Enemy {
     public void setDamage(int dmg) {
         damage = dmg;
     }
+    @Override
+    public int getScore() { return score;}
 }

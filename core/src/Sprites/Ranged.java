@@ -29,6 +29,7 @@ public class Ranged extends Enemy {
         bullettimer = 2;
         HP = 4;
         damage = 2;
+        score = 60;
         elapsed = 0;
         fireHalt = false;
         this.range = range;
@@ -126,6 +127,7 @@ public class Ranged extends Enemy {
         	isDead = true;
         }
         if(isDead && !hasDestroyed) {
+            player.setScore(player.getScore() + score);
         	world.destroyBody(b2body);
         	hasDestroyed = true;
         }
@@ -224,4 +226,6 @@ public class Ranged extends Enemy {
     public void setDamage(int dmg) {
         damage = dmg;
     }
+    @Override
+    public int getScore() { return score;}
 }

@@ -288,7 +288,7 @@ public class Player extends Sprite{
 
 			isDead();
 
-			System.out.println("Player Position: " + nowPosition.x + " , " + nowPosition.y);
+			//System.out.println("Player Position: " + nowPosition.x + " , " + nowPosition.y);
 		}
 	}
 	

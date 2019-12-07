@@ -98,8 +98,9 @@ public class Level_1 implements Screen{
 		
 		//Delete Destroyed
 		for(int i=0;i<enemy.size();i++) {
-			if(enemy.get(i).isHasDestroyed())
+			if(enemy.get(i).isHasDestroyed()) {
 				enemy.remove(i);
+			}
 		}
 			
 

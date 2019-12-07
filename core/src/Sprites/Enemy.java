@@ -25,6 +25,7 @@ public abstract class Enemy extends Sprite {
     protected Player player;
     protected int HP;
     protected int damage;
+    protected int score;
     public Body b2body;
 
     protected enum State{MOVE, ATTACK, STANDING}
@@ -120,6 +121,7 @@ public abstract class Enemy extends Sprite {
     public abstract void setHP(int hp);
     public abstract int getDamage();
     public abstract void setDamage(int dmg);
+	public abstract int getScore();
 
 	public Vector2 getNowPosition() {
 		return nowPosition;
