@@ -1,9 +1,20 @@
 package Sprites;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.gazeintoabyss.GazeintoAbyss;
+
+import Sprites.Enemy.State;
 
 public class EnemyFire extends Sprite {
     public World world;
@@ -11,18 +22,69 @@ public class EnemyFire extends Sprite {
     protected Player player;
 
     private Vector2 position;
+    private Vector2 originPosition;
+    
+    private Animation fireAnimation;
+    
     private int damage;
 
     private boolean toRight;
-    private boolean demage;
-    public EnemyFire(World world, Vector2 position, Player player) {
+    private boolean hasDestroyed;
+    private boolean setToDestroy;
+    
+    private float range;
+    protected float stateTimer;
+    
+    public EnemyFire(World world, Vector2 position, Player player, float range) {
+    	super(new AtlasRegion(new TextureAtlas("Resources/Monster/Monsters.pack").findRegion("Monsters")));
         this.world = world;
         this.position = position;
+        originPosition = new Vector2(position);
+       
         this.player = player;
+        this.range = range;
         toRight = false;
         damage = 12;
+        hasDestroyed = false;
+        setToDestroy = false;
+        stateTimer = 0;
+        
         defineEnemyBullet();
+        
+        //Generate Animation
+        generateAnimation();
     }
+    
+    public void generateAnimation() {
+    	setBounds(0,0,25 / GazeintoAbyss.PPM,33 / GazeintoAbyss.PPM);
+		
+		Array<TextureRegion> frames = new Array<TextureRegion>();
+		for(int i=0;i<3;i++) {
+			frames.add(new TextureRegion(getTexture(), 293 + i*29, 33 ,29, 28));
+		}
+		fireAnimation = new Animation(0.1f, frames);
+		frames.clear();
+    }
+
+    
+    public TextureRegion getFrame(float dt) {
+
+		TextureRegion region;
+		region = (TextureRegion) fireAnimation.getKeyFrame(stateTimer, true);
+		setSize(0.5f, 0.5f);
+		
+		if(!toRight && !region.isFlipX()) {
+			region.flip(true, false);
+		}
+		else if(toRight && region.isFlipX()) {
+			region.flip(true, false);
+		}
+		
+		stateTimer = stateTimer + dt;
+		
+		return region;
+    }
+    
     public void update(float dt) {
         if(toRight) {
             b2body.setLinearVelocity(6f, 0);
@@ -30,7 +92,23 @@ public class EnemyFire extends Sprite {
         else {
             b2body.setLinearVelocity(-6f,0);
         }
+        
         setPosition(new Vector2(b2body.getPosition().x, b2body.getPosition().y));
+        setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight() / 2);
+        setRegion(getFrame(dt));
+        
+        
+        if(position.x * GazeintoAbyss.PPM >= originPosition.x + range && toRight)
+        	setToDestroy = true;
+        else if(position.x * GazeintoAbyss.PPM <= originPosition.x - range && !toRight)
+        	setToDestroy = true;
+        
+        if(setToDestroy && !hasDestroyed) {
+        	hasDestroyed = true;
+        	world.destroyBody(b2body);
+        }
+        
+        System.out.println("Range: " + range);
     }
     public void defineHitBox(int x, int y) {
         FixtureDef fdef = new FixtureDef();
@@ -52,6 +130,7 @@ public class EnemyFire extends Sprite {
 
         defineHitBox(3,1);
     }
+    
     public void setToRight(boolean toRight) {
         this.toRight = toRight;
     }
@@ -60,6 +139,7 @@ public class EnemyFire extends Sprite {
     	if(player.isFreetoHit()) {
     		player.setHitPoint(player.getHitPoint() - damage);
     		player.setHasHit(true);
+    		setToDestroy = true;
     	}
     }
 
@@ -70,5 +150,11 @@ public class EnemyFire extends Sprite {
     public Vector2 getPosition() {
         return position;
     }
+	public boolean isHasDestroyed() {
+		return hasDestroyed;
+	}
+	public void setHasDestroyed(boolean hasDestroyed) {
+		this.hasDestroyed = hasDestroyed;
+	}
 
 }

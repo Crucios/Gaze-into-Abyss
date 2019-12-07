@@ -119,7 +119,6 @@ public class Level_1 implements Screen{
 			if(!enemy.get(i).isHasDestroyed()) {
 				enemy.get(i).update(dt);
 				//Collision Detection
-				System.out.println("Enemy HP: " + enemy.get(i).getHP());
 				for(int j=0;j<PBullet.size();j++) {
 					if(!PBullet.get(j).getDestroy()) {
 						if(PBullet.get(j).getNowPosition().x >= enemy.get(i).getNowPosition().x - 40 && PBullet.get(j).getNowPosition().x <= enemy.get(i).getNowPosition().x + 40
@@ -291,8 +290,15 @@ public class Level_1 implements Screen{
 			chestCreator.get(i).getChestInteractive().getChest().draw(game.batch);
 
 		for(int i=0;i<enemy.size();i++) {
-			if(!enemy.get(i).isHasDestroyed())
+			if(!enemy.get(i).isHasDestroyed()) {
 				enemy.get(i).draw(game.batch);
+				for(int j=0;j<enemy.get(i).getEnemybullet().size();j++) {
+					if(!enemy.get(i).getEnemybullet().get(j).isHasDestroyed())
+						enemy.get(i).getEnemybullet().get(j).draw(game.batch);
+				}
+					
+			}
+				
 			else
 				enemy.remove(i);
 		}

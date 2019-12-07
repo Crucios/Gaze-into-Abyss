@@ -1,5 +1,7 @@
 package Sprites;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -44,6 +46,8 @@ public abstract class Enemy extends Sprite {
 	protected boolean isDead;
 	protected boolean hasDestroyed;
 	
+	protected ArrayList<EnemyFire> enemybullet;
+	
     public Enemy(World world,  Vector2 position, float xawal, float xakhir, Player player) {
     	super(new AtlasRegion(new TextureAtlas("Resources/Monster/Monsters.pack").findRegion("Monsters")));
         this.world = world;
@@ -60,6 +64,8 @@ public abstract class Enemy extends Sprite {
         this.moving = true;
         this.attacking = false;
         this.standing = false;
+        
+        enemybullet = new ArrayList<EnemyFire>();
         
         generateAnimation();
     }
@@ -141,5 +147,13 @@ public abstract class Enemy extends Sprite {
 
 	public void setHasDestroyed(boolean hasDestroyed) {
 		this.hasDestroyed = hasDestroyed;
+	}
+
+	public ArrayList<EnemyFire> getEnemybullet() {
+		return enemybullet;
+	}
+
+	public void setEnemybullet(ArrayList<EnemyFire> enemybullet) {
+		this.enemybullet = enemybullet;
 	}
 }

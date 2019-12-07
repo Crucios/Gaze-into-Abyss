@@ -1,7 +1,7 @@
 package Sprites;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+import java.util.ArrayList;
+
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -16,9 +16,12 @@ public class Ranged extends Enemy {
 
     private Vector2 bulletposition;
     private boolean cekFire;
-    private EnemyFire enemybullet;
+
     private float bullettimer;
     private float range;
+    
+    private boolean fireHalt;
+    private float elapsed;
 
     public Ranged(World world, Vector2 position, float xawal, float xakhir, Player player, float range) {
         super(world, position, xawal, xakhir, player);
@@ -26,6 +29,8 @@ public class Ranged extends Enemy {
         bullettimer = 2;
         HP = 4;
         damage = 2;
+        elapsed = 0;
+        fireHalt = false;
         this.range = range;
     }
     
@@ -82,19 +87,35 @@ public class Ranged extends Enemy {
         setRegion(getFrame(dt));
         nowPosition = new Vector2(b2body.getPosition().x * GazeintoAbyss.PPM, b2body.getPosition().y * GazeintoAbyss.PPM);
 
+        elapsed += dt;
+        
+        if(fireHalt && elapsed >= 0.5f) {
+        	fireHalt = false;
+        	elapsed = 0;
+        }
+        
         if (bullettimer > 0.2f) {
             Fire();
             bullettimer = 0;
         }
         if (cekFire) {
-            enemybullet.update(dt);
+        	for(int i=0;i<enemybullet.size();i++) {
+        		if(enemybullet.get(i).isHasDestroyed())
+        			enemybullet.remove(i);
+        	}
+        	
+        	for(int i=0;i<enemybullet.size();i++) {
+        		if(!enemybullet.get(i).isHasDestroyed()) {
+        			enemybullet.get(i).update(dt);
 
-            if (moveright) {
-                enemybullet.setToRight(moveright);
-            }
-            else {
-                enemybullet.setToRight(moveright);
-            }
+                    if (moveright) {
+                        enemybullet.get(i).setToRight(moveright);
+                    }
+                    else {
+                        enemybullet.get(i).setToRight(moveright);
+                    }
+        		}
+        	}
         }
 
         bullettimer += dt;
@@ -140,6 +161,12 @@ public class Ranged extends Enemy {
             b2body.setLinearVelocity(1f, 0f);
             if (nowPosition.x >= xakhir) {
                 moveright = false;
+            
+            }
+            
+            if(nowPosition.x >= xakhir - 100) {
+            	fireHalt = true;
+                elapsed = 0;
             }
         }
         else if (!moveright && b2body.getLinearVelocity().x >= -2) {
@@ -147,17 +174,22 @@ public class Ranged extends Enemy {
             if (nowPosition.x <= xawal) {
                 moveright = true;
             }
+            
+            if(nowPosition.x <= xawal + 100) {
+            	fireHalt = true;
+                elapsed = 0;
+            }
         }
     }
 
     public void Fire() {
-        if(!player.getHiding() && moveright && (player.getNowPosition().x < nowPosition.x + range && player.getNowPosition().x > nowPosition.x) && (player.getNowPosition().y <= nowPosition.y + 70 && player.getNowPosition().y >= nowPosition.y - 70)){
+        if(!player.getHiding() && moveright && (player.getNowPosition().x < nowPosition.x + range && player.getNowPosition().x > nowPosition.x) && (player.getNowPosition().y <= nowPosition.y + 70 && player.getNowPosition().y >= nowPosition.y - 70) && !fireHalt){
             cekFire = true;
-            enemybullet = new EnemyFire(world, nowPosition, player);
+            enemybullet.add(new EnemyFire(world, nowPosition, player, range));
         }
-        else if (!player.getHiding() && !moveright && (player.getNowPosition().x > nowPosition.x - range && player.getNowPosition().x < nowPosition.x) && (player.getNowPosition().y <= nowPosition.y + 70 && player.getNowPosition().y >= nowPosition.y - 70)) {
+        else if (!player.getHiding() && !moveright && (player.getNowPosition().x > nowPosition.x - range && player.getNowPosition().x < nowPosition.x) && (player.getNowPosition().y <= nowPosition.y + 70 && player.getNowPosition().y >= nowPosition.y - 70) && !fireHalt) {
             cekFire = true;
-            enemybullet = new EnemyFire(world, nowPosition, player);
+            enemybullet.add(new EnemyFire(world, nowPosition, player, range)); 
         }
 
     }
