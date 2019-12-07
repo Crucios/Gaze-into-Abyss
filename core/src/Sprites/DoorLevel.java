@@ -73,9 +73,11 @@ public class DoorLevel extends InteractiveTileObject{
 						
 						try(FileWriter fileWriter = new FileWriter("Save_Files.txt")){
 							fileWriter.write(player.toString());
+							fileWriter.close();
 						} catch (IOException e) {
 							System.out.println("File Error!");
 						}
+
 						cek = true;
 					}
 				}
