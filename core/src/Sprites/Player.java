@@ -23,7 +23,7 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
 public class Player extends Sprite{
-	public enum State{RUNNING_PISTOL, RUNNING_RIFLE, WALKING_PISTOL, WALKING_RIFLE, STANDING_PISTOL, STANDING_RIFLE, SHOOTING_RIFLE, SHOOTING_PISTOL, HIDDING};
+	public enum State{RUNNING_PISTOL, RUNNING_RIFLE, WALKING_PISTOL, WALKING_RIFLE, STANDING_PISTOL, STANDING_RIFLE, SHOOTING_RIFLE, SHOOTING_PISTOL, HIDDING, DEAD};
 	public State currentState;
 	public State previousState;
 	public World world;
@@ -53,7 +53,8 @@ public class Player extends Sprite{
 	private boolean hidden;
 	private boolean camGlitched;
 	private boolean teleportNextLevel;
-	
+	private boolean playerdead;
+
 	private Vector2 position;	//Origin Position
 	private Vector2 nowPosition;
 	private Vector2 bulletPosition;
@@ -82,6 +83,8 @@ public class Player extends Sprite{
 	private boolean isFreetoHit;
 	private boolean hasHit;
 	private float elapsed;
+
+	private boolean hasDestroyed;
 	
 	public Player(World world, Vector2 position) {
 		super(new AtlasRegion(new TextureAtlas("Resources/Player/Player.pack").findRegion("sprite-player")));
@@ -115,6 +118,8 @@ public class Player extends Sprite{
 		hidden = false;
 		camGlitched = false;
 		teleportNextLevel = false;
+		playerdead = false;
+		hasDestroyed = false;
 		
 		debuffSlowness = false;
 		debuffFear = false;
@@ -203,79 +208,88 @@ public class Player extends Sprite{
 		
 	}
 	public void update(float dt) {
-		elapsed+=dt;
-		if(teleportNextLevel) {
-			definePlayer(40,70);
-			teleportNextLevel = false;
-		}
-		if(setToTeleport) {
-			world.destroyBody(b2body);
-			setToTeleport = false;
-			definePlayer(40, 70);
-			camGlitched = true;
-		}
-		else if(isHiding && !hidden) {
-			position = nowPosition;
-			world.destroyBody(b2body);
-			hidden = true;
-			setRegion(getFrame(dt));
-		}
-		else if(!isHiding && hidden) {
-			definePlayer(40,70);
-			hidden = false;
-		}
-		else if(!isHiding && !setToTeleport && !hidden){
-			setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight() / 2);
-			nowPosition = new Vector2(b2body.getPosition().x * GazeintoAbyss.PPM, b2body.getPosition().y * GazeintoAbyss.PPM);
-			setRegion(getFrame(dt));
-		}
+		if (currentState != State.DEAD) {
+			elapsed+=dt;
+			if(teleportNextLevel) {
+				definePlayer(40,70);
+				teleportNextLevel = false;
+			}
+			if(setToTeleport) {
+				world.destroyBody(b2body);
+				setToTeleport = false;
+				definePlayer(40, 70);
+				camGlitched = true;
+			}
+			else if(isHiding && !hidden) {
+				position = nowPosition;
+				world.destroyBody(b2body);
+				hidden = true;
+				setRegion(getFrame(dt));
+			}
+			else if(!isHiding && hidden) {
+				definePlayer(40,70);
+				hidden = false;
+			}
+			else if(!isHiding && !setToTeleport && !hidden){
+				setPosition(b2body.getPosition().x - getWidth()/2, b2body.getPosition().y - getHeight() / 2);
+				nowPosition = new Vector2(b2body.getPosition().x * GazeintoAbyss.PPM, b2body.getPosition().y * GazeintoAbyss.PPM);
+				setRegion(getFrame(dt));
+			}
 
-		if(hasHit) {
-			isFreetoHit = false;
-			elapsed = 0;
-			hasHit = false;
-		}
-		if(!isFreetoHit && elapsed > 1.0) {
-			isFreetoHit = true;
-		}
-		
-		if(debuffSlowness)
-			debuffedSlowness();
-		
-		for(PistolBullet bul : PBullet) {
-			if(!bul.getDestroy()) {
-				bul.update(dt);
+			if(hasHit) {
+				isFreetoHit = false;
+				elapsed = 0;
+				hasHit = false;
 			}
-		}
-		for(RifleBullet bul : RBullet) {
-			if(!bul.getDestroy()) {
-				bul.update(dt);
+			if(!isFreetoHit && elapsed > 1.0) {
+				isFreetoHit = true;
 			}
-		}
-		bulletPosition = new Vector2(nowPosition);
-		if(pistol) {			
-			bulletPosition.y += 39f;
-			if(toRight) {
-				bulletPosition.x += 30f;
+
+			if(debuffSlowness)
+				debuffedSlowness();
+
+			for(PistolBullet bul : PBullet) {
+				if(!bul.getDestroy()) {
+					bul.update(dt);
+				}
 			}
-			else {
-				bulletPosition.x -= 30f;
+			for(RifleBullet bul : RBullet) {
+				if(!bul.getDestroy()) {
+					bul.update(dt);
+				}
 			}
-		}
-		else {
-			
-			bulletPosition.y += 28f;
-			if(toRight) {
-				bulletPosition.x += 30f;
+			bulletPosition = new Vector2(nowPosition);
+			if(pistol) {
+				bulletPosition.y += 39f;
+				if(toRight) {
+					bulletPosition.x += 30f;
+				}
+				else {
+					bulletPosition.x -= 30f;
+				}
 			}
 			else {
-				bulletPosition.x -= 30f;
+
+				bulletPosition.y += 28f;
+				if(toRight) {
+					bulletPosition.x += 30f;
+				}
+				else {
+					bulletPosition.x -= 30f;
+				}
 			}
+			PBulletTimer += dt;
+			RBulletTimer += dt;
+
+			if(playerdead && !hasDestroyed){
+				hasDestroyed = true;
+				world.destroyBody(b2body);
+			}
+
+			isDead();
+
+			System.out.println("Player Position: " + nowPosition.x + " , " + nowPosition.y);
 		}
-		PBulletTimer += dt;
-		RBulletTimer += dt;
-		
-		System.out.println("Player Position: " + nowPosition.x + " , " + nowPosition.y);
 	}
 	
 	public TextureRegion getFrame(float dt) {
@@ -381,6 +395,9 @@ public class Player extends Sprite{
 	}
 	
 	public State getState() {
+		if (playerdead) {
+			return State.DEAD;
+		}
 		if(isHiding)
 			return State.HIDDING;
 		if(pistol) {
@@ -408,6 +425,7 @@ public class Player extends Sprite{
 		else {
 			return State.STANDING_PISTOL;
 		}
+
 	}
 	
 	public void defineHitBox(int x, int y) {
@@ -432,95 +450,97 @@ public class Player extends Sprite{
 	}
 	
 	public void handleinput() {
-		//Movement here
-		//If D Key Pressed
-		if(Gdx.input.isKeyPressed(Input.Keys.D) && b2body.getLinearVelocity().x <= limitMovementSpeed - limitSlownessSpeed) {
-			b2body.applyLinearImpulse(new Vector2(movementSpeed - slownessSpeed,0), b2body.getWorldCenter(), true);
-		}
-		//If A Key Pressed
-		else if(Gdx.input.isKeyPressed(Input.Keys.A) && b2body.getLinearVelocity().x >= -(limitMovementSpeed - limitSlownessSpeed)) {
-			b2body.applyLinearImpulse(new Vector2(-(movementSpeed - slownessSpeed),0), b2body.getWorldCenter(), true);
-		}
-		//If D and Shift left Key Pressed
-		if(Gdx.input.isKeyPressed(Input.Keys.D) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x <= limitMovementSpeed - limitSlownessSpeed+ 4) {
-			b2body.applyLinearImpulse(new Vector2(movementSpeed - slownessSpeed + 2.5f,0), b2body.getWorldCenter(), true);
-		}
-		//If A and Shift left Key Pressed
-		else if(Gdx.input.isKeyPressed(Input.Keys.A) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x >= -(limitMovementSpeed - limitSlownessSpeed + 4)) {
-			b2body.applyLinearImpulse(new Vector2(-(movementSpeed - slownessSpeed + 2.5f), 0), b2body.getWorldCenter(), true);
-		}
-		
-		if(Gdx.input.isKeyPressed(Input.Keys.Q) && !pistol) {
-			pistol = true;
-			rifle = false;
-		}
-		else if(Gdx.input.isKeyPressed(Input.Keys.R) && !rifle) {
-			rifle = true;
-			pistol = false;
-		}
-		
-		//Health Potion
-		if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
-			debuffFear = true;
-		}
-		//Cure Potion
-		if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
-			debuffSlowness = true;
-		}
-		if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)) {
-			if(curePotionCount > 0) {
-				isCured();
-				curePotionCount--;
+		if (currentState != State.DEAD) {
+			//Movement here
+			//If D Key Pressed
+			if(Gdx.input.isKeyPressed(Input.Keys.D) && b2body.getLinearVelocity().x <= limitMovementSpeed - limitSlownessSpeed) {
+				b2body.applyLinearImpulse(new Vector2(movementSpeed - slownessSpeed,0), b2body.getWorldCenter(), true);
 			}
-		}
-		if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_4)) {
-			if(healingPotionCount > 0) {
-				hitPoint += 30;
-				if(hitPoint > 100) {
-					hitPoint = 100;
+			//If A Key Pressed
+			else if(Gdx.input.isKeyPressed(Input.Keys.A) && b2body.getLinearVelocity().x >= -(limitMovementSpeed - limitSlownessSpeed)) {
+				b2body.applyLinearImpulse(new Vector2(-(movementSpeed - slownessSpeed),0), b2body.getWorldCenter(), true);
+			}
+			//If D and Shift left Key Pressed
+			if(Gdx.input.isKeyPressed(Input.Keys.D) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x <= limitMovementSpeed - limitSlownessSpeed+ 4) {
+				b2body.applyLinearImpulse(new Vector2(movementSpeed - slownessSpeed + 2.5f,0), b2body.getWorldCenter(), true);
+			}
+			//If A and Shif t left Key Pressed
+			else if(Gdx.input.isKeyPressed(Input.Keys.A) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x >= -(limitMovementSpeed - limitSlownessSpeed + 4)) {
+				b2body.applyLinearImpulse(new Vector2(-(movementSpeed - slownessSpeed + 2.5f), 0), b2body.getWorldCenter(), true);
+			}
+
+			if(Gdx.input.isKeyPressed(Input.Keys.Q) && !pistol) {
+				pistol = true;
+				rifle = false;
+			}
+			else if(Gdx.input.isKeyPressed(Input.Keys.R) && !rifle) {
+				rifle = true;
+				pistol = false;
+			}
+
+			//Health Potion
+			if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
+				debuffFear = true;
+			}
+			//Cure Potion
+			if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
+				debuffSlowness = true;
+			}
+			if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)) {
+				if(curePotionCount > 0) {
+					isCured();
+					curePotionCount--;
 				}
-				healingPotionCount--;
 			}
-		}
-		if(Gdx.input.isKeyJustPressed(Input.Keys.E) && isHiding) {
-			isHiding = false;
-		}
-		if(pistol && Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D)) {
-			if(PBulletTimer>0.5f && ammoPistol > 0) {
-				boolean miss = false;
-				if(debuffFear) {
-					Random random = new Random();
-					int randomInteger = random.nextInt(11);
-					if(randomInteger >= 3)
-						miss = false;
-					else
-						miss = true;
+			if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_4)) {
+				if(healingPotionCount > 0) {
+					hitPoint += 30;
+					if(hitPoint > 100) {
+						hitPoint = 100;
+					}
+					healingPotionCount--;
 				}
-				PBullet.add(new PistolBullet(world,bulletPosition, miss));
-				PBulletTimer = 0;
-				ammoPistol--;
 			}
-			shooting = true;
-		}
-		else if(rifle && Gdx.input.isKeyPressed(Input.Keys.SPACE) && !Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D)) {
-			if(RBulletTimer>0.2f && ammoRifle > 0) {
-				boolean miss = false;
-				if(debuffFear) {
-					Random random = new Random();
-					int randomInteger = random.nextInt(11);
-					if(randomInteger >= 3)
-						miss = false;
-					else
-						miss = true;
+			if(Gdx.input.isKeyJustPressed(Input.Keys.E) && isHiding) {
+				isHiding = false;
+			}
+			if(pistol && Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D)) {
+				if(PBulletTimer>0.5f && ammoPistol > 0) {
+					boolean miss = false;
+					if(debuffFear) {
+						Random random = new Random();
+						int randomInteger = random.nextInt(11);
+						if(randomInteger >= 3)
+							miss = false;
+						else
+							miss = true;
+					}
+					PBullet.add(new PistolBullet(world,bulletPosition, miss));
+					PBulletTimer = 0;
+					ammoPistol--;
 				}
-				RBullet.add(new RifleBullet(world,bulletPosition,miss));
-				RBulletTimer = 0;
-				ammoRifle--;
+				shooting = true;
 			}
-			shooting = true;
-		}
-		else {
-			shooting = false;
+			else if(rifle && Gdx.input.isKeyPressed(Input.Keys.SPACE) && !Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D)) {
+				if(RBulletTimer>0.2f && ammoRifle > 0) {
+					boolean miss = false;
+					if(debuffFear) {
+						Random random = new Random();
+						int randomInteger = random.nextInt(11);
+						if(randomInteger >= 3)
+							miss = false;
+						else
+							miss = true;
+					}
+					RBullet.add(new RifleBullet(world,bulletPosition,miss));
+					RBulletTimer = 0;
+					ammoRifle--;
+				}
+				shooting = true;
+			}
+			else {
+				shooting = false;
+			}
 		}
 	}
 
@@ -536,7 +556,14 @@ public class Player extends Sprite{
 		limitSlownessSpeed = 0;
 		cured = true;
 	}
-	
+
+	//Checking Player
+	public void isDead() {
+		if (hitPoint <= 0) {
+			playerdead = true;
+		}
+	}
+
 	public ArrayList<PistolBullet> getPistolBullet() {
 		return PBullet;
 	}
@@ -662,6 +689,15 @@ public class Player extends Sprite{
 	public boolean hasCured() {
 		return cured;
 	}
+
+	public boolean isHasDestroyed() {
+		return hasDestroyed;
+	}
+
+	public void setHasDestroyed(boolean hasDestroyed) {
+		this.hasDestroyed = hasDestroyed;
+	}
+
 	@Override
 	public String toString() {
 		return level + "\n" + score + "\n" + hitPoint + "\n" + (int)position.x + "\n" + (int)position.y + "\n" 

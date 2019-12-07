@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
-public class GameOver implements Screen {
+public class WinScreen implements Screen {
     private Viewport viewPort;
     private Stage stage;
 
@@ -25,18 +25,17 @@ public class GameOver implements Screen {
     private FreeTypeFontGenerator.FreeTypeFontParameter fontParameter;
     private BitmapFont font;
 
-    //Player score
     private int playerscore;
+
+    Texture Title;
+    Texture BackButton;
+    Texture BackButtonActive;
+
     private Player player;
 
-    Texture GameOverTitle;
-    Texture RetryButton;
-    Texture RetryHoverButton;
-    Texture BackButton;
-    Texture BackHoverButton;
-
-    public GameOver(GazeintoAbyss game, Player player) {
+    public WinScreen(GazeintoAbyss game, Player player) {
         this.game = game;
+
         viewPort = new FitViewport(GazeintoAbyss.WIDTH, GazeintoAbyss.HEIGHT, new OrthographicCamera());
         stage = new Stage(viewPort, ((GazeintoAbyss) game).batch);
 
@@ -48,60 +47,60 @@ public class GameOver implements Screen {
         fontParameter.color = Color.RED;
         font = fontGenerator.generateFont(fontParameter);
 
-        GameOverTitle = new Texture("Resources/GameOver/GameOver.png");
-        RetryButton = new Texture("Resources/GameOver/Retry.png");
-        RetryHoverButton = new Texture("Resources/GameOver/Retry-Hover.png");
+        Title = new Texture("Resources/WinScreen/WinScreen.png");
         BackButton = new Texture("Resources/GameOver/ToTitle.png");
-        BackHoverButton = new Texture("Resources/GameOver/ToTitle-Hover.png");
+        BackButtonActive = new Texture("Resources/GameOver/ToTitle-Hover.png");
     }
-
     @Override
     public void show() {
 
     }
+
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.draw();
-        game.batch.begin();
 
-        game.batch.draw(GameOverTitle, GazeintoAbyss.WIDTH / 2 - 300, 400, 600, 400);
         playerscore = player.getScore();
-        font.draw(game.batch, "SCORE: " + playerscore, GazeintoAbyss.WIDTH / 2 - 85, 600);
 
-        game.batch.draw(RetryButton, GazeintoAbyss.WIDTH / 2 - 300, 300, 600, 300);
-        if ((Gdx.input.getX() >= 540 && Gdx.input.getX() <= 740) && (Gdx.input.getY() >= 230 && Gdx.input.getY() <= 280)) {
-            game.batch.draw(RetryHoverButton, GazeintoAbyss.WIDTH / 2 - 300, 300, 600, 300);
-        }
+        game.batch.begin();
+        game.batch.draw(Title, GazeintoAbyss.WIDTH / 2 - 300, 400, 600, 400);
+        //Player scored
+        font.draw(game.batch, "SCORE: " + playerscore, GazeintoAbyss.WIDTH / 2 - 85, 500);
+
         game.batch.draw(BackButton, GazeintoAbyss.WIDTH / 2 - 300, 200, 600, 300);
         if ((Gdx.input.getX() >= 555 && Gdx.input.getX() <= 728) && (Gdx.input.getY() >= 335 && Gdx.input.getY() <= 390)) {
-            game.batch.draw(BackHoverButton, GazeintoAbyss.WIDTH / 2 - 300, 200, 600, 300);
+            game.batch.draw(BackButtonActive, GazeintoAbyss.WIDTH / 2 - 300, 200, 600, 300);
             if (Gdx.input.isTouched()) {
+                this.dispose();
                 game.setScreen(new MainMenuScreen(game));
-                //this.dispose();
             }
         }
-        System.out.println("X: " + Gdx.input.getX() + " Y: " + Gdx.input.getY());
 
         game.batch.end();
     }
+
     @Override
     public void resize(int width, int height) {
 
     }
+
     @Override
     public void pause() {
 
     }
+
     @Override
     public void resume() {
 
     }
+
     @Override
     public void hide() {
 
     }
+
     @Override
     public void dispose() {
 

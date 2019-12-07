@@ -175,7 +175,7 @@ public class Level_1 implements Screen{
 		
 		if(gameOver) {
 			gameOver = false;
-			game.setScreen(new GameOver(game));
+			game.setScreen(new GameOver(game, player));
 		}
 			
 		//Update camera every iteration

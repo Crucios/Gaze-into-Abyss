@@ -1,5 +1,8 @@
 package Screens.Level_5;
 
+import Screens.WinScreen;
+import Sprites.DoorFinish;
+import Tools.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.gazeintoabyss.GazeintoAbyss;
@@ -7,13 +10,10 @@ import com.mygdx.gazeintoabyss.GazeintoAbyss;
 import Screens.Level_1.Level_1;
 import Sprites.Key;
 import Sprites.Player;
-import Tools.ChestCreator;
-import Tools.DoorAreaCreator;
-import Tools.DoorHideCreator;
-import Tools.DoorLevelCreator;
-import Tools.WorldCreator;
 
 public class Level_5 extends Level_1{
+
+	private DoorFinishCreator doorFinishCreator;
 
 	public Level_5(GazeintoAbyss game, World world, Player player, String filepath_tmx) {
 		super(game, world, player, filepath_tmx);
@@ -67,7 +67,11 @@ public class Level_5 extends Level_1{
 		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area4", player, new Key("1"), 200, 0, 0, 0));
 		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area5", player, new Key("1"), 200, 0, 0, 0));
 		
-		//Generate door-level
+		//Generate door-finish
+		int score = player.getScore();
+		System.out.println("SCORE: " + score);
+		WinScreen WScreen = new WinScreen(game, player);
+		doorFinishCreator = new DoorFinishCreator(game, world, map, player, WScreen,"finish-door",false,"", this);
 	}
 }
 

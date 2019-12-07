@@ -20,7 +20,7 @@ public class Melee extends Enemy {
     public Melee(World wolrd,  Vector2 position, float xawal, float xakhir, Player player) {
         super(wolrd, position, xawal, xakhir, player);
         HP = 8;
-        damage = 6;
+        damage = 100;
         //DefineEnemy();
     }
 

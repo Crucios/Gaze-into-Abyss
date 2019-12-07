@@ -7,9 +7,13 @@ import java.io.IOException;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
 import Screens.Level_2.Level_2;
@@ -18,6 +22,9 @@ import Screens.Level_1.Level_1;
 import Sprites.Player;
 
 public class MainMenuScreen implements Screen {
+
+    private Viewport viewPort;
+    private Stage stage;
 
     GazeintoAbyss game;
     /* Texture pada MainMenu dari Button, BG, Title*/
@@ -35,6 +42,9 @@ public class MainMenuScreen implements Screen {
 
     public MainMenuScreen(GazeintoAbyss game) {
         this.game = game;
+        viewPort = new FitViewport(GazeintoAbyss.WIDTH, GazeintoAbyss.HEIGHT, new OrthographicCamera());
+        stage = new Stage(viewPort, ((GazeintoAbyss) game).batch);
+
         ExitButtonActive = new Texture("Resources/MainMenu/Exit-Hover-Transparent.png");
         ExitButtonInactive = new Texture("Resources/MainMenu/Exit-Transparent.png");
         PlayButtonActive = new Texture("Resources/MainMenu/Start-Hover-Transparent.png");
