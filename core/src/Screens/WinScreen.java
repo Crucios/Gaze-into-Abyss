@@ -72,7 +72,7 @@ public class WinScreen implements Screen {
         game.batch.draw(BackButton, GazeintoAbyss.WIDTH / 2 - 300, 200, 600, 300);
         if ((Gdx.input.getX() >= 555 && Gdx.input.getX() <= 728) && (Gdx.input.getY() >= 335 && Gdx.input.getY() <= 390)) {
             game.batch.draw(BackButtonActive, GazeintoAbyss.WIDTH / 2 - 300, 200, 600, 300);
-            if (Gdx.input.isTouched()) {
+            if (Gdx.input.justTouched()) {
                 this.dispose();
                 game.setScreen(new MainMenuScreen(game));
             }

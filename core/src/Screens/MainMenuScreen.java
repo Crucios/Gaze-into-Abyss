@@ -76,7 +76,7 @@ public class MainMenuScreen implements Screen {
         if (Gdx.input.getX() <= 760 && Gdx.input.getX() >= 510 && Gdx.input.getY() <= 290 && Gdx.input.getY() >= 250)
         {
             game.batch.draw(PlayButtonActive,ExitX,300, ExitB_WIDTH, ExitB_HEIGHT);
-            if (Gdx.input.isTouched()) {
+            if (Gdx.input.justTouched()) {
                 this.dispose();
                 World tempWorld = new World(new Vector2(0, -10),true);
                 Level_1 nextLevel = new Level_1(game, tempWorld, new Player(tempWorld, new Vector2(100,520)),"Resources/Levels/Level 1/Level 1.tmx");
@@ -92,8 +92,9 @@ public class MainMenuScreen implements Screen {
         if (Gdx.input.getX() <= 710 && Gdx.input.getX() >= 570 && Gdx.input.getY() <= 390 && Gdx.input.getY() >= 340)
         {
             game.batch.draw(LoadButtonActive,ExitX,200, ExitB_WIDTH, ExitB_HEIGHT);
-            if (Gdx.input.isTouched()) {
+            if (Gdx.input.justTouched()) {
                 BufferedReader reader;
+
                 try {
                 	reader = new BufferedReader(new FileReader("Save_Files.txt"));
                 	int playerLevel = Integer.parseInt(reader.readLine());
@@ -162,7 +163,7 @@ public class MainMenuScreen implements Screen {
         {
             game.batch.draw(ExitButtonActive,ExitX,100, ExitB_WIDTH, ExitB_HEIGHT);
             //Ketika exit diklik maka program tertutup
-            if (Gdx.input.isTouched()) {
+            if (Gdx.input.justTouched()) {
                 Gdx.app.exit();
             }
         }else {

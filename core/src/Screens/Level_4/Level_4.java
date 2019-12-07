@@ -1,13 +1,12 @@
 package Screens.Level_4;
 
+import Sprites.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.gazeintoabyss.GazeintoAbyss;
 
 import Screens.Level_1.Level_1;
 import Screens.Level_5.Level_5;
-import Sprites.Key;
-import Sprites.Player;
 import Tools.ChestCreator;
 import Tools.DoorAreaCreator;
 import Tools.DoorHideCreator;
@@ -58,7 +57,16 @@ public class Level_4 extends Level_1{
 		//Generate door-hide
 		new DoorHideCreator(game, world, map, player, "door-hide-object-area3");
 		new DoorHideCreator(game, world, map, player, "door-hide-object-area4");
-		
+
+		//Generate Enemy
+		enemy.add(new Melee(world, new Vector2((704+1517)/2, 1415), 704, 1517, player));
+		enemy.add(new Ranged(world, new Vector2((1725+1973)/2, 1415), 1725, 1973, player, 400));
+		enemy.add(new Speed(world, new Vector2((617+1111)/2, 983), 617, 1111, player));
+		enemy.add(new Ranged(world, new Vector2((1000+1483)/2, 119), 1000, 1483, player, 500));
+		enemy.add(new Melee(world, new Vector2((372+770)/2, 119), 372, 770, player));
+		enemy.add(new Speed(world, new Vector2((434+1078)/2, 552), 434, 1078, player));
+		enemy.add(new Speed(world, new Vector2((1374+1862)/2, 552), 1374, 1862, player));
+
 		//Generate Chest
 		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area1", player, new Key("1"), 200, 0, 0, 0));
 		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area2", player, new Key("1"), 200, 0, 0, 0));

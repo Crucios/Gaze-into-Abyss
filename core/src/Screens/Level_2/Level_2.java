@@ -21,6 +21,7 @@ public class Level_2 extends Level_1{
 
 	public Level_2(GazeintoAbyss game, World world, Player player, String filepath_tmx) {
 		super(game, world, player, filepath_tmx);
+
 		// TODO Auto-generated constructor stub
 	}
 
