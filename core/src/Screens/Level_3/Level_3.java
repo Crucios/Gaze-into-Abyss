@@ -73,8 +73,8 @@ public class Level_3 extends Level_1{
 		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area2", player, new Key("Level 3 Key to area 3"), 0, 7, 0, 0));
 		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area3", player, new Key("Level 3 Key to area 4"), 2, 0, 0, 1));
 		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area4", player, new Key(""), 0, 2, 0, 0));
-		chestCreator.add(new ChestCreator(game, world, map, "chest-object-mimic-area3", player, new Key("Key to Level 4"), 3, 3, 0, 0));
-		chestCreator.add(new ChestCreator(game, world, map, "chest-object-mimic-area4", player, new Key(""), 0, 4, 1, 0));
+		chestCreator.add(new ChestCreator(game, world, map, "chest-object-mimic-area3", player, new Key(""), 3, 3, 0, 0));
+		chestCreator.add(new ChestCreator(game, world, map, "chest-object-mimic-area4", player, new Key("Key to Level 4"), 0, 4, 1, 0));
 		
 		//enerate door-level
 		Level_4 nextLevel = new Level_4(game, new World(new Vector2(0, -10),true), player,"Resources/Levels/Level 4/Level 4.tmx");
