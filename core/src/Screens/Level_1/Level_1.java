@@ -162,7 +162,7 @@ public class Level_1 implements Screen{
 			player.setDebuffSlowness(true);
 			hasDebuffedSlowness = true;
 		}
-		else if(elapsed > 180.0 && !player.isDebuffFear()) {
+		else if(elapsed > 90.0 && !player.isDebuffFear()) {
 			player.setDebuffFear(true);
 			hasDebuffedFear = false;
 		}

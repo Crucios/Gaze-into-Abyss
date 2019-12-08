@@ -76,7 +76,7 @@ public class DoorFinish extends InteractiveTileObject {
                 }
             }
             else {
-            	GazeintoAbyss.manager.get("Resources/Sound/door-open.mp3",Sound.class).play();
+            	GazeintoAbyss.manager.get("Resources/Sound/door-open.ogg",Sound.class).play();
                 setToDispose = true;
                 game.setScreen(WScreen);
                 /*nextLevel.getGamecam().position.set(newGameCamPosition,0);

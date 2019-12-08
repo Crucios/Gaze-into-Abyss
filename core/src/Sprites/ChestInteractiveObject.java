@@ -27,10 +27,10 @@ public class ChestInteractiveObject extends InteractiveTileObject{
 
 	@Override
 	public void onHit() {
-		if(Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-			GazeintoAbyss.manager.get("Resources/Sound/chest-open.ogg",Sound.class).play();
+		if(Gdx.input.isKeyJustPressed(Input.Keys.E)) {		
 			chest.opening();
 			if(!chest.getOpened()) {
+				GazeintoAbyss.manager.get("Resources/Sound/chest-open.ogg",Sound.class).play();
 				player.addKey(chest.getKey());
 				player.addAmmoPistol(chest.getPAmmo());
 				player.addAmmoRIfle(chest.getRAmmo());

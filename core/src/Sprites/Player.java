@@ -105,7 +105,7 @@ public class Player extends Sprite{
 		
 		level = 1;
 		
-		hitPoint = 100;
+		hitPoint = 1000;
 		
 		currentState = State.STANDING_PISTOL;
 		previousState = State.STANDING_PISTOL;
@@ -538,22 +538,24 @@ public class Player extends Sprite{
 
 
 			if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
-				if(curePotionCount > 0) {
-					GazeintoAbyss.manager.get("Resources/Sound/drink.ogg",Sound.class).play();
-					isCured();
-					curePotionCount--;
-				}
-			}
-			if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
 				if(healingPotionCount > 0) {
 					GazeintoAbyss.manager.get("Resources/Sound/drink.ogg",Sound.class).play();
-					hitPoint += 25;
+					hitPoint += 30;
 					if(hitPoint > 100) {
 						hitPoint = 100;
 					}
 					healingPotionCount--;
 				}
 			}
+			//Cure Potion
+			if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
+				if(curePotionCount > 0) {
+					GazeintoAbyss.manager.get("Resources/Sound/drink.ogg",Sound.class).play();
+					isCured();
+					curePotionCount--;
+				}
+			}
+			
 			if(Gdx.input.isKeyJustPressed(Input.Keys.E) && isHiding) {
 				isHiding = false;
 			}
