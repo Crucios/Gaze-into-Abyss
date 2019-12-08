@@ -375,11 +375,11 @@ public class Player extends Sprite{
 		}
 		
 		//
-		if((Gdx.input.isKeyPressed(Input.Keys.A) || !toRight) && !region.isFlipX()) {
+		if((Gdx.input.isKeyPressed(Input.Keys.A) || !toRight) && !region.isFlipX() && !Gdx.input.isKeyPressed(Input.Keys.D)) {
 			region.flip(true, false);
 			toRight = false;
 		}
-		else if((Gdx.input.isKeyPressed(Input.Keys.D) || toRight) && region.isFlipX()) {
+		else if((Gdx.input.isKeyPressed(Input.Keys.D) || toRight) && region.isFlipX() && !Gdx.input.isKeyPressed(Input.Keys.A)) {
 			region.flip(true, false);
 			toRight = true;
 		}
@@ -409,7 +409,10 @@ public class Player extends Sprite{
 		if(isHiding)
 			return State.HIDDING;
 		if(pistol) {
-			if((Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && Gdx.input.isKeyPressed(Input.Keys.A)) || 
+			if(Gdx.input.isKeyPressed(Input.Keys.D) && Gdx.input.isKeyPressed(Input.Keys.A)) {
+				return State.STANDING_PISTOL;
+			}
+			else if((Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && Gdx.input.isKeyPressed(Input.Keys.A)) || 
 					(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && Gdx.input.isKeyPressed(Input.Keys.D)))
 				return State.RUNNING_PISTOL;
 			else if(Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.D))
@@ -420,7 +423,10 @@ public class Player extends Sprite{
 				return State.STANDING_PISTOL;
 		}
 		else if(rifle) {
-			if((Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && Gdx.input.isKeyPressed(Input.Keys.A)) || 
+			if(Gdx.input.isKeyPressed(Input.Keys.D) && Gdx.input.isKeyPressed(Input.Keys.A)) {
+				return State.STANDING_RIFLE;
+			}
+			else if((Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && Gdx.input.isKeyPressed(Input.Keys.A)) || 
 					(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && Gdx.input.isKeyPressed(Input.Keys.D)))
 				return State.RUNNING_RIFLE;
 			else if(Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.D))
@@ -461,7 +467,7 @@ public class Player extends Sprite{
 		if (currentState != State.DEAD) {
 			//Movement here
 			//If D Key Pressed
-			if(Gdx.input.isKeyPressed(Input.Keys.D) && b2body.getLinearVelocity().x <= limitMovementSpeed - limitSlownessSpeed) {
+			if(Gdx.input.isKeyPressed(Input.Keys.D) && b2body.getLinearVelocity().x <= limitMovementSpeed - limitSlownessSpeed && !Gdx.input.isKeyPressed(Input.Keys.A)) {
 				if(WalkTimer > 0.35f && !Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
 					if(nowStep == 0){
 						GazeintoAbyss.manager.get("Resources/Sound/walk2.ogg",Sound.class).play();
@@ -476,7 +482,7 @@ public class Player extends Sprite{
 				b2body.applyLinearImpulse(new Vector2(movementSpeed - slownessSpeed,0), b2body.getWorldCenter(), true);
 			}
 			//If A Key Pressed
-			else if(Gdx.input.isKeyPressed(Input.Keys.A) && b2body.getLinearVelocity().x >= -(limitMovementSpeed - limitSlownessSpeed)) {
+			else if(Gdx.input.isKeyPressed(Input.Keys.A) && b2body.getLinearVelocity().x >= -(limitMovementSpeed - limitSlownessSpeed) && !Gdx.input.isKeyPressed(Input.Keys.D)) {
 				if(WalkTimer > 0.35f && !Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
 					if(nowStep == 0){
 						GazeintoAbyss.manager.get("Resources/Sound/walk2.ogg",Sound.class).play();
@@ -491,7 +497,7 @@ public class Player extends Sprite{
 				b2body.applyLinearImpulse(new Vector2(-(movementSpeed - slownessSpeed),0), b2body.getWorldCenter(), true);
 			}
 			//If D and Shift left Key Pressed
-			if(Gdx.input.isKeyPressed(Input.Keys.D) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x <= limitMovementSpeed - limitSlownessSpeed+ 1.5f) {
+			if(Gdx.input.isKeyPressed(Input.Keys.D) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x <= limitMovementSpeed - limitSlownessSpeed+ 1.5f && !Gdx.input.isKeyPressed(Input.Keys.A)) {
 				if(WalkTimer > 0.2f) {
 					if(nowStep == 0){
 						GazeintoAbyss.manager.get("Resources/Sound/walk2.ogg",Sound.class).play();
@@ -506,7 +512,7 @@ public class Player extends Sprite{
 				b2body.applyLinearImpulse(new Vector2(movementSpeed - slownessSpeed + 1f,0), b2body.getWorldCenter(), true);
 			}
 			//If A and Shif t left Key Pressed
-			else if(Gdx.input.isKeyPressed(Input.Keys.A) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x >= -(limitMovementSpeed - limitSlownessSpeed + 1.5)) {
+			else if(Gdx.input.isKeyPressed(Input.Keys.A) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x >= -(limitMovementSpeed - limitSlownessSpeed + 1.5) && !Gdx.input.isKeyPressed(Input.Keys.D)) {
 				if(WalkTimer > 0.2f) {
 					if(nowStep == 0){
 						GazeintoAbyss.manager.get("Resources/Sound/walk2.ogg",Sound.class).play();
@@ -530,22 +536,15 @@ public class Player extends Sprite{
 				pistol = false;
 			}
 
-			//Health Potion
+
 			if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
-				debuffFear = true;
-			}
-			//Cure Potion
-			if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
-				debuffSlowness = true;
-			}
-			if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)) {
 				if(curePotionCount > 0) {
 					GazeintoAbyss.manager.get("Resources/Sound/drink.ogg",Sound.class).play();
 					isCured();
 					curePotionCount--;
 				}
 			}
-			if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_4)) {
+			if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
 				if(healingPotionCount > 0) {
 					GazeintoAbyss.manager.get("Resources/Sound/drink.ogg",Sound.class).play();
 					hitPoint += 25;

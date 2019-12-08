@@ -53,7 +53,7 @@ public class DoorFinish extends InteractiveTileObject {
                 for(Key key: keys) {
                     if(key.getId() == lock) {
                     	GazeintoAbyss.manager.get("Resources/Sound/door-unlock.mp3",Sound.class).play();
-                    	GazeintoAbyss.manager.get("Resources/Sound/door-open.mp3",Sound.class).play();
+                    	GazeintoAbyss.manager.get("Resources/Sound/door-open.ogg",Sound.class).play();
                         System.out.println("Door open");
                         isLock = false;
                         setToDispose = true;
