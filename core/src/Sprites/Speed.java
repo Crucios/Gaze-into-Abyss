@@ -19,8 +19,8 @@ public class Speed extends Enemy {
 
     public Speed(World world, Vector2 position, float xawal, float xakhir, Player player) {
         super(world, position, xawal, xakhir, player);
-        HP = 4;
-        damage = 8;
+        HP = 10;
+        damage = 6;
         score = 40;
         flapTimer = 0;
         //DefineEnemy();
@@ -86,6 +86,7 @@ public class Speed extends Enemy {
         	isDead = true;
         }
         if(isDead && !hasDestroyed) {
+        	GazeintoAbyss.manager.get("Resources/Sound/speed-death.ogg",Sound.class).play();
             player.setScore(player.getScore() + score);
         	world.destroyBody(b2body);
         	hasDestroyed = true;
@@ -99,14 +100,14 @@ public class Speed extends Enemy {
 
     @Override
     public void enemyMovement() {
-        if (moveright && b2body.getLinearVelocity().x <= 2) {
+        if (moveright && b2body.getLinearVelocity().x <= 3.5f) {
             //b2body.applyLinearImpulse(new Vector2(0.5f,0), b2body.getWorldCenter(), true);
-            b2body.setLinearVelocity(2f, 0f);
+            b2body.setLinearVelocity(3.5f, 0f);
             if (nowPosition.x >= xakhir) { moveright = false; }
         }
-        else if (!moveright && b2body.getLinearVelocity().x >= -2) {
+        else if (!moveright && b2body.getLinearVelocity().x >= -3.5f) {
             //b2body.applyLinearImpulse(new Vector2(-0.5f,0), b2body.getWorldCenter(), true);
-            b2body.setLinearVelocity(-2f, 0f);
+            b2body.setLinearVelocity(-3.5f, 0f);
             if (nowPosition.x <= xawal) { moveright = true; }
         }
     }
@@ -143,6 +144,7 @@ public class Speed extends Enemy {
     @Override
     public void onHit() {
     	if(player.isFreetoHit()) {
+    		GazeintoAbyss.manager.get("Resources/Sound/player-hit.ogg",Sound.class).play();
     		player.setHitPoint(player.getHitPoint() - damage);
     		player.setHasHit(true);
     	}
@@ -158,6 +160,7 @@ public class Speed extends Enemy {
     }
     @Override
     public void setHP(int hp) {
+    	GazeintoAbyss.manager.get("Resources/Sound/speed-hit.ogg",Sound.class).play();
         HP = hp;
     }
     @Override

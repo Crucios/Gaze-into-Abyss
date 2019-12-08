@@ -1,5 +1,6 @@
 package Sprites;
 
+import com.badlogic.gdx.audio.Sound;
 //import Screens.PlayScreen;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -19,8 +20,8 @@ public class Melee extends Enemy {
 
     public Melee(World wolrd,  Vector2 position, float xawal, float xakhir, Player player) {
         super(wolrd, position, xawal, xakhir, player);
-        HP = 8;
-        damage = 20;
+        HP = 14;
+        damage = 10;
         score = 25;
         //DefineEnemy();
     }
@@ -36,6 +37,7 @@ public class Melee extends Enemy {
         //Destroy if HP drop to 0
         
         if(isDead && !hasDestroyed) {
+        	GazeintoAbyss.manager.get("Resources/Sound/melee-death.ogg",Sound.class).play();
             player.setScore(player.getScore() + score);
         	world.destroyBody(b2body);
         	hasDestroyed = true;
@@ -142,6 +144,7 @@ public class Melee extends Enemy {
     @Override
     public void onHit() {
     	if(player.isFreetoHit()) {
+    		GazeintoAbyss.manager.get("Resources/Sound/player-hit.ogg",Sound.class).play();
     		player.setHitPoint(player.getHitPoint() - damage);
     		player.setHasHit(true);
     	}	
@@ -157,6 +160,7 @@ public class Melee extends Enemy {
     }
     @Override
     public void setHP(int hp) {
+    	GazeintoAbyss.manager.get("Resources/Sound/melee-hit.ogg",Sound.class).play();
         HP = hp;
     }
     @Override

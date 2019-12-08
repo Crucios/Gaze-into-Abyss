@@ -28,8 +28,8 @@ public class Ranged extends Enemy {
         super(world, position, xawal, xakhir, player);
         cekFire = false;
         bullettimer = 2;
-        HP = 4;
-        damage = 2;
+        HP = 8;
+        damage = 15;
         score = 60;
         elapsed = 0;
         fireHalt = false;
@@ -128,6 +128,7 @@ public class Ranged extends Enemy {
         	isDead = true;
         }
         if(isDead && !hasDestroyed) {
+        	GazeintoAbyss.manager.get("Resources/Sound/ranged-death.ogg",Sound.class).play();
             player.setScore(player.getScore() + score);
         	world.destroyBody(b2body);
         	hasDestroyed = true;
@@ -202,6 +203,7 @@ public class Ranged extends Enemy {
     @Override
     public void onHit() {
     	if(player.isFreetoHit()) {
+    		GazeintoAbyss.manager.get("Resources/Sound/player-hit.ogg",Sound.class).play();
     		player.setHitPoint(player.getHitPoint() - damage);
     		player.setHasHit(true);
     	}
@@ -219,6 +221,7 @@ public class Ranged extends Enemy {
     }
     @Override
     public void setHP(int hp) {
+    	GazeintoAbyss.manager.get("Resources/Sound/ranged-hit.ogg",Sound.class).play();
         HP = hp;
     }
     @Override

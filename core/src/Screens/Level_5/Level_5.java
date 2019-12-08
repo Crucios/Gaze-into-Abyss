@@ -68,10 +68,10 @@ public class Level_5 extends Level_1{
 		enemy.add(new Melee(world, new Vector2((425+895)/2, 551), 425, 895, player));
 
 		//Generate Chest
-		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area1", player, new Key(""), 8, 10, 1, 0));
+		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area1", player, new Key(""), 8, 8, 1, 0));
 		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area3", player, new Key("Level 5 Key to Area 5"), 5, 5, 0, 0));
-		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area4", player, new Key("Key to Finish"), 1, 2, 0, 0));
-		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area5", player, new Key("Level 5 Key to Area 4"), 1, 1, 0, 0));
+		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area4", player, new Key("Key to Finish"), 2, 3, 0, 0));
+		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area5", player, new Key("Level 5 Key to Area 4"), 2, 2, 0, 1));
 		
 		//Generate door-finish
 		int score = player.getScore();

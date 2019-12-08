@@ -1,5 +1,6 @@
 package Sprites;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -137,6 +138,7 @@ public class EnemyFire extends Sprite {
 
     public void onHit() {
     	if(player.isFreetoHit()) {
+    		GazeintoAbyss.manager.get("Resources/Sound/player-hit.ogg",Sound.class).play();
     		player.setHitPoint(player.getHitPoint() - damage);
     		player.setHasHit(true);
     		setToDestroy = true;

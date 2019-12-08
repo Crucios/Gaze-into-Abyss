@@ -491,7 +491,7 @@ public class Player extends Sprite{
 				b2body.applyLinearImpulse(new Vector2(-(movementSpeed - slownessSpeed),0), b2body.getWorldCenter(), true);
 			}
 			//If D and Shift left Key Pressed
-			if(Gdx.input.isKeyPressed(Input.Keys.D) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x <= limitMovementSpeed - limitSlownessSpeed+ 4) {
+			if(Gdx.input.isKeyPressed(Input.Keys.D) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x <= limitMovementSpeed - limitSlownessSpeed+ 1.5f) {
 				if(WalkTimer > 0.2f) {
 					if(nowStep == 0){
 						GazeintoAbyss.manager.get("Resources/Sound/walk2.ogg",Sound.class).play();
@@ -503,10 +503,10 @@ public class Player extends Sprite{
 					}
 					WalkTimer = 0;
 				}
-				b2body.applyLinearImpulse(new Vector2(movementSpeed - slownessSpeed + 2.5f,0), b2body.getWorldCenter(), true);
+				b2body.applyLinearImpulse(new Vector2(movementSpeed - slownessSpeed + 1f,0), b2body.getWorldCenter(), true);
 			}
 			//If A and Shif t left Key Pressed
-			else if(Gdx.input.isKeyPressed(Input.Keys.A) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x >= -(limitMovementSpeed - limitSlownessSpeed + 4)) {
+			else if(Gdx.input.isKeyPressed(Input.Keys.A) && Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && b2body.getLinearVelocity().x >= -(limitMovementSpeed - limitSlownessSpeed + 1.5)) {
 				if(WalkTimer > 0.2f) {
 					if(nowStep == 0){
 						GazeintoAbyss.manager.get("Resources/Sound/walk2.ogg",Sound.class).play();
@@ -518,7 +518,7 @@ public class Player extends Sprite{
 					}
 					WalkTimer = 0;
 				}
-				b2body.applyLinearImpulse(new Vector2(-(movementSpeed - slownessSpeed + 2.5f), 0), b2body.getWorldCenter(), true);
+				b2body.applyLinearImpulse(new Vector2(-(movementSpeed - slownessSpeed + 1f), 0), b2body.getWorldCenter(), true);
 			}
 
 			if(Gdx.input.isKeyPressed(Input.Keys.Q) && !pistol) {
@@ -548,7 +548,7 @@ public class Player extends Sprite{
 			if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_4)) {
 				if(healingPotionCount > 0) {
 					GazeintoAbyss.manager.get("Resources/Sound/drink.ogg",Sound.class).play();
-					hitPoint += 30;
+					hitPoint += 25;
 					if(hitPoint > 100) {
 						hitPoint = 100;
 					}
@@ -601,8 +601,9 @@ public class Player extends Sprite{
 	}
 
 	public void debuffedSlowness() {
-		slownessSpeed = 0.2f;
-		limitSlownessSpeed = 0.3;
+		slownessSpeed = 0.3f;
+		limitSlownessSpeed = 1.3f;
+		
 	}
 	
 	public void isCured() {

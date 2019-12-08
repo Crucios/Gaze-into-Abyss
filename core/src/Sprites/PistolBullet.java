@@ -41,7 +41,7 @@ public class PistolBullet extends Sprite {
 		this.stopTimer = false;
 		this.destroy = false;
 		this.miss = miss;
-		this.damage = 2;
+		this.damage = 4;
 		hasDamaged = false;
 		isHit = false;
 		timer = 0;

@@ -37,6 +37,13 @@ public class GazeintoAbyss extends Game {
 		manager.load("Resources/Sound/drink.ogg",Sound.class);
 		manager.load("Resources/Sound/game-over.ogg",Sound.class);
 		manager.load("Resources/Sound/flap.ogg",Sound.class);
+		manager.load("Resources/Sound/melee-hit.ogg",Sound.class);
+		manager.load("Resources/Sound/melee-death.ogg",Sound.class);
+		manager.load("Resources/Sound/ranged-hit.ogg",Sound.class);
+		manager.load("Resources/Sound/ranged-death.ogg",Sound.class);
+		manager.load("Resources/Sound/speed-hit.ogg",Sound.class);
+		manager.load("Resources/Sound/speed-death.ogg",Sound.class);
+		manager.load("Resources/Sound/player-hit.ogg",Sound.class);
 		manager.finishLoading();
 		setScreen(new MainMenuScreen(this));
 	}

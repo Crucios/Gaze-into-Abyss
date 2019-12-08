@@ -50,7 +50,7 @@ public class Level_3 extends Level_1{
 		new DoorAreaCreator(game, world, map, player, gamecam, newCamera, "door-area-object-f1-t3", new Vector2(400,560), this, newMaxRight,true,"Level 3 Key to area 3");
 		
 		newCamera = new Vector2((gamePort.getWorldWidth()/2),1.39f); 
-		new DoorAreaCreator(game, world, map, player, gamecam, newCamera, "door-area-object-f1-t4", new Vector2(173,130), this, newMaxRight,true,"Level 4 Key to area 4");
+		new DoorAreaCreator(game, world, map, player, gamecam, newCamera, "door-area-object-f1-t4", new Vector2(173,130), this, newMaxRight,true,"Level 3 Key to area 4");
 		
 		newCamera = new Vector2((gamePort.getWorldWidth()/2),14.35f); 
 		new DoorAreaCreator(game, world, map, player, gamecam, newCamera, "door-area-object-f2-t1", new Vector2(2920,1400), this, newMaxRight,false,"");
@@ -73,7 +73,7 @@ public class Level_3 extends Level_1{
 		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area2", player, new Key("Level 3 Key to area 3"), 0, 7, 0, 0));
 		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area3", player, new Key("Level 3 Key to area 4"), 2, 0, 0, 1));
 		chestCreator.add(new ChestCreator(game, world, map, "chest-object-area4", player, new Key(""), 0, 2, 0, 0));
-		chestCreator.add(new ChestCreator(game, world, map, "chest-object-mimic-area3", player, new Key("Key to Level 4"), 1, 0, 0, 0));
+		chestCreator.add(new ChestCreator(game, world, map, "chest-object-mimic-area3", player, new Key("Key to Level 4"), 3, 3, 0, 0));
 		chestCreator.add(new ChestCreator(game, world, map, "chest-object-mimic-area4", player, new Key(""), 0, 4, 1, 0));
 		
 		//enerate door-level

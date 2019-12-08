@@ -43,7 +43,7 @@ public class Level_4 extends Level_1{
 		
 		newCamera = new Vector2((gamePort.getWorldWidth()/2 + 0.1f),1.39f); 
 		newMaxRight = gamePort.getWorldWidth()/2 * 4f - 1.8f;
-		new DoorAreaCreator(game, world, map, player, gamecam, newCamera, "door-area4-object-area2", new Vector2(255,130), this, newMaxRight,false,"Level Key to Area 4");
+		new DoorAreaCreator(game, world, map, player, gamecam, newCamera, "door-area4-object-area2", new Vector2(255,130), this, newMaxRight,false,"Level 4 Key to Area 4");
 
 		newCamera = new Vector2((gamePort.getWorldWidth()/2 + 0.1f),14.35f);
 		newMaxRight = 18.3f;
