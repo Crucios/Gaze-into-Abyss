@@ -105,7 +105,7 @@ public class Player extends Sprite{
 		
 		level = 1;
 		
-		hitPoint = 1000;
+		hitPoint = 100;
 		
 		currentState = State.STANDING_PISTOL;
 		previousState = State.STANDING_PISTOL;

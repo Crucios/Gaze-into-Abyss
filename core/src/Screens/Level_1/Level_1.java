@@ -60,7 +60,7 @@ public class Level_1 implements Screen{
 	
 	//Box2D
 	protected World world;
-	protected Box2DDebugRenderer b2dr;
+	//protected Box2DDebugRenderer b2dr;
 	
 	protected Player player;
 	protected ArrayList<Enemy> enemy;
@@ -224,7 +224,7 @@ public class Level_1 implements Screen{
 		renderer.setView(gamecam);
 		
 		this.world = world;
-		b2dr = new Box2DDebugRenderer();
+		//b2dr = new Box2DDebugRenderer();
 		
 		//Music
 		music = GazeintoAbyss.manager.get("Resources/Sound/background-sound.ogg", Music.class);
@@ -289,7 +289,7 @@ public class Level_1 implements Screen{
 		
 		renderer.render();
 		
-		b2dr.render(world, gamecam.combined);
+		//b2dr.render(world, gamecam.combined);
 		
 		game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
 		hud.stage.draw();
@@ -341,7 +341,7 @@ public class Level_1 implements Screen{
 			}
 		}
 		catch(NullPointerException t) {
-			System.out.println("Pointer NULL");
+			
 		}
 		
 	}
@@ -375,7 +375,7 @@ public class Level_1 implements Screen{
 		map.dispose();
 		renderer.dispose();
 		world.dispose();
-		b2dr.dispose();
+		//b2dr.dispose();
 		hud.dispose();
 	}
 
